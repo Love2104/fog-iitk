@@ -1,0 +1,17 @@
+*.h5
+*.mp4
+*.dump
+*.bak
+*.orig
+*.raw
+*.log
+*.txt
+*.py
+screenshot*.png
+index_output.html
+.claude/
+.agents/
+node_modules/
+compile.css
+compile.css.map
+all_datasets/long_term/final_data1.csv

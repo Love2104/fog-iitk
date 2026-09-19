@@ -1,0 +1,81 @@
+[
+{
+"title":"Data-Driven Fog Forecasting for the Indo-Gangetic Plains",
+"download_link": "https://www.currentscience.ac.in/Volumes/129/06/0502.pdf",
+"publication":"Current Science, 2025",
+"citation": "Deshpande, P., Bhattacharya, A., & Tripathi, S. (2025). Data-Driven Fog Forecasting for the Indo-Gangetic Plains. Current Science, 129(6). https://doi.org/10.18520/cs/v129/i6/502-512",
+"abstract": "Fog is a socio-natural hazard common during winter in the Indo-Gangetic Plains, disrupting transportation, health, and agriculture. The Indian Institute of Technology Kanpur fog project addresses the challenge of fog forecasting by using data science with in situ and satellite observations. A novel fog index quantifies fog duration and intensity, supporting medium-term forecasting, while machine learning models achieve 0.9 accuracy for six-hour visibility forecasts. An uncertainty-aware Bayesian neural network using INSAT-3D data improves fog detection performance compared to the operational INSAT fog product, increasing the probability of detection from 0.13 to 0.68. The real-time results are publicly shared at https://fog.iitk.ac.in/.",
+"authors": ["Prasad Deshpande", "Arnab Bhattacharya", "Shivam Tripathi"],
+"keywords":[ "Forecasting", "Indo-Gangetic", "INSAT-3D", "timeseries", "visibility"]
+},
+{
+"title":"Bayesian Neural Networks for Satellite Fog Detection: Quantifying Epistemic and Aleatoric Uncertainties",
+"download_link": "https://link.springer.com/article/10.1007/s41976-024-00155-7",
+"publication":"Remote Sensing in Earth Systems Sciences by Springer, 2024",
+"citation": " Deshpande, P., Tripathi, S., & Bhattacharya, A. (2024). Bayesian Neural Networks for Satellite Fog Detection: Quantifying Epistemic and Aleatoric Uncertainties. Remote Sensing in Earth Systems Sciences. https://doi.org/10.1007/s41976-024-00155-7",
+"abstract": "Conventional threshold-based dual-channel methods, as well as recent deep learning-based methods, can deterministically detect fog using satellite observations. However, stochastic processes like fog are best represented by probabilistic models. This study proposes a method for probabilistic fog detection from satellite data using the Bayesian neural network (BNN)-based model. The novelty of the method lies in quantifying fog detection uncertainty and disentangling its epistemic and aleatoric components. The model generates a probability of fog for each input, which can be thresholded into fog/no-fog status, if needed. Using data from the INSAT-3D geostationary satellite over 18 North Indian cities, we demonstrate that the proposed method significantly outperforms the operational fog detection product of the Indian Space Research Organization, INSAT-FOG. The critical success indices (CSI) of the proposed model during testing and the INSAT-FOG are 0.48 and 0.12, respectively, whereas their probabilities of fog detection (PoD) are 0.68 and 0.13, respectively. The diurnal evaluation of the results shows that the model performs better even during dawn and dusk, which is a critical challenge in satellite fog detection. Moreover, the proposed model can detect very dense fog observations (visibility < 50 m) accurately (with CSI 0.93). On average, the detection uncertainty is lower for correct detections than for incorrect detections, suggesting that the model is more confident about correct detections. The uncertainty analysis reveals that the aleatoric uncertainty is usually higher than the epistemic uncertainty, suggesting potential avenues for future improvements in satellite fog detection. It is concluded that the proposed BNN is a promising method for real-time operational fog detection.",
+"authors": ["Prasad Deshpande", "Arnab Bhattacharya", "Shivam Tripathi"],
+"keywords":[ "Bayesian Inference", "Bayesian Network", "Motion Detection", "Parametric Inference", "Probabilistic data networks", "Probability and Statistics in Computer Science"]
+
+},
+{
+"title":"Event-based fog climatology and typology for cities in Indo-Gangetic plains",
+"publication":"Urban Climate by Elsevier, 2023",
+"download_link": "https://www.sciencedirect.com/science/article/pii/S2212095523002365?via%3Dihub",
+"citation": " Deshpande, P., Meena, D., Tripathi, S., Bhattacharya, A., & Verma, M. K. (2023). Event-based fog climatology and typology for cities in Indo-Gangetic plains. Urban Climate, 51, 101642. https://doi.org/10.1016/j.uclim.2023.101642",
+"abstract": "Dense fog blankets Indo-Gangetic Plains (IGP) during winter affecting the lives and livelihoods of millions of its inhabitants. This study investigates fog climatology and typology of winter fog in IGP using half-hourly surface observations of visibility at seven North Indian cities from 1991 to 2020. It identifies fog events and characterises them based on time of occurrence and duration, and analyses their frequency at seasonal, monthly, and daily scales. Next, the fog events are classified based on fog formation processes. The analysis shows that the majority (∼84%) of the events are radiation fog, followed by advection fog (∼13%). The highest number of fog events occur in January. The fog onset timing shows an east-west trend, with western cities having delayed onset. On the other hand, the fog intensity exhibits a north-south trend, with northern cities having more intense fog events. The time-series analysis indicates that seasonal fog hours show a higher inter-annual variability, while durations of fog events exhibit inter-city variability. A comparison of fog characteristics with other regions of the world reveals that IGP has a relatively higher percentage of radiation fog and longer-duration fog events.",
+"authors": ["Prasad Deshpande", "Deepika Meena", "Arnab Bhattacharya", "Shivam Tripathi", "Mahendra K. Verma"],
+"keywords":[ "Atmospheric visibility", "Radiation fog", "Data imputation", "Fog events", "METAR records", "SMOG"]
+
+},
+{
+"title":"FogCast: Probabilistic Medium Range Fog Forecasting using Global Machine Learning Weather Prediction Model",
+"publication":"Quarterly Journal of the Royal Meteorological Society by Wiley, 2025",
+"download_link": "",
+"citation": "",
+"abstract": "",
+"authors": [],
+"keywords":[]
+
+},
+{
+"title":"Forecasting of Fog Index and Prediction Interval using Bayesian Methods",
+"publication":"8th International Conference on Data Science & Management of Data (CODS-COMAD 2024), 2025",
+"download_link": "https://dl.acm.org/doi/10.1145/3703323.3703738",
+"citation": " Fog is one of the atmospheric phenomena that affects air and surface transportation, and various regular activities. Therefore, accurate fog prediction is an important problem in the winter months when fog becomes severe in north India. Our objective in this work is long-term prediction of fog index for lead times of 6 hours to 5 days. The fog index is a holistic measure that takes into account both the fog severity and the duration. It is unit less and is normalised to be between 0 and 1. At longer lead times, studying and predicting fog index is more appropriate than instant visibility (i.e., fog) values. We augment the values predicted by classical and time series models by using a Bayesian approach for probabilistic regression that provides a credible interval around the point prediction values. The best model for fog index prediction exhibits an RMSE of 0.125 with an average band length of 0.43 for 3 days lead time at Lucknow airport. A web-based dissemination system that shows the predicted fog index values has been deployed at https://fog.iitk.ac.in/fog-prediction/.",
+"abstract": "Fog is one of the atmospheric phenomena that affects air and surface transportation, and various regular activities. Therefore, accurate fog prediction is an important problem in the winter months when fog becomes severe in north India. Our objective in this work is long-term prediction of fog index for lead times of 6 hours to 5 days. The fog index is a holistic measure that takes into account both the fog severity and the duration. It is unit less and is normalised to be between 0 and 1. At longer lead times, studying and predicting fog index is more appropriate than instant visibility (i.e., fog) values. We augment the values predicted by classical and time series models by using a Bayesian approach for probabilistic regression that provides a credible interval around the point prediction values. The best model for fog index prediction exhibits an RMSE of 0.125 with an average band length of 0.43 for 3 days lead time at Lucknow airport. A web-based dissemination system that shows the predicted fog index values has been deployed at https://fog.iitk.ac.in/fog-prediction/.",
+"authors": ["Kriti Bajaj", "Ushakiran Mannam", "Prasad Deshpande", "Yash Patil", "Arnab Bhattacharya", "Shivam Tripathi"],
+"keywords":[ "Atmospheric visibility", "Fog Index", "Long-term Prediction", "Fog events", "Bayesian method", "epistemic uncertainty", "aleatoric uncertainty"]
+
+},
+{
+"title":"Short-Term Fog Forecasting using Meteorological Observations at Airports in North India",
+"publication":"7th Joint International Conference on Data Science & Management of Data, 2024",
+"download_link": "https://dl.acm.org/doi/10.1145/3632410.3632449",
+"citation": " Sharma, S., Bajaj, K., Deshpande, P., Bhattacharya, A., & Tripathi, S. (2024). Short-Term Fog Forecasting using Meteorological Observations at Airports in North India. Proceedings of the 7th Joint International Conference on Data Science & Management of Data (11th ACM IKDD CODS and 29th COMAD), 307–315. https://doi.org/10.1145/3632410.3632449",
+"abstract": "Fog is a major phenomenon in North India during the winter months of November to February. It lowers visibility in these regions which adversely affects surface and air transportation, agriculture, and other day-to-day activities. Flights get delayed, canceled or diverted due to reduced visibility conditions. Therefore, accurate forecasting of fog (which is measured as visibility in terms of distance) at the airports up to 6 hours is important. We develop data science models that use historical meteorological observations (1974-2021) from METAR reports of ground stations at different airports of North India for short-term fog prediction. Models are designed for both binary classification ('fog' versus 'no-fog') as well as multi-class classification (that categorizes fog into 4 classes). In addition, we also design regression models that predict visibility. Results show that the best visibility regression model has a root-mean-squared-error (RMSE) of 0.20 km for 3-hour lead time prediction for Lucknow airport. Corresponding classification accuracies are 0.90 and 0.79 for the 2-class and 5-class problems respectively. Similar trends were observed for other airports and lead times. A web-based dissemination system has been deployed at https://fog.iitk.ac.in.",
+"authors": ["Shruti Sharma", "Kriti Bajaj", "Prasad Deshpande", "Arnab Bhattacharya", "Shivam Tripathi"],
+"keywords":[ "Atmospheric visibility", "Short-term Prediction", "Gradient Boosting Regressor", "Meteorological Parameters", "North India Airports"]
+
+},
+{
+"title":"Comparison of in-situ fog observations with INSAT-3D satellite fog product for North Indian cities",
+"publication":"IGARSS 2022 - 2022 IEEE International Geoscience and Remote Sensing Symposium at Kuala Lumpur, Malaysia, 2022",
+"download_link": "https://ieeexplore.ieee.org/document/9883759/",
+"citation": " Deshpande, P., Tripathi, S., & Bhattacharya, A. (2022). Comparison of in-situ fog observations with INSAT-3D satellite fog product for North Indian cities. IGARSS 2022 - 2022 IEEE International Geoscience and Remote Sensing Symposium, 6460–6463. https://doi.org/10.1109/IGARSS46834.2022.9883759",
+"abstract": "Low visibility events due to fog cause an adverse impact on transportation in North India during the winter season. In this study, in-situ visibility (METAR) observations and satellite (INSAT -3D) fog product are used to detect the fog for 7 North Indian cities from 2013–2021. Both fog products have a different spatial scale and theoretical background. One should have an idea of an agreement between these two fog data sources before making a combined use. Hence, equivalent visibility for the satellite fog is found out, keeping overall accuracy and Kohen's Kappa coefficient as measures of the agreement. The equivalent visibility for INSAT -3D fog product is 306 m, with an overall accuracy of 0.96 and Kohen's Kappa coefficient of 0.29. The non-fog observations outnumber fog observations and make the dataset imbalanced, leading to a smaller value of Kohen's Kappa coefficient despite a large overall accuracy. The equivalent visibility varies between 161 to 998 m for different cities, indicating some spatial variability altering the agreement.",
+"authors": ["Prasad Deshpande", "Arnab Bhattacharya", "Shivam Tripathi"],
+"keywords":[ "Satellites", "Soft sensors", "Urban areas", "Transportation", "Geoscience and remote sensing", "Fog", "Visibility", "INSAT-3D", "Indo-Gangetic Plains", "METAR"]
+
+},
+{
+"title":"A framework for estimating representative area of a ground sample using remote sensing",
+"publication":"GSW2019 by International Society for Photogrammetry and Remote Sensing (ISPRS), 2019",
+"download_link": "https://isprs-archives.copernicus.org/articles/XLII-2-W13/687/2019/",
+"citation": "Deshpande, P. J., Sure, A., Dikshit, O., & Tripathi, S. (2019). A framework for estimating representative area of a ground sample using remote sensing. The International Archives of the Photogrammetry, Remote Sensing and Spatial Information Sciences, XLII-2/W13(2/W13), 687–692. https://doi.org/10.5194/isprs-archives-XLII-2-W13-687-2019",
+"abstract": "Modelling hydro-meteorological variables over land and atmosphere comprise of ground sampling at selected locations and predicting over the other locations. Remote sensing data can be effectively used to improve predictions by prudently choosing sampling locations of variables co-dependent on the prediction variable. This paper presents a framework for estimating the representative area of a ground sample and thereby determining the number of samples required for prediction with a given level of uncertainty and spatial resolution. Application of the proposed framework for soil moisture as the prediction variable is presented using Google Earth Engine and Scikit-learn libraries implemented in Python 3 programming language.",
+"authors": ["Prasad Deshpande", "Anudeep Sure", "Onkar Dikshit", "Shivam Tripathi"],
+"keywords":["Hydro-meteorological variable", "Regionalisation", "Image fusion", "Heterogeneity", "Remote sensing", "Google Earth Engine"]
+
+}
+]

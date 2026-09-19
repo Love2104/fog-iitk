@@ -1,0 +1,911 @@
+{
+  "version": 1,
+  "skills": {
+    "academy-guide": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/academy-guide/SKILL.md",
+      "computedHash": "07075be5acc7c54fd6b06a1e7636608fa195b83eb98cbddb02e61b9ac1356889"
+    },
+    "agent-web-search-setup": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-claude-code/agent-web-search-setup/SKILL.md",
+      "computedHash": "f25cb99b2874f00cf5634840a91308f68df78e3cd829ecba5cd5a15145261701"
+    },
+    "algorithmic-art": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/algorithmic-art/SKILL.md",
+      "computedHash": "b2ca295de7f9c86c444f1fa21239e22e0eb7013ced1c652169b9402cc96ff744"
+    },
+    "animate": {
+      "source": "emilkowalski/skill",
+      "sourceType": "github",
+      "skillPath": "skills/animate/SKILL.md",
+      "computedHash": "7598d33e7f60dd5c24531eaaa897621cc3bdb48e8050324211627973bc59c4ce"
+    },
+    "animate-expo": {
+      "source": "emilkowalski/skill",
+      "sourceType": "github",
+      "skillPath": "skills/animate-expo/SKILL.md",
+      "computedHash": "5de09593d564091f9db60aabede7bed760251e118548272050a247c653c417d2"
+    },
+    "animation-vocabulary": {
+      "source": "emilkowalski/skill",
+      "sourceType": "github",
+      "skillPath": "skills/animation-vocabulary/SKILL.md",
+      "computedHash": "0058036865ecbb864fd0c4132efcc62425355d6e99c7e6ef6a936742d62a5dea"
+    },
+    "apple-design": {
+      "source": "emilkowalski/skill",
+      "sourceType": "github",
+      "skillPath": "skills/apple-design/SKILL.md",
+      "computedHash": "0190417d092a0df447b000154e39733ea6d97efad6d3bec8a6ce3845aeb88914"
+    },
+    "ashare-news-fetcher": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-financial/ashare-news-fetcher/SKILL.md",
+      "computedHash": "66f9a0e84d4ea2118f77f6eb3271238d8d28f56a43fdc919619a75c41cc0b595"
+    },
+    "ask-sonner": {
+      "source": "emilkowalski/skill",
+      "sourceType": "github",
+      "skillPath": "skills/ask-sonner/SKILL.md",
+      "computedHash": "8bd257b845985f4b35b603b510a126604176521094af79c4b7347ffeb8a8f7ab"
+    },
+    "asr-transcribe-to-text": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-audio/asr-transcribe-to-text/SKILL.md",
+      "computedHash": "b6b83724e9068c753f2848a48a44b95cf2465e1e83ab836ef32b0fff9748d47e"
+    },
+    "auto-repo-setup": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "auto-repo-setup/SKILL.md",
+      "computedHash": "3c19bdf0e1d9f95ce0e7b88635a02f6da94c66bac1c6a289b26e87ea7c486488"
+    },
+    "benchmark-due-diligence": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-financial/benchmark-due-diligence/SKILL.md",
+      "computedHash": "765bde864cbfab1bd4fe7f2c2506739184625ebc52dd4ac0508da6d9d4146744"
+    },
+    "bigdata-skill": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-financial/bigdata-skill/SKILL.md",
+      "computedHash": "52b47cebf204413b6ba74131970561fc67b4eb52c46f6c73e8c2d7efaf0cb87b"
+    },
+    "bilibili-source": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "bilibili-source/SKILL.md",
+      "computedHash": "f73ffaa6bfae89a754d63b19d5c34f0d0b16fbcec21c724717a76711484d8939"
+    },
+    "brand-guidelines": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/brand-guidelines/SKILL.md",
+      "computedHash": "e48840db6ea772ceecdb68b4e50f8cc77e2534b7580aeaf4a6fe6ee7bd845d7d"
+    },
+    "brandkit": {
+      "source": "Leonxlnx/taste-skill",
+      "sourceType": "github",
+      "skillPath": "skills/brandkit/SKILL.md",
+      "computedHash": "b63012f3c3d21197e0185d3e9cc7ec40c589fb10e0b5a32a561739de31aa3f20"
+    },
+    "canvas-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/canvas-design/SKILL.md",
+      "computedHash": "3fa7ea60170023ad8268bf9fd734ea75dd404279a2ef8ddf5abaa1102ad8e5f4"
+    },
+    "capture-screen": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-macos/capture-screen/SKILL.md",
+      "computedHash": "93f27e8b3c2504a926c27e800f869800958d739cfeb8847b19668caa86136389"
+    },
+    "claude-api": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/claude-api/SKILL.md",
+      "computedHash": "9bfcfccd687695f0fae23c37f63d768d9ce3e9b1ab3dc409ab4de0943178bd2f"
+    },
+    "claude-code-hooks": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-claude-code/claude-code-hooks/SKILL.md",
+      "computedHash": "31297469aef292f44b083d7b49cda18dd6aee7e4714e12aac72ce6be2f6fb2e6"
+    },
+    "claude-code-ping-start-5h-quota": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-claude-code/claude-code-ping-start-5h-quota/SKILL.md",
+      "computedHash": "1ee3acbdb4fc995a0e8a7e03c4e4bd28710d5d4e781846d00ea1960978d4939b"
+    },
+    "claude-md-progressive-disclosurer": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-claude-code/claude-md-progressive-disclosurer/SKILL.md",
+      "computedHash": "d0c06b8408ca6acacd7addf2adb4d4c731d11ca0c35e28826c5329472bdbf273"
+    },
+    "claude-migrate-memory-to-doc": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-claude-code/claude-migrate-memory-to-doc/SKILL.md",
+      "computedHash": "3115f2528c01c4049e5b1d7c42a33160cf524d6e31633e0413caaa499a1b4afa"
+    },
+    "claude-skills-troubleshooting": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-claude-code/claude-skills-troubleshooting/SKILL.md",
+      "computedHash": "bbb3c52297b5b48d6d468b19d72f6b5988b8b89e31d21528f185a2a9c0c68117"
+    },
+    "claude-switch-models-setup": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-claude-code/claude-switch-models-setup/SKILL.md",
+      "computedHash": "a289c6546c974f8837c2443d53c4a3fdf06304d71cad76f5a95ff1346a84a957"
+    },
+    "claude-usage-analyst": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-claude-code/claude-usage-analyst/SKILL.md",
+      "computedHash": "0235171e1daa3b9edfaabccac5b9c3b55d6b8ff237ddd718c65cdaa7b9f7a1ef"
+    },
+    "cli-demo-generator": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "cli-demo-generator/SKILL.md",
+      "computedHash": "1e5e4dba3d19f92049944730c27ca382496fa4c8b216305b5dbe8e9ab859eed4"
+    },
+    "cloudflare-troubleshooting": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "cloudflare-troubleshooting/SKILL.md",
+      "computedHash": "29573468bc1123d237444e54b96b70a2ec308b04dcfe9cbdfbdffdfd165fbe3e"
+    },
+    "codex-1m-context-window-setup": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-codex/codex-1m-context-window-setup/SKILL.md",
+      "computedHash": "ed2807b5c4c49861d0f91aa9f19fd9b766797b4f587461fde47ced7c9b838369"
+    },
+    "codex-image-gallery": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-codex/codex-image-gallery/SKILL.md",
+      "computedHash": "8e39f8c42739d9aa05207349c9c3880018882392cd2a07ea8abb100b8c615313"
+    },
+    "competitors-analysis": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "competitors-analysis/SKILL.md",
+      "computedHash": "49a4934e6e5907091ba1b7833c01d96b7fe444875b56bd520b4d91c8b9e4cf53"
+    },
+    "continue-claude-code-work": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-claude-code/continue-claude-code-work/SKILL.md",
+      "computedHash": "444921ffb0e53c18812a8f9ee57a623cac90f661a327bb42284a7b09fa469c94"
+    },
+    "continue-codex-work": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-claude-code/continue-codex-work/SKILL.md",
+      "computedHash": "dc48fe9d80b6083842f1eb2da7ad8819bfde51b2edf62534ae08f7bc93dc4e8e"
+    },
+    "daymade-sector-research": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-financial/daymade-sector-research/SKILL.md",
+      "computedHash": "87e88e2c564509842110005ebcc22a1d4a496e7f04773d15c9a8f0c7ef18e02c"
+    },
+    "debugging-network-issues": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "debugging-network-issues/SKILL.md",
+      "computedHash": "185bc5e49e56b8d3656b26e92b23e0f4c0708067dcfce5bf03b37c3aff690b40"
+    },
+    "deep-research": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "deep-research/SKILL.md",
+      "computedHash": "3d2fbcc076c2ed40207254f129186b6af1c4bc3cc6a340519e5f7b2a2f2f65d5"
+    },
+    "design-style-picker": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-codex/design-style-picker/SKILL.md",
+      "computedHash": "4592b430fcf6785f2082a8dc6a162e72c893e02ba1566c4868d39c9eb5b7cad3"
+    },
+    "design-taste-frontend": {
+      "source": "Leonxlnx/taste-skill",
+      "sourceType": "github",
+      "skillPath": "skills/taste-skill/SKILL.md",
+      "computedHash": "6d838b246d0e35d0b53f4f23f98ba7a1dd561937e64f7d0c7553b0928e376c3e"
+    },
+    "design-taste-frontend-v1": {
+      "source": "Leonxlnx/taste-skill",
+      "sourceType": "github",
+      "skillPath": "skills/taste-skill-v1/SKILL.md",
+      "computedHash": "d704ab912c4d0ca954ffa858983da755ae4cd5cad9ba22554db5557382f5bd34"
+    },
+    "developing-ios-apps": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-macos/developing-ios-apps/SKILL.md",
+      "computedHash": "f9755c90f7bf2ed0126be6b201017e3c64a4b0812bfd5c5cf63c1ef8712cfa10"
+    },
+    "devils-advocate": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-financial/devils-advocate/SKILL.md",
+      "computedHash": "ef449dc862484aa432962206b0bafdbf3f2e1f75d49a22de94b94f22e970f152"
+    },
+    "discernment-nudge": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/discernment-nudge/SKILL.md",
+      "computedHash": "fbe8fab770e8e106623525caa342bd2a4c84992cb840377cb57d4365be599be8"
+    },
+    "doc-coauthoring": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/doc-coauthoring/SKILL.md",
+      "computedHash": "b964e4c3ffe13f66f76dd7919073e60c7aec622cd8a8363bb36323188100cf8e"
+    },
+    "doc-to-markdown": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-docs/doc-to-markdown/SKILL.md",
+      "computedHash": "1a50081a3e54e5bde86a2b96e1b2db80983c4404806fe5baad0adbf35dd2bd26"
+    },
+    "docs-cleaner": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-docs/docs-cleaner/SKILL.md",
+      "computedHash": "ecbe22227c86b4ccb6b2485dfcb5b6b78e100e75f7542a209061ff30f0735808"
+    },
+    "docx": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/docx/SKILL.md",
+      "computedHash": "59c70107f8eae818bdfca7da685a6e4111aa519638b667775b794cb74987ec47"
+    },
+    "docx-creator": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-docs/docx-creator/SKILL.md",
+      "computedHash": "2a70f93a7fc804b361ddc82486efbd199353c01db09aef3eef05090021cf49dc"
+    },
+    "douban-skill": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "douban-skill/SKILL.md",
+      "computedHash": "6e538d43fc2507bb8c60d8806167184a7b076d159aa9e62fd723e76ac6b20509"
+    },
+    "download-gemini-images": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "download-gemini-images/SKILL.md",
+      "computedHash": "a94a0d1ebd68f2a61c23715dbfdc1ba39e0aea286887c1e8ec6d98c599a9f012"
+    },
+    "emil-design-eng": {
+      "source": "emilkowalski/skill",
+      "sourceType": "github",
+      "skillPath": "skills/emil-design-eng/SKILL.md",
+      "computedHash": "51f2537e04d15911b41d78e2de24c36a0e26d41beae15e82a954fe5496a5eda9"
+    },
+    "excalidraw-use": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "excalidraw-use/SKILL.md",
+      "computedHash": "ad66d87f65ec442729d6e6f66e35676e7174445bc2fd0bf2ccc706d85bf8bf01"
+    },
+    "excel-automation": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-docs/excel-automation/SKILL.md",
+      "computedHash": "f332d635b23168794428f99af499050cfc84898a443f0c45596fa89715c8531d"
+    },
+    "fact-checker": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "fact-checker/SKILL.md",
+      "computedHash": "f4babd905be9f9745ef74c60974fce63f20cce6ff53a3f393e4d055616856026"
+    },
+    "feishu-doc-scraper": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "feishu-doc-scraper/SKILL.md",
+      "computedHash": "4b3c27f8707170542fa4f13e7f1f8b2edf2aa0e649bae053208cef388a9922a4"
+    },
+    "financial-data-collector": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-financial/financial-data-collector/SKILL.md",
+      "computedHash": "23e93aece1fda20c7b64426fbcc4cf4af5ea89bbf19b4a4981893ff54c4cde2c"
+    },
+    "find-animation-opportunities": {
+      "source": "emilkowalski/skill",
+      "sourceType": "github",
+      "skillPath": "skills/find-animation-opportunities/SKILL.md",
+      "computedHash": "465d087c41768e4f14ed640dd049036009f613feb55baaa5831b68b33178f9d2"
+    },
+    "fixing-claude-export-conversations": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-claude-code/claude-export-txt-better/SKILL.md",
+      "computedHash": "9f06d5c689fbb24363bcfb2297183d04655b9c7b8d4883e74a41b74e0507b427"
+    },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "89496d5dd00f4810205f351759594fc2742bf8eea85a2f2b2d1de59f4bd91576"
+    },
+    "frontend-visual-qa": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "frontend-visual-qa/SKILL.md",
+      "computedHash": "e2fc014d20de1c797be9f79d1e496f820c5ee943e755cdad3d2b5c8d03cfeaa6"
+    },
+    "full-output-enforcement": {
+      "source": "Leonxlnx/taste-skill",
+      "sourceType": "github",
+      "skillPath": "skills/output-skill/SKILL.md",
+      "computedHash": "26bd29ce4c5e02c7666b2d503609bf466bd32290822e91f0e984147048dbb924"
+    },
+    "gangtise-copilot": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-financial/gangtise-copilot/SKILL.md",
+      "computedHash": "d7bf91486e06618b1fe473ae373b813181611893241a9352f2d07c00671c5d88"
+    },
+    "gemini-history-analyzer": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "gemini-history-analyzer/SKILL.md",
+      "computedHash": "53688a647dbf8907e19476731408bfd9844945d8aeddaa22f6ccd96ce0ca2df1"
+    },
+    "git-safety-net": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "git-safety-net/SKILL.md",
+      "computedHash": "8b0a43b3393ab43ac7b49b987512253272e5ef78cb1f9f303230fc06688ec53e"
+    },
+    "github-contributor": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "github-contributor/SKILL.md",
+      "computedHash": "5a02e5aea404976d1a30be859fae743585396e40df24b0d79e7915b32580b3c5"
+    },
+    "github-ops": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "github-ops/SKILL.md",
+      "computedHash": "71fa86e404a3e43a2ad5195fa7a68cc3b09dee1270edd8afbc6f743e5c4a9f1f"
+    },
+    "github-review-pr": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "github-review-pr/SKILL.md",
+      "computedHash": "caaa745ed0b63bf9c4111c0c705868db08ba56a5f8322305c6008fbb45dc59d6"
+    },
+    "github-sensitive-data-cleanup": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "github-sensitive-data-cleanup/SKILL.md",
+      "computedHash": "ab43f450cdbed7e2dd8df57ec9ddaa0d3d7bb53d9e36c205284b071fb74dca37"
+    },
+    "gpt-taste": {
+      "source": "Leonxlnx/taste-skill",
+      "sourceType": "github",
+      "skillPath": "skills/gpt-tasteskill/SKILL.md",
+      "computedHash": "cc8f0c601d8240a124e1d11634351a2be7b8a72fd807c75e5b6bf7afcd5ddee0"
+    },
+    "high-end-visual-design": {
+      "source": "Leonxlnx/taste-skill",
+      "sourceType": "github",
+      "skillPath": "skills/soft-skill/SKILL.md",
+      "computedHash": "7db385e4c5370e5a7fca9704a1361b056e4504ea6a03924bb86f33a4f00b5c73"
+    },
+    "i18n-expert": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "i18n-expert/SKILL.md",
+      "computedHash": "53863be6a9330da7395c800aa23eaaa2d4e6cf4578b60b8ac13f4f920cd97fd4"
+    },
+    "ima-copilot": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "ima-copilot/SKILL.md",
+      "computedHash": "b71050f37883ec17bea6f2241c8d15efd7c3f445b9510d580d109a355d9282a5"
+    },
+    "image-to-code": {
+      "source": "Leonxlnx/taste-skill",
+      "sourceType": "github",
+      "skillPath": "skills/image-to-code-skill/SKILL.md",
+      "computedHash": "58517b03b2a01f4c9ba65861559d03df931400871bbc200978c975b24bb92c73"
+    },
+    "imagegen-frontend-mobile": {
+      "source": "Leonxlnx/taste-skill",
+      "sourceType": "github",
+      "skillPath": "skills/imagegen-frontend-mobile/SKILL.md",
+      "computedHash": "9ab7f4f6ce66a3cff02bbf5894e5bd5af50bf5d6ef0adffdc88e8fab772fe44f"
+    },
+    "imagegen-frontend-web": {
+      "source": "Leonxlnx/taste-skill",
+      "sourceType": "github",
+      "skillPath": "skills/imagegen-frontend-web/SKILL.md",
+      "computedHash": "65f5ae59fa317567809438310b1c54f78cd133426deb43e4d3d4ca4c8f541628"
+    },
+    "improve-animations": {
+      "source": "emilkowalski/skill",
+      "sourceType": "github",
+      "skillPath": "skills/improve-animations/SKILL.md",
+      "computedHash": "524ea241e41d58bbdd8e288700fe24f5725e2a2f3ae7186ad7cebf9055058356"
+    },
+    "industrial-brutalist-ui": {
+      "source": "Leonxlnx/taste-skill",
+      "sourceType": "github",
+      "skillPath": "skills/brutalist-skill/SKILL.md",
+      "computedHash": "8fc355c4aadb7d29c53ca28bc41be3cd6eea765d121e3737c4dc2d0f90a8effa"
+    },
+    "interaction-design-board": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-codex/interaction-design-board/SKILL.md",
+      "computedHash": "7ffdd844c678fb876788c9bdc3212234a9120d5ec2b6b68482e5663c17589b43"
+    },
+    "internal-comms": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/internal-comms/SKILL.md",
+      "computedHash": "0bdc8867452b7ab9ef6167f6b0db2025ce5fb03773d3f85efcef2dfeb9d4976d"
+    },
+    "kimi-use": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "kimi-use/SKILL.md",
+      "computedHash": "21a26b3ca41f2523fd4ea4e9aabc4b4a4d62d8571d9bf23d933eea24e0722612"
+    },
+    "lark-cli-router": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-claude-code/lark-cli-router/SKILL.md",
+      "computedHash": "a876b4539c49c48248af572536674cfcc1aa093f7598291b0e095b923f49b818"
+    },
+    "llm-eval-harness": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "llm-eval-harness/SKILL.md",
+      "computedHash": "9e3e88196462854a6a85466f2d2a9e4d3f4de4c8c506f6310d93a90531e122da"
+    },
+    "llm-icon-finder": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "llm-icon-finder/SKILL.md",
+      "computedHash": "09674cd25079a68c4887ec834098dbfc03f4450a6f8a7585891ddeb5cd83a7a4"
+    },
+    "llm-wiki-setup": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "llm-wiki-setup/SKILL.md",
+      "computedHash": "2e1c53bdac56017ea84e38f763dee0f4d248d8aca7a66ab97f042942b2cb3327"
+    },
+    "local-codex": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-codex/local-codex/SKILL.md",
+      "computedHash": "0c07490ea53e79404260a6e78fb782f189e58a9a216d5f7d8ff367763abd152f"
+    },
+    "local-conversation-history": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-claude-code/local-conversation-history/SKILL.md",
+      "computedHash": "4e3dbef37f43d95c2758a46ca5585555bdf65b26fc2e8a278a4a9258af474e4c"
+    },
+    "macos-cleaner": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-macos/macos-cleaner/SKILL.md",
+      "computedHash": "925635e308dadfda657405325f27030f80a66a473cd23336784b402aa7f2066b"
+    },
+    "macos-watchdog": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-macos/macos-watchdog/SKILL.md",
+      "computedHash": "42c3ca966bcebacc8d6b9c843122f2f9624c3015ca25541f22e5b8071657cd67"
+    },
+    "marketplace-dev": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-claude-code/marketplace-dev/SKILL.md",
+      "computedHash": "405615991c6eec85bf9b624f2ac01c657b44b2f3045e97ee2ae326f5b0d3a46e"
+    },
+    "marketplace-health-check": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "marketplace-health-check/SKILL.md",
+      "computedHash": "9d053adabfd9bfce1e57a7e152e831ae534074f46e4966a50d548889d29fa914"
+    },
+    "mcp-builder": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/mcp-builder/SKILL.md",
+      "computedHash": "826e46adf81e1372282e205c34e1a2ee876e72148007726e4a2512599d2fef7b"
+    },
+    "meeting-minutes-taker": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-audio/meeting-minutes-taker/SKILL.md",
+      "computedHash": "448400ffea233c535b5eafd2311de44e75291089fff068584c51004fefd0a7b9"
+    },
+    "meme-creator": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "meme-creator/SKILL.md",
+      "computedHash": "adbd7d0d7f41824c343d1f9a816d3c284037aa585c001ea7cfeea1c5306ae128"
+    },
+    "mermaid-tools": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-docs/mermaid-tools/SKILL.md",
+      "computedHash": "9d5837a1a2667b196b5e8ba8f4153c53a84ff80b2039a976aeec9f736b95ece6"
+    },
+    "minimalist-ui": {
+      "source": "Leonxlnx/taste-skill",
+      "sourceType": "github",
+      "skillPath": "skills/minimalist-skill/SKILL.md",
+      "computedHash": "08873a3131d3be27bef9bf3304b310b16b44ca6e3561aebe532797be3443f6bd"
+    },
+    "mobile-native": {
+      "source": "emilkowalski/skill",
+      "sourceType": "github",
+      "skillPath": "skills/mobile-native/SKILL.md",
+      "computedHash": "f221cea36642168df6d3d6d7f236237cbf1ae669138ff7df07775674223d49ad"
+    },
+    "notify-wecom": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "notify-wecom/SKILL.md",
+      "computedHash": "8e142bf63c9ee446ecbb1ba538d16ecdf38e460ea553a02f1738ceb7a542302b"
+    },
+    "openclaw": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "openclaw/SKILL.md",
+      "computedHash": "19af406cc627cf9783071b5a8c27efe077943f1e73c68ca9ac1c376f1ddcc88b"
+    },
+    "openclaw-model-switch": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "openclaw-model-switch/SKILL.md",
+      "computedHash": "0de0e5fbb70fddc62330d4232305d2f5d3c0ae243641b30c6756fc523ef53a37"
+    },
+    "pdf": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pdf/SKILL.md",
+      "computedHash": "cfbc539377088ca7e44a813b30c306327385bbd973cd7a721e1743f60837dd62"
+    },
+    "pdf-creator": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-docs/pdf-creator/SKILL.md",
+      "computedHash": "af4732697ece59ba915a01b5a800ad50f41d03b24cfd1962f24b0a795746f333"
+    },
+    "pdf-to-html": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-docs/pdf-to-html/SKILL.md",
+      "computedHash": "b56b208afb66230087ddc325fe2b948880c83b6522d37901f84a2761f9bf8abe"
+    },
+    "peer-message": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "peer-message/SKILL.md",
+      "computedHash": "6aeff5170d9c0d56fc7a8312b0248a01fc7002250dc969772891458d984c0ac0"
+    },
+    "pharma-daily-report": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-financial/pharma-daily-report/SKILL.md",
+      "computedHash": "45acc239ff62cd54be0ebbfb7402e0f9a5b9678ce6d73e6620dbd454a27b3173"
+    },
+    "photo-to-scanned-pdf": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-docs/photo-to-scanned-pdf/SKILL.md",
+      "computedHash": "83c8ffc12ef9ae8610284e0f9a4d065ba2ca3161749f0f60ccd3304b6291263a"
+    },
+    "pick-ui-library": {
+      "source": "emilkowalski/skill",
+      "sourceType": "github",
+      "skillPath": "skills/pick-ui-library/SKILL.md",
+      "computedHash": "5d2a77bf0ecafbda85aa95fb49999b6d77945d9066ec83d970b62e5b388cd686"
+    },
+    "ppt-creator": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-docs/ppt-creator/SKILL.md",
+      "computedHash": "afecec49999479891d9dc0738ccb4c20abe7bc24857aa10a251610689b0b03d1"
+    },
+    "pptx": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pptx/SKILL.md",
+      "computedHash": "82eaf5daede5a1779aa17ccf06597cb209a0c2bd41d3a2f18bd45e0301a387fb"
+    },
+    "prior-work-retrieval": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-claude-code/prior-work-retrieval/SKILL.md",
+      "computedHash": "29378c94eda657cefb7e4076f27822fca161a81567f5ad38e59b598271570676"
+    },
+    "product-analysis": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "product-analysis/SKILL.md",
+      "computedHash": "88771d46bf5e553cb27c8fbea9294126d07c3d6456eed947f34c0afd658b59b0"
+    },
+    "prompt-optimizer": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "prompt-optimizer/SKILL.md",
+      "computedHash": "f8fc249317c73276290bd8f74e2e47153e8427451d8def11372b769c5adcab06"
+    },
+    "promptfoo-evaluation": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "promptfoo-evaluation/SKILL.md",
+      "computedHash": "4107d059274e7435dd625fd2a8240155c92452c2917368d44e9f084daaf3a77d"
+    },
+    "prototype": {
+      "source": "emilkowalski/skill",
+      "sourceType": "github",
+      "skillPath": "skills/prototype/SKILL.md",
+      "computedHash": "77be567d8c946608fdd15e61b62ab383cdf289a194dce2479828b7eda860d3ba"
+    },
+    "qa-expert": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "qa-expert/SKILL.md",
+      "computedHash": "ba702241e660c0fa6ee4204506d5157f4d1fdb6ac8108274e922bed0a2e6e63b"
+    },
+    "read-claude-code-history": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-claude-code/read-claude-code-history/SKILL.md",
+      "computedHash": "0332262170a142eab33646cc904fbefb2f20058357ade3e3c20ed079bdbf25b4"
+    },
+    "read-claude-web-conversation": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-claude-code/read-claude-web-conversation/SKILL.md",
+      "computedHash": "53940ac9cabd7a3e0e7e05a93931fc36b8523b87bd76a4d6ba5790b5f9c21642"
+    },
+    "read-codex-history": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-claude-code/read-codex-history/SKILL.md",
+      "computedHash": "620ae2835bc7cd82998c9e44072e8362ed739b4b50be5b3a1151db9a1a8beb52"
+    },
+    "read-docx-review": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-docs/read-docx-review/SKILL.md",
+      "computedHash": "f127d021a9ccbe6857f2d015bf5751016db86a1206656b6578505aad9f7385ee"
+    },
+    "redesign-existing-projects": {
+      "source": "Leonxlnx/taste-skill",
+      "sourceType": "github",
+      "skillPath": "skills/redesign-skill/SKILL.md",
+      "computedHash": "b405eee0e0e80fc243f731d9aa368bca307e356db7e6157d27101d369dac6726"
+    },
+    "repomix-safe-mixer": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "repomix-safe-mixer/SKILL.md",
+      "computedHash": "2d69b1e8c5954d8b5a6bc122098086996fbb5c908371ae6a24af318993dc0761"
+    },
+    "repomix-unmixer": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "repomix-unmixer/SKILL.md",
+      "computedHash": "2f05f976689558afadf36f6ffb4ef13a17ff54ca17a01da6f06fca3e89c705a1"
+    },
+    "review-animations": {
+      "source": "emilkowalski/skill",
+      "sourceType": "github",
+      "skillPath": "skills/review-animations/SKILL.md",
+      "computedHash": "b4e5f0f4fe3e2743c85bf7354108f48a0b9d502cb20ef5c4a9c195da91f93736"
+    },
+    "scrapling-skill": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "scrapling-skill/SKILL.md",
+      "computedHash": "05cbd1206a515fab2915bebf4b29da9d138d56773355ed69b6372918e0eaa8ac"
+    },
+    "setup-notifications-via-wecom": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "setup-notifications-via-wecom/SKILL.md",
+      "computedHash": "09c2209043cdb98d142f829ea96cf87bcbb1acac0e0d5e474ba8dfd473f08804"
+    },
+    "skill-creator": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-skill/skill-creator/SKILL.md",
+      "computedHash": "1cbbcacc00e7d4a03175fbaee139cac35e2ccac8185700cbdc22bc82ff0db947"
+    },
+    "skill-governance": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-skill/skill-governance/SKILL.md",
+      "computedHash": "a05c2605079b9ee728ba80bf38264bce20a11283ef9fd7ca1592247dcf17461b"
+    },
+    "skill-reviewer": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-skill/skill-reviewer/SKILL.md",
+      "computedHash": "d7a59628a40fa807afa4e1e075f1b40ab462aea56acba5694134c68aa3988d65"
+    },
+    "skills-search": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-skill/skills-search/SKILL.md",
+      "computedHash": "9466b16901d3ff5df004155eb65e04a5bd70cc497f119eb24a73d5024451dfb1"
+    },
+    "slack-gif-creator": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/slack-gif-creator/SKILL.md",
+      "computedHash": "fab4fcfcaed371071069d61a3ab94dff15d10d36403ff269d147ea986cd98083"
+    },
+    "slides-creator": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "slides-creator/SKILL.md",
+      "computedHash": "f3ad6388ff09dba8335b72a346487329bb3499b375ab4bd2c1c5ad0010827a40"
+    },
+    "statusline-generator": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-claude-code/statusline-generator/SKILL.md",
+      "computedHash": "ac9d0cc65fc1a6bbf59c9195bef8fe94c4555224fbdafafc8a3c31d910cfb2f0"
+    },
+    "stepfun-asr": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-audio/stepfun-asr/SKILL.md",
+      "computedHash": "8039a6fec2784dc5e3ac2a707f8fef194b6ee0dc6a0eda1fc98369034b63fa30"
+    },
+    "stepfun-tts": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-audio/stepfun-tts/SKILL.md",
+      "computedHash": "c7c3b47e878e236185c421bbd9e020637cbc6f35d6bbdd615c3949fe2d6e9eee"
+    },
+    "stitch-design-taste": {
+      "source": "Leonxlnx/taste-skill",
+      "sourceType": "github",
+      "skillPath": "skills/stitch-skill/SKILL.md",
+      "computedHash": "13322f38406cd3abf16ba45e35bdc9b18002d0153a79b4612b97aefc65d5a335"
+    },
+    "teams-channel-post-writer": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "teams-channel-post-writer/SKILL.md",
+      "computedHash": "bfa9486fb33eaffd9a2a2ee07ddc101e362d3e390d28626f68e618e165271dc5"
+    },
+    "template-skill": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "template/SKILL.md",
+      "computedHash": "38c88f722b574a922311d334a70c2008a2a5b896f06eaa75516d716e5725b26f"
+    },
+    "terminal-screenshot": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-claude-code/terminal-screenshot/SKILL.md",
+      "computedHash": "67d33284758ae82b149cfad721f645dd0a4bb31079f141bb0997cc95fa9712fb"
+    },
+    "terraform-skill": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "terraform-skill/SKILL.md",
+      "computedHash": "50caeca4a0bd1b4561f6d63ef23a154e461b63987d490094532fa6c24c436373"
+    },
+    "theme-factory": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/theme-factory/SKILL.md",
+      "computedHash": "598ddfa9784ae2a8c55be5dbb047b98564d875dea6f4669168a87ae1ea1a4ed3"
+    },
+    "tibo-reset-codex": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "tibo-reset-codex/SKILL.md",
+      "computedHash": "1423e3bcb14878a5391e052dbfa93972c05987d60309993c20f732b0b4781258"
+    },
+    "transcript-fixer": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "daymade-audio/transcript-fixer/SKILL.md",
+      "computedHash": "a9bc4723ffa3e49089fbc7887e6f9e3c4a8c9b2cd79023f6910d2c9a44ca05f5"
+    },
+    "tunnel-doctor": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "tunnel-doctor/SKILL.md",
+      "computedHash": "55741caea969e95b752a85663a5eb2454cc0ab7b8d3b8bb63e3c1345b8fb630a"
+    },
+    "twitter-reader": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "twitter-reader/SKILL.md",
+      "computedHash": "9fd1166a6e5eb9ce6176a69b2af6080fe2709eeaecac007f785d14b191bb15cb"
+    },
+    "ui-designer": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "ui-designer/SKILL.md",
+      "computedHash": "864f50b2563af5181e2d98c106713d654a5b49a44fe9bb7c508d9e25d1b49f45"
+    },
+    "video-comparer": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "video-comparer/SKILL.md",
+      "computedHash": "d935b71afad7d74761f65cd6c11b0f47a72eed6e4648b9b5a7fa9cdd86929ac2"
+    },
+    "web-artifacts-builder": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/web-artifacts-builder/SKILL.md",
+      "computedHash": "d52d422ead3fa26859a6af129609841a8536b230a2d649f86e61771d063e05e2"
+    },
+    "webapp-testing": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/webapp-testing/SKILL.md",
+      "computedHash": "ad5b1fc52807e9afa4635e59218a026b164dc58b6c3f41b0f7c644dcd6ccf572"
+    },
+    "windows-remote-desktop-connection-doctor": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "windows-remote-desktop-connection-doctor/SKILL.md",
+      "computedHash": "1ffb1ef3a5ab85def0f8ae7efbc9177c4e08db879da4b939c7bab751d9e4fe52"
+    },
+    "wps-doc-scraper": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "wps-doc-scraper/SKILL.md",
+      "computedHash": "32004e8fabb8eb2b5a6f0d35e9fa7fd13e715bbb3343b8dfb745fae23e6dbe53"
+    },
+    "write-swift": {
+      "source": "emilkowalski/skill",
+      "sourceType": "github",
+      "skillPath": "skills/write-swift/SKILL.md",
+      "computedHash": "f20bb9cf51dbee1900b264820a12f1d3d378dc4d23ac758e7ba9e644c49a2459"
+    },
+    "xlsx": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/xlsx/SKILL.md",
+      "computedHash": "f5945e6e76dc7c178375e5cdf3140959b30cbcd4570ec3dc62296812259fc38d"
+    },
+    "youtube-downloader": {
+      "source": "daymade/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "youtube-downloader/SKILL.md",
+      "computedHash": "c6cddeae39eea963731fefd5b7324878609034a08d76414d0255791d2729df25"
+    }
+  }
+}

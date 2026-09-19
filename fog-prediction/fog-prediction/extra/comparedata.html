@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="./assets/img/favicon.png">
+    <title>Fog Prediction</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+    <link href="./assets/css/font-awesome.css" rel="stylesheet" />
+    <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+    <link href="./assets/css/argon-design-system.css?v=1.2.0" rel="stylesheet" />
+
+    <!-- <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/data.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/export-data.js"></script> -->
+
+    <style>
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            /*position the autocomplete items to be the same width as the container:*/
+            top: 100%;
+            left: 0;
+            right: 0;
+            max-height: 300px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            text-align: justify;
+        }
+        
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            font: outline;
+            color: azure;
+            background: radial-gradient(rgb(235, 119, 235), rgb(108, 108, 238));
+            border-bottom: 2px solid #d4d4d4;
+        }
+        /*when hovering an item:*/
+        
+        .autocomplete-items div:hover {
+            background: radial-gradient(rgb(28, 226, 160), rgb(61, 214, 241));
+        }
+        /*when navigating through the items using the arrow keys:*/
+        
+        .autocomplete-active {
+            background: radial-gradient(rgb(28, 226, 160), rgb(61, 214, 241)) !important;
+            color: #ffffff;
+        }
+        
+        #compchart-section {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="index-page">
+
+    <!-- Navigation bar starts -->
+
+    <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom">
+        <div class="container">
+            <a class="navbar-brand mr-md-6" href="/fog-prediction/"><img class="img-fluid" src="./assets/img/fps1.png" style="height: 50px;"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+            <div class="collapse navbar-collapse" id="navbar-default">
+                <div class="navbar-collapse-header">
+                    <div class="row">
+                        <div class="col-6 collapse-brand">
+
+                        </div>
+                        <div class="col-6 collapse-close">
+                            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
+                            <span></span>
+                            <span></span>
+                        </button>
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="navbar-nav ml-lg-auto">
+                    <li>
+                        <div class="row">
+                            <div class="col-md-12" style="height:60px;">
+                                <form role="form" autocomplete="off" method="GET">
+                                    <div class="form-group">
+                                        <div class="autocomplete input-group">
+                                            <a href="../fog-prediction/" class="nav-link">
+                                                <span class="nav-link-inner--text"><button type="button" class="btn btn-primary btn-fab btn-icon btn-round fa fa-home">Home</button></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Navigation bar ends -->
+
+
+    <div class="wrapper">
+        <section class="section section-shaped" style="padding-bottom:2rem;">
+            <div class="shape shape-primary" style="height: 100px;">
+            </div>
+        </section>
+    </div>
+
+    <div class="container-fluid">
+        <div class="card shadow" style="padding-top:20px ;">
+            <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem">
+
+                <div class="row " style="height: 100px;">
+                    <div class="col-md" style="text-align: center;">
+                        <h2><b>Select the Cities Name </b></h2>
+                    </div>
+                </div>
+
+                <div class="row ">
+
+                    <!-- <div class="col-md data-column">
+                    <div class="input-daterange">
+                        <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                            </div>
+                            <input id="drange" class="flatpickr range form-control" type="text"  placeholder="Select Date Range ">
+                        </div>
+                        </div>
+                    </div>
+                </div> -->
+                    <div class="col-md-3 data-column"></div>
+                    <div class="col-md-2 ">
+                        <div class="col-md  map-data d-flex" style="width:100%;">
+                            <form role="form" autocomplete="off" method="GET">
+                                <div class="form-group">
+                                    <div class="autocomplete input-group" style="width:100%;">
+                                        <input id="myInputFirst" class="form-control" placeholder="First City" type="text" width="50%" required>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-2 data-column"></div>
+                    <div class="col-md-2 ">
+                        <div class="col-md  map-data d-flex" style="width:100%;">
+                            <form role="form" autocomplete="off" method="GET">
+                                <div class="form-group">
+                                    <div class="autocomplete input-group" style="width:100%;">
+                                        <input id="myInputSecond" class="form-control" placeholder="Second City" type="text" width="100%" required>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-3 data-column"></div>
+                </div>
+
+
+                <div class="row justify-content-center">
+                    <div class="col-md-5 data-column"></div>
+                    <div class="col-md-2">
+                        <button id="compare-button" type="button" class="btn btn-primary">Compare</button>
+                    </div>
+                    <div class="col-md-5 data-column"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid " id="main-div" style="display: none;">
+        <div class="card">
+            <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem">
+                <section class="section  pb-0" id="compchart-section" style="padding-top:1rem;">
+                    <section class="section  pb-0" style="padding-top:1rem;">
+                        <div class="container-fluid">
+                            <div class="card">
+                                <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;height: 500px">
+                                    <div id="compchart"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <section class="section  pb-0" id="Temperature-section" style="padding-top:0">
+                            <section class="section  pb-0" style="padding-top:1rem;">
+                                <div class="container-fluid">
+                                    <div class="card shadow">
+                                        <div class="card-body rounded " style="padding:0">
+                                            <div class="row">
+                                                <div class="container-fluid">
+                                                    <div class="col-md data-column">
+                                                        <div id="TempComp"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </section>
+                        </section>
+                        </div>
+                        <!-- <section class="section  pb-0" id="Temperature-section" style="padding-top:1rem;">
+                  <section class="section  pb-0" style="padding-top:1rem;">
+                    <div class="container">
+                      <div class="card shadow">
+                        <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;">
+                          <div class="row">
+                            <div class="container">
+                              <div class="col-md data-column">
+                                <div id="Temperature"></div>
+                              </div>
+                            </div>
+                          </div> 
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </section> -->
+                        <div class="col-md-4">
+                            <section class="section  pb-0" id="Humidity-section" style="padding-top:0">
+                                <section class="section  pb-0" style="padding-top:1rem;">
+                                    <div class="container-fluid">
+                                        <div class="card shadow">
+                                            <div class="card-body rounded " style="padding:0">
+                                                <div class="row">
+                                                    <div class="container-fluid">
+                                                        <div class="col-md data-column">
+                                                            <div id="HumidityComp"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </section>
+                        </div>
+                        <div class="col-md-4">
+                            <section class="section  pb-0" id="Wind-section" style="padding-top:0">
+                                <section class="section  pb-0" style="padding-top:1rem;">
+                                    <div class="container-fluid">
+                                        <div class="card shadow">
+                                            <div class="card-body rounded " style="padding:0">
+                                                <div class="row">
+                                                    <div class="container-fluid">
+                                                        <div class="col-md data-column">
+                                                            <div id="WindComp"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- <section class="section  pb-0" style="padding-top:1rem;margin-bottom:1rem">
+  <div class="container">
+    <div class="card shadow">
+      <div class="card-body bg-gradient-primary rounded " style="padding:1rem 2rem 1rem 2rem;">
+      </div>
+    </div>
+  </div>
+</section> -->
+
+        <script src="./assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+        <script src="./assets/js/core/jquery.min.js" type="text/javascript"></script>
+        <script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
+        <script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+        <script src="./assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+        <script src="./assets/js/plugins/bootstrap-switch.js"></script>
+        <script src="./assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
+        <script src="./assets/js/plugins/moment.min.js"></script>
+
+        <script src="./assets/js/plugins/datetimepicker.js" type="text/javascript"></script>
+        <script src="./assets/js/plugins/bootstrap-datepicker.min.js"></script>
+        <script src="./assets/js/argon-design-system.min.js?v=1.2.0" type="text/javascript"></script>
+
+        <script src="./assets/js/plugins/bootstrap-datepicker.min.js"></script>
+        <script src="./assets/js/argon-design-system.min.js?v=1.2.0" type="text/javascript"></script>
+
+        <script src="./assets/chart-library/core.js"></script>
+        <script src="./assets/chart-library/charts.js"></script>
+        <script src="./assets/chart-library/themes/material.js"></script>
+        <script src="./assets/chart-library/themes/animated.js"></script>
+
+
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script src="https://code.highcharts.com/stock/highstock.js"></script>
+        <script src="https://code.highcharts.com/stock/modules/data.js"></script>
+        <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+
+        <script src="./js/compare.js"></script>
+</body>
+
+</html>

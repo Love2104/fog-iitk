@@ -1,0 +1,14 @@
+/* Build entry for assets/css/fog-redesign.css:
+ *   sass compile.scss assets/css/fog-redesign.css
+ *
+ * These are imported at TOP LEVEL on purpose. Nesting them under a wrapper
+ * class rewrites fog-core's `:root { --token: ... }` into `.wrapper :root`,
+ * which matches nothing -- :root is <html>, an ancestor of the wrapper, never
+ * a descendant -- and every design token in the system silently resolves to
+ * nothing. Scoping is already handled inside each partial: fog-core declares
+ * custom properties only, fog-nav is entirely under .fognav, and fog-home is
+ * entirely under .fog-home, so none of them can reach a legacy page's markup.
+ */
+@use "assets/css/fog-core";
+@use "assets/css/fog-nav";
+@use "assets/css/fog-home";

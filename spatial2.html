@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png"> -->
+    <link rel="icon" type="image/png" href="./assets/img/iitk.png">
+    <title>Map</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+    <link href="./assets/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+    <link href="./assets/css/argon-design-system.css?v=1.2.0" rel="stylesheet" />
+    <!-- <script src="https://cdn.jsdelivr.net/gh/egeriis/zipcelx/lib/standalone.js"></script> -->
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.9.0/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="assets/v6.5.0/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="assets/v6.5.0/examples/resources/layout.css" type="text/css">
+    <link rel="stylesheet" href="assets/ol-layerswitcher/dist/ol-layerswitcher.css" />-->
+    <!--<link rel="stylesheet" href="https://openlayers.org/en/v6.4.3/css/ol.css" />
+    <link rel="stylesheet" href="https://raw.githack.com/walkermatt/ol-layerswitcher/master/src/ol-layerswitcher.css" />
+    <link rel="stylesheet" href="https://raw.githack.com/walkermatt/ol-layerswitcher/master/examples/layerswitcher.css" />
+    <link rel="stylesheet" href="https://unpkg.com/ol-layerswitcher@3.8.3/dist/ol-layerswitcher.css" />-->
+    <link rel="stylesheet" href="assets/v6.5.0/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="assets/v6.5.0/examples/resources/layout.css" type="text/css">
+    <link rel="stylesheet" href="assets/ol-layerswitcher/dist/ol-layerswitcher.css" />
+
+
+    <script src="assets/v6.5.0/build/ol.js"></script>
+    <script src="assets/ol-layerswitcher/dist/ol-layerswitcher.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    
+<!--<link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />-->
+<script src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' rel='stylesheet' />
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevent scrolling */
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav {
+            
+            
+            padding: 10px;
+            z-index:2;
+        }
+
+        #map1 {
+            flex: 1; /* Fill remaining vertical space */
+            position: relative;
+            top:100px;
+            width: 100%;
+             /* Subtract nav height from total height */
+            z-index: 1;
+        }
+
+        .form-container {
+            position: absolute;
+            top: 100px;
+            left: 20px;
+            bottom:20px;
+            background-color: white;
+            padding: 20px;
+            z-index: 2;
+            border-radus:20px;
+        }
+        .form-container2 {
+            position: absolute;
+            bottom: 20px;
+            right:20px;
+            background-color: transparent;
+            padding: 20px;
+            z-index: 2;
+            border-radus:20px;
+        }
+        .form-container3 {
+            position: absolute;
+            top: 100px;
+            right:20px;
+            background-color: transparent;
+            padding: 20px;
+            z-index: 2;
+            border-radus:20px;
+        }
+
+        /* Additional styling for form elements */
+        form {
+            /* Add your form styling here */
+        }
+    </style>
+
+    <style>
+       
+        .color-legend {
+            width: 200px;
+            height: 20px;
+            background: linear-gradient(to right, white, black);/*red, yellow, green); */
+           
+        }
+
+        
+        .legend-label {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+                .legend {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Define the legend items for each category */
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        /* Define the color or symbol for each category */
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        /* You can add more styles as needed */
+
+        /* Define the colors or symbols for your discrete variables */
+        .category-1 {
+            background-color: white;
+        }
+
+        .category-2 {
+            background-color: black;
+        }
+
+        /* You can add more styles as needed */
+    </style>
+    <style>
+        .layer-switcher.shown.layer-switcher-activation-mode-click {
+            padding-right: 10px;
+          }
+          .layer-switcher.shown.layer-switcher-activation-mode-click > button {
+            right: 0;
+            border-left: 0;
+          }
+         
+        /*.map {
+            height: ;
+            width: 400px;
+          }*/
+          .ol-mouse-position{
+            top:97%;
+            right:20%;
+            position:absolute;
+            font-weight: bold;
+            }
+            .layer-switcher.shown {
+             max-height: 465px;
+            }
+            
+            #legend{
+               z-index: 11;
+               padding: 4px 8px;
+               border: 2px solid grey;
+               position: absolute;
+               bottom: 0px;
+               height: 50%;
+               overflow: scroll;
+               width:15%; 
+               right: 0%;
+               background-color: #ffffff;
+               font-weight: bold;
+             }
+        v\:* { behavior: url(#default#VML);}
+        o\:* { behavior: url(#default#VML);}
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            /*position the autocomplete items to be the same width as the container:*/
+            top: 100%;
+            left: 0;
+            right: 0;
+            max-height: 300px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            text-align: justify;
+        }
+        
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            font: outline;
+            color: azure;
+            background: radial-gradient(rgb(235, 119, 235), rgb(108, 108, 238));
+            border-bottom: 2px solid #d4d4d4;
+        }
+        /*when hovering an item:*/
+        
+        .autocomplete-items div:hover {
+            background: radial-gradient(rgb(28, 226, 160), rgb(61, 214, 241));
+        }
+        /*when navigating through the items using the arrow keys:*/
+        
+        .autocomplete-active {
+            background: radial-gradient(rgb(28, 226, 160), rgb(61, 214, 241)) !important;
+            color: #ffffff;
+        }
+        
+        #compchart-section {
+            display: none;
+        }
+       /*.container #canvas {
+        width: 100%;
+        height: auto;
+        }*/
+       
+        .circle {
+            width: 10px;
+            height: 10px;
+            background: red;
+            border-radius: 50%;
+            z-index:1;
+        }
+        /*.con .circle {
+        position: absolute;
+        top:300px;
+        left:300px;
+        
+        border: none;
+        cursor: pointer;
+       
+        }*/
+    </style>
+</head>
+
+<body id="page" class="index-page" style="font-family: 'Libre Baskerville', serif;">
+
+    <!-- Navigation bar starts -->
+    
+    <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom ">
+        <div class="container">
+            <a class="navbar-brand mr-md-6" href="../fog-prediction/"><img class="img-fluid" src="./assets/img/fps1.png" style="height: 60px;width: 350px; background-color:#5e72e4;border-radius:10px"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+            <div class="collapse navbar-collapse" id="navbar-default">
+                <div class="navbar-collapse-header">
+                    <div class="row">
+                        <div class="col-6 collapse-brand">
+
+                        </div>
+                        <div class="col-6 collapse-close">
+                            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
+                            <span></span>
+                            <span></span>
+                        </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="navbar-nav flex-row mr-auto ml-4 d-none d-md-flex">
+                    <h2 style="color: #5e72e4; margin-left: 100px;font-weight: bold;">Spatial Fog Detection</h2>
+                </div>
+                <ul class="navbar-nav ml-lg-auto">
+                    <li>
+                        <div class="row">
+                            <div class="col-md-12" style="height:60px;">
+                                <form role="form" autocomplete="off" method="GET">
+                                    <div class="form-group">
+                                        <div class="autocomplete input-group">
+                                            <a href="../fog-prediction/" class="nav-link">
+                                                <span class="nav-link-inner--text"><button type="button" class="btn btn-primary btn-fab btn-icon btn-round fa fa-home">Home</button></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    
+
+    <!-- Navigation bar ends -->
+
+
+   <!--<div class="wrapper container-fuild">
+        <section class="section section-shaped rounded" style="padding-bottom:2rem;">
+            <div class="shape shape-primary" style="height: 100px;">
+                
+            </div>
+        </section>
+    </div>-->
+    
+    <div id="map1" class="map " ></div>
+            
+    <!--<div class="row mt-4 " style="padding:1rem 2rem 1rem 1rem; ">-->
+
+     <div class="form-container container  col-md-3" >
+        
+        <div class="row d-flex justify-content-center m-4">
+        
+        <form  autocomplete="off" method="GET" id="cityform" >
+        <h5>Select the City and Time of data to be viewed</h5>
+        <div class="row m-2">
+            <input type="radio"  name="inputSelection" value="input1" id="radio1" checked> 
+            <div class="form-group col">
+            <label for="myInputFirst">City</label>
+            <input id="myInputFirst" class="form-control" placeholder="Enter City...." type="text" width="50%">
+            
+            </div>
+
+        </div>
+        <h5 style="text-align:center;">OR</h5>
+        <div class="row  m-2">
+            <input type="radio"  name="inputSelection" value="input2" id="radio2"> 
+            <div class="form-group col">
+            
+                <label for="myInputFirst">Latitude & Longitude (Double click location on map to get latitude & longitude)</label>
+                <div class="row">
+                    <input id="lat" class="form-control col w-25 m-1" placeholder="Enter Latitude...." type="text" pattern="[0-9]*[.]?[0-9]*"   disabled>
+                    <input id="long" class="form-control col w-25 m-1" placeholder="Enter Longitude...." type="text" pattern="[0-9]*[.]?[0-9]*"  disabled>
+                </div>
+            
+            </div>
+        </div>
+            
+           <div class="form-group">
+                <label for="myInputSecond">Start Date & Time</label>
+                <input id="myInputSecond" class="form-control" placeholder="Enter Date & Time...." type="datetime-local" width="50%" required>
+                
+            </div> 
+             <div class="form-group">
+                <label for="endDate">End Date & Time</label>
+                <input id="endDate" class="form-control" placeholder="Enter Date & Time...." type="datetime-local" width="50%" required>
+                <span class="nav-link-inner--text"><button type="button" class="btn btn-link" id="select-city" onclick="latest()"> Take Latest</button></span>
+                
+            </div> 
+            
+            
+        <span class="nav-link-inner--text"><button type="Submit" class="btn btn-primary" id="submit">Submit</button></span>
+        <span class="nav-link-inner--text"><button type="reset" class="btn btn-primary" id="reset" onclick="resetit()">Reset</button></span>
+        
+        </form>
+        </div>
+        </div>
+        
+        
+        
+       
+    </div>
+    
+    <div class="form-container3 contatiner col-md-8" >
+        
+
+                
+
+                <p style="color:red; padding:10px; text-align:center;font-weight:bolder;">Note: Real-time fog detection has been paused as the winter season is over. It will resume on November 1, 2024.</p>
+                    <h4 class="" style="text-align:center;">Fog results for:<span id="dt"></span> IST (GMT+5:30)</h4>
+                    <div class="text-center "  style="margin-top:1rem;font-size:21px;" id="address">
+                
+                    </div>
+                    <div class="text-center "  style="font-size:21px;" id="fogval">
+                        
+                    </div>
+                    <div class="text-center "  style="font-size:21px;" id="epi">
+                        
+                    </div>
+                    <div class="text-center "  style="font-size:21px;" id="alea">
+                        
+                    </div>
+                    <div class='d-flex justify-content-center w-100 ' >
+                            <div class='col-md-6 mt-2'>
+                                <input type="range" class="form-range w-100" id="opacity" min="1" max="10" step="1" value="10" >
+                            </div>
+                            <div class='col-md-2'>
+                                <button id="playPauseButton" class="btn btn-primary">
+                                    <i id="playPauseIcon" class="fa fa-play"></i>
+                                </button>
+                            </div>
+                    </div>
+    </div>
+    <div class="form-container2 contatiner col-md-8" >
+                    
+                    
+                <div class="d-flex justify-content-center w-100 " id="whileg" script="text-align:center">
+                    
+                    <div class=" w-75" style=" justify-content: center;align-items: center;" >
+                        <div class="rounded w-100" style=" border: 2px solid; "><div class="color-legend w-100   " id="legen"></div></div>
+
+                        <div class="legend-label">
+                            <span>1(Fog)</span>    
+                            <span>0(No Fog)</span>
+                        </div>
+                        </div>
+                        
+                    
+                    </div>
+                    
+                   
+                    
+                    
+                    <!--<div class="form-check mt-3">-->
+                    
+                   <!-- <div class="d-flex justify-content-center" style="height: 100vh;padding:10px;">
+                        <div id="map1" class="map1 w-100 h-100"></div>
+                        
+                   </div> --> 
+                    <p style="color:red; padding:10px; font-weight:bolder;">Disclaimer: The above data is for educational use only. Raw data provided by the Space Application Center by Indian Space Research Organisation (SAC-ISRO)<p>
+                    
+               
+        </div>
+    
+            <!-- <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;">
+                <div id="rmse" align="center"></div>
+            </div> -->
+           <!-- <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;">
+                <div id="rmsec"></div>
+            </div>
+            
+        </div>        
+    </div>-->
+    <!--<section id="footr" class="section  pb-0" style="padding-top:1rem;margin-bottom:1rem;display: none;">
+        <div class="container-fuild">
+            <div class="card shadow">
+                <div class="card-body bg-gradient-primary rounded ">
+                    <div class="row justify-content-center" style="color:white;">
+                        <a href="./about.html" target="_blank" style="color: #ffffff;"><p>© Fog Prediction , IIT Kanpur. All rights reserved.</p></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>-->
+
+    
+    
+
+
+    
+
+    <script src="./assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="./assets/js/core/jquery.min.js" type="text/javascript"></script>
+    <script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
+    <script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+    <script src="./assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <script src="./assets/js/plugins/bootstrap-switch.js"></script>
+    <script src="./assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
+    <script src="./assets/js/plugins/moment.min.js"></script>
+
+    <script src="./assets/js/plugins/datetimepicker.js" type="text/javascript"></script>
+    <script src="./assets/js/plugins/bootstrap-datepicker.min.js"></script>
+    <script src="./assets/js/argon-design-system.min.js?v=1.2.0" type="text/javascript"></script>
+
+    <script src="./assets/js/plugins/bootstrap-datepicker.min.js"></script>
+    <script src="./assets/js/argon-design-system.min.js?v=1.2.0" type="text/javascript"></script>
+
+    <script src="./assets/chart-library/core.js"></script>
+    <script src="./assets/chart-library/charts.js"></script>
+    <script src="./assets/chart-library/themes/material.js"></script>
+    <script src="./assets/chart-library/themes/animated.js"></script>
+    
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
+
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/data.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="./assets/vendor/leaflet/leaflet-idw.js"></script>
+
+    <script src="./js/spatial.js"></script>
+   <!-- <script>
+        document.getElementById("myInputFirst").value = 'Lucknow'
+        loaddata(4,"Gradient Boosting Regressor")
+    </script>
+    <script type="text/javascript" src="js/google_map.js"></script>
+    <script src="assets/v6.5.0/build/ol.js"></script>
+    <script src="assets/ol-layerswitcher/dist/ol-layerswitcher.js"></script>-->
+    <!--<script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>-->
+    
+
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.1.0/chroma.min.js"></script>
+
+    <!--<script src="https://gipong.github.io/shp2geojson.js"></script>-->
+    <!--<script src="https://openlayers.org/en/v6.4.3/build/ol.js"></script>
+    <script src="https://raw.githack.com/walkermatt/ol-layerswitcher/master/dist/ol-layerswitcher.js"></script>
+    <script src="https://raw.githack.com/walkermatt/ol-layerswitcher/master/examples/layerswitcher.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.9.0/build/ol.js"></script>
+    <script src="https://unpkg.com/ol-layerswitcher@3.8.3"></script>-->
+    
+    <script>
+    
+       function latest(){
+        const now = new Date();
+        var mon=(now.getMonth()+1<10)? '0'+(now.getMonth()+1) : now.getMonth()+1
+        var date=(now.getDate()<10)? '0'+now.getDate() : now.getDate()
+        var minite=(now.getMinutes()<10)? '0'+now.getMinutes() : now.getMinutes()
+        var hour=(now.getHours()<10)? '0'+now.getHours() : now.getHours()
+        var today=now.getFullYear()+'-'+mon+'-'+date+'T'+hour+':'+minite;
+        //now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        $('#endDate').val(today);
+        
+    }
+
+        /*function init() {
+            canvas = document.getElementById('canvas');
+            context = canvas.getContext('2d');
+
+            //drawImage(image);
+
+            var image = new Image();
+            image.onload = function () {
+                canvas.width = image.width;
+                canvas.height = image.height;
+               
+                context.drawImage(image, 0, 0);
+            }
+            image.src = 'images/FOG.jpg';
+            
+
+            
+        }
+
+        window.addEventListener('load', init);  */
+         
+    </script>
+    <script src='apis/files1.php'>
+    
+    </script>
+    <script>
+     window.addEventListener('load', function() {
+        console.log(window.performance.timing.navigationStart)
+        var renderTime = window.performance.timing.domContentLoadedEventEnd - window.performance.timing.navigationStart;
+        console.log('Render time: ' + renderTime + ' milliseconds');
+    });
+  </script>
+  
+</body>
+
+</html>

@@ -1,0 +1,837 @@
+/* ==========================================================================
+   Fog IITK — navigation.
+   Implements docs/FOG_IITK_WEBSITE_AUDIT.md §39.
+
+   Every rule is scoped under .fognav, because this bar is included by twelve
+   pages that still load Bootstrap 4.3.1 and Argon. Those two set colour,
+   text-decoration, background, margin, font and transition on a, button,
+   summary and input; the :where() block below takes those properties back at
+   zero specificity, so a single component class beats it without the arms race
+   that !important would start.
+
+   Four rules govern the whole bar:
+
+     1. Docked and opaque. The bar is a solid surface on a hairline, not a
+        floating translucent pill. It sits ON the page.
+
+     2. Separation is spacing. Hairlines are spent only where they mean
+        something structural -- the bar's own bottom edge, the compartment
+        divider inside the station well, the rule under a panel's caption.
+        Nothing here is a box drawn around a thing.
+
+     3. One shadow recipe, and only on layers that FLOAT above the page: the
+        dropdown panels, the suggestion list, the mobile sheet. Two stops --
+        a tight contact shadow and a wide diffuse one -- because a single
+        blur reads as a smudge. The bar itself casts nothing.
+
+     4. Motion is critically damped and interruptible. One curve,
+        cubic-bezier(0.2, 0.8, 0.2, 1): it arrives fast and settles without
+        overshoot. Nothing bounces, nothing loops, nothing animates on scroll.
+        Under prefers-reduced-motion everything still changes state, instantly.
+   ========================================================================== */
+
+.fognav :where(a) {
+  color: inherit;
+  text-decoration: none;
+  background: none;
+  transition: none;
+}
+.fognav :where(button, summary, input, form) {
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.fognav :where(summary) { display: block; cursor: pointer; }
+.fognav :where(summary)::-webkit-details-marker { display: none; }
+.fognav :where(summary)::marker { content: ""; }
+.fognav :where(p), .fognav :where(ul), .fognav :where(li) { margin: 0; padding: 0; }
+.fognav :where(ul) { list-style: none; }
+.fognav :where(svg) { display: block; }
+/* The UA's [hidden] rule is a bare attribute selector, so any component class
+   that sets display -- .fognav-opt is display:flex -- silently outranks it and
+   el.hidden = true stops doing anything. Two selectors here, no !important. */
+.fognav [hidden] { display: none; }
+
+.fognav {
+  --ease-spring: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --r-ctl: 7px;
+  --r-pop: 10px;
+  --r-card: 18px;
+  --shadow-float: 0 1px 2px rgba(22, 24, 28, 0.05), 0 14px 32px -14px rgba(22, 24, 28, 0.28);
+  --shadow-card: 0 1px 2px rgba(22, 24, 28, 0.04), 0 8px 20px -12px rgba(22, 24, 28, 0.16);
+
+  /* The whole component sticks, not the bar alone: the bar is now a card
+     floating inside this band, and the band's own ground is what hides the
+     page scrolling underneath. */
+  position: sticky;
+  top: 0;
+  z-index: 120;
+  padding: var(--sp-3) 0;
+  background: var(--paper);
+  font-family: var(--ff-sans);
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--ink);
+  background: var(--surface);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* A dark panel needs a deeper, more diffuse shadow to read as lifted at all. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .fognav {
+    --shadow-float: 0 1px 2px rgba(0, 0, 0, 0.5), 0 18px 40px -14px rgba(0, 0, 0, 0.72);
+    --shadow-card:  0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 26px -14px rgba(0, 0, 0, 0.6);
+  }
+}
+:root[data-theme="dark"] .fognav {
+  --shadow-float: 0 1px 2px rgba(0, 0, 0, 0.5), 0 18px 40px -14px rgba(0, 0, 0, 0.72);
+  --shadow-card:  0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 26px -14px rgba(0, 0, 0, 0.6);
+}
+
+.fognav :focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ── the bar ─────────────────────────────────────────────────────────────── */
+
+/* A card inset from the viewport edge -- deliberately NOT a centred pill: it
+   keeps the full measure of the page, carries a modest 18px radius rather than
+   a capsule, and casts one restrained contact shadow. */
+.fognav-bar {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: stretch;
+  gap: var(--sp-6);
+  min-height: 62px;
+  margin: 0 var(--sp-4);
+  padding: 0 var(--sp-5);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-card);
+}
+
+/* ── wordmark ────────────────────────────────────────────────────────────── */
+
+.fognav-mark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+  /* Only bites in the wrapped two-row bar, where the mark would otherwise
+     shrink to the 22px glyph and fall under the minimum target size. */
+  min-height: 36px;
+}
+.fognav-glyph { width: 22px; height: 22px; flex: 0 0 auto; overflow: visible; }
+.fognav-glyph .g-net {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.fognav-glyph .g-node { fill: var(--accent); }
+.fognav-glyph .g-fog {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.95;
+  stroke-linecap: round;
+}
+.fognav-glyph .g-f1 { opacity: 0.90; }
+.fognav-glyph .g-f2 { opacity: 0.55; }
+.fognav-glyph .g-f3 { opacity: 0.28; }
+
+.fognav-mark-text { display: flex; flex-direction: column; justify-content: center; }
+/* Optical sizing: at 18px the wordmark needs the tracking pulled in, or the
+   mono spacing reads as a gap between every letter. */
+.fognav-mark-name {
+  font-family: var(--ff-mono);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  color: var(--ink);
+}
+.fognav-mark-org {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  color: var(--ink-3);
+}
+/* The mark clears as you approach it -- the one piece of wit in the bar, and
+   it costs four opacity values. */
+@media (hover: hover) and (pointer: fine) {
+  .fognav-mark:hover .fognav-glyph .g-f2 { opacity: 0.80; }
+  .fognav-mark:hover .fognav-glyph .g-f3 { opacity: 0.52; }
+  .fognav-glyph .g-fog { transition: opacity var(--dur-hover) var(--ease-spring); }
+}
+
+/* ── station well ────────────────────────────────────────────────────────── */
+/* Three compartments, read left to right as instrument hardware: a nameplate
+   saying what the channel selects, the field you type into, and the key that
+   loads it. The nameplate carries the recessed --paper-3 ground so the field
+   itself stays clear -- that inversion is what stops this reading as the
+   framework input-group it would otherwise be. */
+
+.fognav-find {
+  position: relative;
+  align-self: center;
+  flex: 0 1 306px;
+  min-width: 160px;
+}
+
+.fognav-well {
+  display: flex;
+  align-items: stretch;
+  height: 36px;
+  background: var(--surface);
+  border: 1px solid var(--rule-2);
+  border-radius: var(--r-ctl);
+  transition: border-color var(--dur-hover) var(--ease-spring),
+              box-shadow var(--dur-hover) var(--ease-spring);
+}
+@media (hover: hover) and (pointer: fine) {
+  .fognav-find:hover .fognav-well { border-color: var(--ink-3); }
+}
+/* Engaged: a slate ring, and every compartment acknowledges it. This is the
+   focus indicator -- the input's own is suppressed below, never removed
+   without a replacement. */
+.fognav-find:focus-within .fognav-well {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.fognav-well-lab {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  padding: 0 9px;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--ink-3);
+  background: var(--paper-3);
+  border-right: 1px solid var(--rule-2);
+  border-radius: calc(var(--r-ctl) - 1px) 0 0 calc(var(--r-ctl) - 1px);
+  transition: color var(--dur-hover) var(--ease-spring),
+              background var(--dur-hover) var(--ease-spring),
+              border-color var(--dur-hover) var(--ease-spring);
+}
+.fognav-find:focus-within .fognav-well-lab {
+  color: var(--accent);
+  background: var(--measured-tint);
+  border-right-color: var(--accent);
+}
+
+/* Stretch, not centre: the input must own the full height of the compartment
+   so its hit area is the well, not the 21px the glyphs happen to occupy. */
+.fognav-well-field {
+  display: flex;
+  align-items: stretch;
+  gap: 7px;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-left: 9px;
+}
+
+.fognav-well-icon {
+  width: 14px; height: 14px;
+  align-self: center;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: var(--ink-3);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  transition: stroke var(--dur-hover) var(--ease-spring);
+}
+.fognav-find:focus-within .fognav-well-icon { stroke: var(--accent); }
+
+.fognav-q {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0;
+  font-family: var(--ff-sans);
+  font-size: var(--fs-ui);
+  letter-spacing: -0.006em;
+  color: var(--ink);
+  background: none;
+  border: 0;
+}
+.fognav-q::placeholder { color: var(--ink-3); opacity: 1; }
+.fognav-q::-webkit-search-cancel-button { display: none; }
+.fognav-q:focus, .fognav-q:focus-visible { outline: none; }
+
+/* Not a filled button. A labelled key in the instrument's own mono, divided
+   from the field by the one hairline this control spends, and armed -- taking
+   slate and a tint -- only while the control is engaged. */
+.fognav-go {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  padding: 0 13px;
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  border-left: 1px solid var(--rule);
+  border-radius: 0 calc(var(--r-ctl) - 1px) calc(var(--r-ctl) - 1px) 0;
+  cursor: pointer;
+  transition: color var(--dur-hover) var(--ease-spring),
+              background var(--dur-hover) var(--ease-spring),
+              transform var(--dur-press) var(--ease-spring);
+}
+@media (hover: hover) and (pointer: fine) {
+  .fognav-go:hover { color: var(--ink); background: var(--paper-2); }
+}
+.fognav-find:focus-within .fognav-go {
+  color: var(--accent);
+  background: var(--measured-tint);
+  border-left-color: var(--accent);
+}
+.fognav-go:active { transform: scale(0.96); }
+.fognav-go:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+
+/* ── suggestion list ─────────────────────────────────────────────────────── */
+/* Revealed by :focus-within, so the list exists without JavaScript. */
+
+.fognav-results {
+  display: none;
+  position: absolute;
+  top: calc(100% + 7px);
+  left: 0;
+  z-index: 40;
+  width: 340px;
+  min-width: 100%;
+  max-width: calc(100vw - 2 * var(--sp-4));
+  background: var(--surface);
+  border: 1px solid var(--rule-2);
+  border-radius: var(--r-pop);
+  box-shadow: var(--shadow-float);
+  overflow: hidden;
+  transform-origin: top left;
+}
+.fognav-find:focus-within .fognav-results,
+.fognav-find.is-open .fognav-results {
+  display: block;
+  animation: fognav-pop var(--dur-pop-in) var(--ease-spring);
+}
+.fognav-results-scroll {
+  max-height: 322px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 5px;
+}
+
+.fognav-note {
+  padding: var(--sp-3);
+  font-size: var(--fs-micro);
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+.fognav-note-now {
+  padding: 9px var(--sp-3);
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--rule);
+}
+.fognav-note-now b { font-weight: 600; color: var(--ink); }
+.fognav-note-now i {
+  font-style: normal;
+  font-family: var(--ff-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.02em;
+  color: var(--measured);
+  background: var(--measured-tint);
+  padding: 1px 5px;
+  border-radius: 3px;
+  margin-left: 4px;
+}
+
+.fognav-group-label {
+  position: sticky;
+  top: -5px;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin: 6px 0 3px !important;
+  padding: 5px 9px;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--ink-3);
+  background: var(--surface);
+}
+.fognav-group-label::after {
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--rule);
+}
+.fognav-group-label i {
+  font-style: normal;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  color: var(--ink-3);
+}
+
+.fognav-opt {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: 7px 9px;
+  border-radius: 5px;
+  transition: background var(--dur-hover) var(--ease-spring);
+}
+.fognav-opt b { font-weight: 400; font-size: var(--fs-ui); color: var(--ink); }
+.fognav-opt i {
+  font-style: normal;
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+}
+@media (hover: hover) and (pointer: fine) {
+  .fognav-opt:hover { background: var(--paper-2); }
+  .fognav-opt:hover i { color: var(--measured); }
+}
+.fognav-opt:focus-visible, .fognav-opt.is-cursor { background: var(--paper-2); }
+.fognav-opt.is-cursor { box-shadow: inset 2px 0 0 var(--accent); }
+.fognav-opt[aria-current="true"] { background: var(--measured-tint); }
+.fognav-opt[aria-current="true"] b { font-weight: 600; }
+.fognav-opt[aria-current="true"] i { color: var(--measured); }
+
+/* ── sections ────────────────────────────────────────────────────────────── */
+/* Pushed to the right edge and separated by space alone. */
+
+.fognav-sections {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: 1px;
+  flex: 0 1 auto;
+  min-width: 0;
+  margin-left: auto;
+}
+
+/* One marker for the whole row, moved by js/fog-nav.js. Transform and width
+   are the only things that change, both on the one curve; the element is
+   inert to the pointer so it can never swallow a click. Absent the script it
+   simply never gains .is-on and the links fall back to their colour change. */
+.fognav-pill {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0;
+  height: 32px;
+  margin-top: -16px;
+  border-radius: 6px;
+  background: var(--paper-2);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(0, 0, 0);
+  transition: transform 280ms var(--ease-spring),
+              width 280ms var(--ease-spring),
+              opacity 150ms linear;
+}
+.fognav-pill.is-on { opacity: 1; }
+/* First appearance must not slide in from x=0 across the whole bar. */
+.fognav-pill.is-placing { transition: opacity 150ms linear; }
+
+.fognav-item { position: relative; z-index: 1; display: flex; align-items: stretch; }
+
+.fognav-link,
+.fognav-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+  font-size: var(--fs-ui);
+  font-weight: 500;
+  letter-spacing: -0.006em;
+  color: var(--ink-2);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color var(--dur-hover) var(--ease-spring);
+}
+@media (hover: hover) and (pointer: fine) {
+  .fognav-link:hover, .fognav-toggle:hover { color: var(--ink); }
+}
+.fognav-drop[open] > .fognav-toggle { color: var(--ink); }
+
+/* Active section: full ink, and a 2px slate rule under the LABEL. It used to
+   hang off the bar's bottom edge, which no longer exists now that the bar is
+   an inset card -- an underline anchored to a rounded corner reads as damage.
+   Anchoring it to the word instead keeps it correct at every width, including
+   the wrapped two-row bar. Deliberately a different shape from the travelling
+   marker: "here" and "under the cursor" must not look alike. */
+.fognav-link > span,
+.fognav-toggle > span:first-child { position: relative; }
+
+.fognav-item[data-active="true"] .fognav-link,
+.fognav-item[data-active="true"] .fognav-toggle { color: var(--ink); font-weight: 600; }
+.fognav-item[data-active="true"] .fognav-link > span::after,
+.fognav-item[data-active="true"] .fognav-toggle > span:first-child::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -6px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--accent);
+}
+
+/* Keyboard focus borrows the travelling marker's geometry rather than drawing
+   a 62px-tall box around a 20px word. Same shape, same place -- so tabbing and
+   hovering describe the same object. */
+.fognav-link:focus-visible,
+.fognav-toggle:focus-visible { outline: none; }
+.fognav-link:focus-visible::after,
+.fognav-toggle:focus-visible::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 50%;
+  height: 32px;
+  margin-top: -16px;
+  border-radius: 6px;
+  box-shadow: 0 0 0 2px var(--focus);
+  pointer-events: none;
+}
+
+.fognav-caret {
+  align-self: center;
+  width: 7px; height: 7px;
+  border-right: 1.4px solid currentColor;
+  border-bottom: 1.4px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  opacity: 0.5;
+  transition: transform var(--dur-hover) var(--ease-spring), opacity var(--dur-hover) var(--ease-spring);
+}
+.fognav-drop[open] .fognav-caret { transform: translateY(1px) rotate(-135deg); opacity: 0.9; }
+
+/* ── dropdown panel ──────────────────────────────────────────────────────── */
+
+.fognav-drop { position: relative; display: flex; align-items: stretch; }
+
+.fognav-panel {
+  position: absolute;
+  top: calc(100% + 7px);
+  left: 0;
+  z-index: 40;
+  width: 344px;
+  max-width: calc(100vw - 2 * var(--sp-5));
+  padding: var(--sp-2);
+  background: var(--surface);
+  border: 1px solid var(--rule-2);
+  border-radius: var(--r-pop);
+  box-shadow: var(--shadow-float);
+  transform-origin: top left;
+}
+.fognav-panel[data-align="right"] { left: auto; right: 0; transform-origin: top right; }
+
+.fognav-panel-note {
+  padding: 6px var(--sp-3) var(--sp-2);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.01em;
+  color: var(--ink-3);
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 5px !important;
+}
+
+.fognav-panel-item {
+  position: relative;
+  display: block;
+  padding: 9px var(--sp-3) 9px 18px;
+  border-radius: 5px;
+  transition: background var(--dur-hover) var(--ease-spring);
+}
+/* The tick in the left margin is the hover affordance. It is also how the
+   current page is marked, so hovering shows you what "here" would look like. */
+.fognav-panel-item::before {
+  content: "";
+  position: absolute;
+  left: 6px; top: 13px;
+  width: 2px; height: 0;
+  background: var(--accent);
+  border-radius: 1px;
+  transition: height var(--dur-hover) var(--ease-spring);
+}
+.fognav-panel-item strong {
+  display: block;
+  font-size: var(--fs-ui);
+  font-weight: 600;
+  letter-spacing: -0.008em;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.fognav-panel-item span {
+  display: block;
+  margin-top: 1px;
+  font-size: var(--fs-micro);
+  line-height: 1.4;
+  color: var(--ink-3);
+}
+@media (hover: hover) and (pointer: fine) {
+  .fognav-panel-item:hover { background: var(--paper-2); }
+  .fognav-panel-item:hover::before { height: 20px; }
+  .fognav-panel-item:hover span { color: var(--ink-2); }
+}
+.fognav-panel-item:focus-visible { background: var(--paper-2); }
+.fognav-panel-item[aria-current="page"] { background: var(--paper-2); }
+.fognav-panel-item[aria-current="page"]::before { height: 20px; }
+
+/* Origin-aware pop: every floating layer grows from the corner it hangs off,
+   so it reads as coming out of its trigger rather than fading in from nowhere.
+   <details> already removes closed content from the page, so nothing hidden
+   here is left in the tab order. */
+details[open] > .fognav-panel,
+details[open] > .fognav-sheet {
+  animation: fognav-pop var(--dur-pop-in) var(--ease-spring);
+}
+@keyframes fognav-pop {
+  from { opacity: 0; transform: translateY(-6px) scale(0.965); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+.fognav-sheet { transform-origin: top right; }
+
+/* ── tools ───────────────────────────────────────────────────────────────── */
+
+.fognav-tools {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex: 0 0 auto;
+}
+
+.fognav-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px; height: 36px;
+  color: var(--ink-2);
+  border: 1px solid transparent;
+  border-radius: var(--r-ctl);
+  cursor: pointer;
+  transition: color var(--dur-hover) var(--ease-spring),
+              background var(--dur-hover) var(--ease-spring),
+              border-color var(--dur-hover) var(--ease-spring),
+              transform var(--dur-press) var(--ease-spring);
+}
+@media (hover: hover) and (pointer: fine) {
+  .fognav-icon-btn:hover { color: var(--ink); border-color: var(--rule); background: var(--paper-2); }
+}
+.fognav-icon-btn:active { transform: scale(0.94); }
+/* No display here: it would outrank the two icon rules below. */
+.fognav-icon-btn svg { width: 17px; height: 17px; }
+
+.fognav-icon-sun  { display: none; }
+.fognav-icon-moon { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .fognav-icon-moon { display: none; }
+  :root:not([data-theme="light"]) .fognav-icon-sun  { display: block; }
+}
+:root[data-theme="dark"]  .fognav-icon-moon { display: none; }
+:root[data-theme="dark"]  .fognav-icon-sun  { display: block; }
+:root[data-theme="light"] .fognav-icon-moon { display: block; }
+:root[data-theme="light"] .fognav-icon-sun  { display: none; }
+
+/* ── status strip ────────────────────────────────────────────────────────── */
+
+/* Full-bleed under the floating card. The negative bottom margin cancels the
+   band's padding so the strip sits flush on the band's own bottom edge; with
+   no strip rendered, that padding is what gives the card its lower margin. */
+.fognav-status {
+  margin: var(--sp-3) 0 calc(var(--sp-3) * -1);
+  background: var(--paper-2);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.fognav-status-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: 7px var(--sp-5);
+  font-size: var(--fs-micro);
+  color: var(--ink-3);
+  overflow-x: auto;
+  scrollbar-width: none;
+  white-space: nowrap;
+}
+.fognav-status-inner::-webkit-scrollbar { display: none; }
+
+.fognav-feed { display: inline-flex; align-items: center; gap: 6px; flex: 0 0 auto; }
+.fognav-feed-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--fresh-ok);
+  flex: 0 0 auto;
+}
+.fognav-feed[data-tone="warn"] .fognav-feed-dot { background: var(--fresh-warn); }
+/* A dead feed reads as a hollow ring: absence of fill, not a different fill. */
+.fognav-feed[data-tone="error"] .fognav-feed-dot {
+  background: transparent;
+  border: 1.5px solid var(--fresh-dead);
+}
+.fognav-feed-lab { color: var(--ink-3); }
+.fognav-feed-val { font-family: var(--ff-mono); font-size: 10.5px; color: var(--ink-2); }
+.fognav-feed[data-tone="warn"] .fognav-feed-val { color: var(--fresh-warn); }
+.fognav-feed[data-tone="error"] .fognav-feed-val { color: var(--fresh-dead); font-weight: 500; }
+
+.fognav-status-when { margin-left: auto; flex: 0 0 auto; color: var(--ink-3); }
+.fognav-status-when b { font-family: var(--ff-mono); font-weight: 500; color: var(--ink-2); }
+
+/* ── burger + sheet ──────────────────────────────────────────────────────── */
+
+.fognav-burger { position: relative; display: none; align-items: center; }
+.fognav-burger > summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px; height: 36px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-ctl);
+}
+.fognav-burger[open] > summary { border-color: var(--accent); }
+.fognav-burger-lines { position: relative; width: 16px; height: 10px; }
+.fognav-burger-lines::before,
+.fognav-burger-lines::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  height: 1.5px;
+  background: var(--ink);
+  border-radius: 1px;
+  transition: transform var(--dur-pop-in) var(--ease-spring);
+}
+.fognav-burger-lines::before { top: 0; }
+.fognav-burger-lines::after  { bottom: 0; }
+.fognav-burger[open] .fognav-burger-lines::before { transform: translateY(4.25px) rotate(45deg); }
+.fognav-burger[open] .fognav-burger-lines::after  { transform: translateY(-4.25px) rotate(-45deg); }
+
+.fognav-sheet {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 40;
+  width: 320px;
+  max-width: calc(100vw - 2 * var(--sp-4));
+  max-height: min(74vh, 620px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--sp-2);
+  background: var(--surface);
+  border: 1px solid var(--rule-2);
+  border-radius: var(--r-pop);
+  box-shadow: var(--shadow-float);
+}
+.fognav-sheet-group + .fognav-sheet-group { border-top: 1px solid var(--rule); margin-top: 5px; padding-top: 5px; }
+.fognav-sheet-head {
+  padding: var(--sp-2) var(--sp-3) 3px;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.fognav-sheet-link {
+  display: block;
+  padding: 9px var(--sp-3);
+  font-size: var(--fs-ui);
+  font-weight: 600;
+  letter-spacing: -0.008em;
+  color: var(--ink);
+  border-radius: 5px;
+}
+.fognav-sheet-link em {
+  display: block;
+  font-style: normal;
+  font-weight: 400;
+  font-size: var(--fs-micro);
+  line-height: 1.4;
+  color: var(--ink-3);
+}
+.fognav-sheet-link[aria-current="page"] { background: var(--paper-2); box-shadow: inset 2px 0 0 var(--accent); }
+.fognav-sheet-link:active { background: var(--paper-2); }
+
+/* ── responsive ──────────────────────────────────────────────────────────── */
+/* Six long section labels plus a station field need real width. Rather than
+   crush them, the bar tightens once and then hands the sections to the sheet. */
+
+@media (max-width: 1400px) {
+  .fognav-bar { gap: var(--sp-5); }
+  .fognav-find { flex-basis: 236px; }
+  .fognav-link, .fognav-toggle { padding: 0 9px; font-size: 13.5px; }
+}
+
+@media (max-width: 1180px) {
+  .fognav-sections { display: none; }
+  .fognav-burger { display: flex; }
+  .fognav-bar { gap: var(--sp-4); padding: 0 var(--sp-4); }
+  .fognav-find { flex: 1 1 auto; max-width: 420px; margin-right: auto; }
+  .fognav-status-inner { padding: 7px var(--sp-4); }
+}
+
+@media (max-width: 620px) {
+  .fognav-mark-org { display: none; }
+  .fognav-bar { gap: var(--sp-3); margin: 0 var(--sp-3); border-radius: 14px; }
+  .fognav { padding: var(--sp-2) 0; }
+  .fognav-status { margin: var(--sp-2) 0 calc(var(--sp-2) * -1); }
+  .fognav-results { width: auto; right: 0; }
+  .fognav-status-when { display: none; }
+}
+
+@media (max-width: 440px) {
+  .fognav-well-lab { display: none; }
+  .fognav-well-field { padding-left: 10px; }
+  .fognav-go { padding: 0 11px; }
+}
+
+@media (max-width: 400px) {
+  .fognav-bar { padding: 0 var(--sp-3); margin: 0 var(--sp-2); }
+  .fognav-status-inner { padding: 7px var(--sp-3); gap: var(--sp-4); }
+}
+
+/* Below this the well cannot hold a station name and a key in the width left
+   over beside the mark. Rather than crush it, it takes its own row: the bar
+   becomes two lines and every control keeps its size. */
+@media (max-width: 359px) {
+  .fognav-bar {
+    flex-wrap: wrap;
+    align-items: center;
+    min-height: 0;
+    margin: 0 var(--sp-2);
+    padding: 9px var(--sp-3) 10px;
+    gap: var(--sp-3);
+  }
+  .fognav-mark  { order: 1; }
+  .fognav-tools { order: 2; margin-left: auto; }
+  .fognav-find  { order: 3; flex: 1 0 100%; min-width: 0; max-width: none; }
+  .fognav-results { max-width: none; }
+}
+
+/* The pill is an enhancement on a fine pointer. On touch it would lag a tap
+   it cannot predict, and under reduced motion it must not travel. */
+@media (hover: none), (pointer: coarse) {
+  .fognav-pill { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fognav-pill { transition: opacity 1ms linear; }
+}

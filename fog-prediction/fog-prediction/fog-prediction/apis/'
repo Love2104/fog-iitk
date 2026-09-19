@@ -1,0 +1,40 @@
+<?php
+
+function bb()
+{
+$servername = "localhost";
+$username = "chaman";
+$password = "chaman123";
+$dbname = "fogprediction";
+
+$conn = new PDO("pgsql:host=$servername;dbname=$dbname", $username, $password);
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$stmt = $conn->prepare("SELECT * FROM meteorological_data where station='VILK' and date_time>='2010-01-01' and date_time<=now()"); 
+$stmt->execute();
+
+$filename = 'test_postgres.csv';
+
+header('Content-type: application/csv');
+header('Content-Disposition: attachment; filename=' . $filename);
+header("Content-Transfer-Encoding: UTF-8");
+
+$head = fopen($filename, 'w');
+
+$headers = $stmt->fetch(PDO::FETCH_ASSOC);
+fputcsv($head, array_keys($headers));
+
+fclose($head);
+
+$data = fopen($filename, 'a');
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        fputcsv($data, $row);
+    }
+
+fclose($data);
+}
+
+bb();
+
+?>
+

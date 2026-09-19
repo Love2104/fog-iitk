@@ -1,0 +1,499 @@
+/* ==========================================================================
+   Fog IITK — the "Now" page (Premium Redesign)
+   Anti-template, anti-AI-slop, strong visual hierarchy.
+   ========================================================================== */
+
+.fog-home {
+  /* Local Overrides for Premium Atmospheric Look (leaves navbar untouched) */
+  --paper: #090a0c;
+  --paper-2: #0e0f12;
+  --paper-3: #121418;
+  --paper-predicted: #0b0a09;
+  --surface: rgba(255, 255, 255, 0.02);
+  
+  --ink: #f0f2f5;
+  --ink-2: #a0a5b0;
+  --ink-3: #6b7280;
+  
+  --rule: rgba(255, 255, 255, 0.06);
+  --rule-2: rgba(255, 255, 255, 0.1);
+
+  --accent: #e2e8f0;
+  --accent-hover: #ffffff;
+
+  --state-clear: #4ade80;
+  --state-fog: #fbbf24;
+  --state-dense: #f97316;
+  --state-verydense: #ef4444;
+  --state-nodata: #6b7280;
+
+  --fog-glow-clear: rgba(74, 222, 128, 0.15);
+  --fog-glow-fog: rgba(251, 191, 36, 0.15);
+  --fog-glow-dense: rgba(249, 115, 22, 0.15);
+  --fog-glow-verydense: rgba(239, 68, 68, 0.2);
+  --fog-glow-nodata: rgba(255, 255, 255, 0.05);
+
+  --ff-sans: 'Inter', system-ui, sans-serif;
+  --ff-mono: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+  --ff-display: 'Inter', system-ui, sans-serif; /* Keep strictly sans-serif as requested, clean */
+
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--ff-sans);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Base resets for main content */
+.fog-home * {
+  box-sizing: border-box;
+}
+
+.fog-home h1, .fog-home h2, .fog-home h3, .fog-home p {
+  margin: 0;
+  font-weight: normal;
+}
+
+.fog-home a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.fog-home a:hover {
+  color: var(--accent-hover);
+}
+
+/* ── LAYOUT ───────────────────────────────────────────────────────────── */
+.fog-shell {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+@media (max-width: 768px) {
+  .fog-shell { padding: 0 20px; }
+}
+
+/* Atmospheric Glow Background */
+.fog-home::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 800px;
+  background: radial-gradient(circle at top, var(--current-glow, var(--fog-glow-nodata)), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.8;
+}
+
+/* ── HERO / CURRENT ATMOSPHERE ────────────────────────────────────────── */
+.premium-hero {
+  position: relative;
+  z-index: 10;
+  padding: 120px 0 80px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border-bottom: 1px solid var(--rule);
+}
+
+.hero-super {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 24px;
+}
+
+.hero-main {
+  font-family: var(--ff-display);
+  font-weight: 300;
+  font-size: 140px;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .hero-main { font-size: 80px; }
+}
+
+.hero-main .unit {
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--ink-2);
+  letter-spacing: -0.02em;
+}
+
+.hero-status {
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin-bottom: 40px;
+}
+
+.hero-meta {
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  color: var(--ink-3);
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.hero-meta .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ── HORIZONTAL SCALE (Replaces rail) ─────────────────────────────────── */
+.scale-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 40px auto 0;
+  position: relative;
+}
+
+.scale-track {
+  height: 2px;
+  background: var(--rule-2);
+  position: relative;
+  border-radius: 1px;
+}
+
+.scale-fill {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  background: var(--ink);
+  border-radius: 1px;
+  transition: width 1s ease-out;
+}
+
+.scale-threshold {
+  position: absolute;
+  top: -6px; bottom: -6px;
+  width: 1px;
+  background: var(--state-fog);
+  z-index: 2;
+}
+
+.scale-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  color: var(--ink-3);
+}
+
+.scale-marker {
+  position: absolute;
+  top: -4px;
+  width: 2px;
+  height: 10px;
+  background: var(--ink);
+  z-index: 3;
+}
+
+/* ── CURRENT CONDITIONS STRIP ─────────────────────────────────────────── */
+.conditions-strip {
+  position: relative;
+  z-index: 10;
+  padding: 40px 0;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.condition-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.condition-label {
+  font-size: 11px;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.condition-value {
+  font-family: var(--ff-mono);
+  font-size: 20px;
+  color: var(--ink);
+}
+
+.condition-value .unit {
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+/* ── FORECAST SECTION ─────────────────────────────────────────────────── */
+.forecast-section {
+  position: relative;
+  z-index: 10;
+  padding: 80px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.section-header {
+  margin-bottom: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.section-title {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 8px;
+}
+
+.forecast-summary {
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.forecast-context {
+  font-size: 14px;
+  color: var(--ink-2);
+  max-width: 400px;
+}
+
+.forecast-chart-container {
+  height: 400px;
+  width: 100%;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+/* Inline Timeline */
+.forecast-timeline {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+}
+
+.timeline-step {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.timeline-time {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  color: var(--ink-3);
+}
+
+.timeline-val {
+  font-family: var(--ff-mono);
+  font-size: 14px;
+  color: var(--ink);
+}
+
+/* ── MODEL CONTEXT & EVIDENCE ─────────────────────────────────────────── */
+.meta-section {
+  padding: 80px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+}
+
+@media (max-width: 1024px) {
+  .meta-section { grid-template-columns: 1fr; }
+}
+
+.meta-block {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.meta-title {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 12px;
+}
+
+.meta-rail {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meta-item dt {
+  font-size: 11px;
+  color: var(--ink-3);
+}
+
+.meta-item dd {
+  font-family: var(--ff-mono);
+  font-size: 13px;
+  color: var(--ink);
+  margin: 0;
+}
+
+.terminal-block {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--rule);
+  padding: 20px;
+  border-radius: 4px;
+  font-family: var(--ff-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  word-wrap: break-word;
+}
+
+/* ── NETWORK MAP ──────────────────────────────────────────────────────── */
+.network-section {
+  padding: 80px 0;
+  border-top: 1px solid var(--rule);
+}
+
+.map-container {
+  height: 500px;
+  width: 100%;
+  position: relative;
+  margin-top: 40px;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid var(--rule);
+}
+
+.fog-map {
+  width: 100%;
+  height: 100%;
+}
+.fog-map .land { fill: #0f1115; }
+.fog-map .states { fill: none; stroke: var(--rule-2); stroke-width: 0.5; }
+.fog-map .dot { fill: var(--ink-3); }
+.fog-map .hit { fill: transparent; cursor: pointer; }
+.fog-map .dot-validated { fill: var(--ink-2); }
+.fog-map .ring { fill: transparent; stroke: var(--ink-2); stroke-width: 1; opacity: 0; transition: opacity 0.2s; }
+.fog-map a:hover .ring { opacity: 1; }
+.fog-map .sel { fill: var(--accent); }
+.fog-map .sel-ring { fill: transparent; stroke: var(--accent); stroke-width: 1.5; }
+.fog-map .sel-label { fill: var(--ink); font-family: var(--ff-sans); font-size: 12px; font-weight: 500; }
+
+/* ── DATA STATUS ──────────────────────────────────────────────────────── */
+.data-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 100px;
+  font-size: 12px;
+  background: var(--surface);
+}
+
+.data-status[data-stale="true"] {
+  border-color: rgba(251, 191, 36, 0.3);
+  color: var(--state-fog);
+}
+
+.data-status[data-stale="false"] {
+  color: var(--state-clear);
+}
+
+.data-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* Overriding default chart styles (amcharts/svg) */
+.fog-chart-wrap svg {
+  width: 100%;
+  height: 100%;
+}
+
+.fog-chart-wrap .trace-obs { stroke: var(--ink); stroke-width: 2; fill: none; }
+.fog-chart-wrap .trace-fcst { stroke: var(--predicted); stroke-width: 2; stroke-dasharray: 4 4; fill: none; }
+.fog-chart-wrap .grid-line { stroke: var(--rule); stroke-width: 1; }
+.fog-chart-wrap .axis-label { fill: var(--ink-3); font-family: var(--ff-mono); font-size: 10px; }
+.fog-chart-wrap .hover-line { stroke: var(--rule-2); stroke-width: 1; }
+.fog-chart-wrap .hover-dot { fill: var(--ink); }
+
+/* ── SVG CHART STYLES ── */
+.fog-chart {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.fog-chart .obs {
+  stroke: var(--ink);
+  stroke-width: 2;
+  fill: none;
+  stroke-linejoin: round;
+}
+
+.fog-chart .fcst {
+  stroke: var(--ink-2);
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+  fill: none;
+  stroke-linejoin: round;
+}
+
+.fog-chart .fcst-step {
+  fill: var(--ink-2);
+}
+
+.fog-chart .grid {
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.fog-chart .zone-fog { fill: var(--fog-glow-fog); }
+.fog-chart .zone-dense { fill: var(--fog-glow-dense); }
+.fog-chart .zone-verydense { fill: var(--fog-glow-verydense); }
+
+.fog-chart .thr { stroke-width: 1; stroke-dasharray: 2 2; }
+.fog-chart .thr-1 { stroke: var(--state-fog); }
+.fog-chart .thr-dense { stroke: var(--state-dense); }
+.fog-chart .thr-verydense { stroke: var(--state-verydense); }
+
+.fog-chart .void {
+  fill: url(#fog-void);
+  opacity: 0.1;
+}
+.fog-chart .void-line { stroke: var(--ink-3); stroke-width: 1; }
+
+.fog-chart text {
+  fill: var(--ink-3);
+  font-family: var(--ff-mono);
+  font-size: 11px;
+}

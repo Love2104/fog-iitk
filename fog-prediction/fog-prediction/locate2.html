@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png"> -->
+    <link rel="icon" type="image/png" href="./assets/img/iitk.png">
+    <title>Map</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+    <link href="./assets/css/font-awesome.css" rel="stylesheet" />
+    <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+    <link href="./assets/css/argon-design-system.css?v=1.2.0" rel="stylesheet" />
+    <!-- <script src="https://cdn.jsdelivr.net/gh/egeriis/zipcelx/lib/standalone.js"></script> -->
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.9.0/css/ol.css" type="text/css">-->
+    <link rel="stylesheet" href="assets/v6.5.0/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="assets/v6.5.0/examples/resources/layout.css" type="text/css">
+    <link rel="stylesheet" href="assets/ol-layerswitcher/dist/ol-layerswitcher.css" />
+    <!--<link rel="stylesheet" href="https://openlayers.org/en/v6.4.3/css/ol.css" />
+    <link rel="stylesheet" href="https://raw.githack.com/walkermatt/ol-layerswitcher/master/src/ol-layerswitcher.css" />
+    <link rel="stylesheet" href="https://raw.githack.com/walkermatt/ol-layerswitcher/master/examples/layerswitcher.css" />-->
+    <!--<link rel="stylesheet" href="https://unpkg.com/ol-layerswitcher@3.8.3/dist/ol-layerswitcher.css" />
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />-->
+
+
+    <script src="assets/v6.5.0/build/ol.js"></script>
+    <script src="assets/ol-layerswitcher/dist/ol-layerswitcher.js"></script>
+<!--<link rel="stylesheet" href="https://bhuvan-app1.nrsc.gov.in/static/css/leaflet.css" as="style" onload="this.rel=&quot;stylesheet&quot;">
+    <link rel="stylesheet" href="https://bhuvan-app1.nrsc.gov.in/static/css/leaflet.css" as="style" onload="this.rel=&quot;stylesheet&quot;">
+<script defer="defer" src="https://bhuvan-app1.nrsc.gov.in/bhuvan2d2.0/static/js/main.86570c6b.js"></script>
+    <link href="https://bhuvan-app1.nrsc.gov.in/bhuvan2d2.0/static/css/main.c4cb7030.css" rel="stylesheet">-->
+    <style>
+        .layer-switcher.shown.layer-switcher-activation-mode-click {
+            padding-right: 10px;
+          }
+          .layer-switcher.shown.layer-switcher-activation-mode-click > button {
+            right: 0;
+            border-left: 0;
+          }
+        /*.map {
+            height: ;
+            width: 400px;
+          }*/
+          .ol-mouse-position{
+            top:97%;
+            right:20%;
+            position:absolute;
+            font-weight: bold;
+            }
+            .layer-switcher.shown {
+             max-height: 465px;
+            }
+            
+            #legend{
+               z-index: 11;
+               padding: 4px 8px;
+               border: 2px solid grey;
+               position: absolute;
+               bottom: 0px;
+               height: 50%;
+               overflow: scroll;
+               width:15%; 
+               right: 0%;
+               background-color: #ffffff;
+               font-weight: bold;
+             }
+        v\:* { behavior: url(#default#VML);}
+        o\:* { behavior: url(#default#VML);}
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            /*position the autocomplete items to be the same width as the container:*/
+            top: 100%;
+            left: 0;
+            right: 0;
+            max-height: 300px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            text-align: justify;
+        }
+        
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            font: outline;
+            color: azure;
+            background: radial-gradient(rgb(235, 119, 235), rgb(108, 108, 238));
+            border-bottom: 2px solid #d4d4d4;
+        }
+        /*when hovering an item:*/
+        
+        .autocomplete-items div:hover {
+            background: radial-gradient(rgb(28, 226, 160), rgb(61, 214, 241));
+        }
+        /*when navigating through the items using the arrow keys:*/
+        
+        .autocomplete-active {
+            background: radial-gradient(rgb(28, 226, 160), rgb(61, 214, 241)) !important;
+            color: #ffffff;
+        }
+        
+        #compchart-section {
+            display: none;
+        }
+       /*.container #canvas {
+        width: 100%;
+        height: auto;
+        }*/
+       
+        .circle {
+            width: 10px;
+            height: 10px;
+            background: red;
+            border-radius: 50%;
+            z-index:1;
+        }
+        /*.con .circle {
+        position: absolute;
+        top:300px;
+        left:300px;
+        
+        border: none;
+        cursor: pointer;
+       
+        }*/
+    </style>
+</head>
+
+<body id="page" class="index-page" style="font-family: 'Libre Baskerville', serif;">
+
+    <!-- Navigation bar starts -->
+
+    <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom">
+        <div class="container">
+            <a class="navbar-brand mr-md-6" href="../fog-prediction/"><img class="img-fluid" src="./assets/img/fps1.png" style="height: 60px;width: 350px;"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+            <div class="collapse navbar-collapse" id="navbar-default">
+                <div class="navbar-collapse-header">
+                    <div class="row">
+                        <div class="col-6 collapse-brand">
+
+                        </div>
+                        <div class="col-6 collapse-close">
+                            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
+                            <span></span>
+                            <span></span>
+                        </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="navbar-nav flex-row mr-auto ml-4 d-none d-md-flex">
+                    <h2 style="color: #ffffff; margin-left: 100px;font-weight: bold;">Locator</h2>
+                </div>
+                <ul class="navbar-nav ml-lg-auto">
+                    <li>
+                        <div class="row">
+                            <div class="col-md-12" style="height:60px;">
+                                <form role="form" autocomplete="off" method="GET">
+                                    <div class="form-group">
+                                        <div class="autocomplete input-group">
+                                            <a href="../fog-prediction/" class="nav-link">
+                                                <span class="nav-link-inner--text"><button type="button" class="btn btn-primary btn-fab btn-icon btn-round fa fa-home">Home</button></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Navigation bar ends -->
+
+
+   <div class="wrapper container-fuild">
+        <section class="section section-shaped rounded" style="padding-bottom:2rem;">
+            <div class="shape shape-primary" style="height: 100px;">
+            </div>
+        </section>
+    </div>
+    <div class="container" style="margin:10px;padding:10px">
+    
+        <div class="row d-flex justify-content-center">
+        <form  autocomplete="off" method="GET" id="cityform" >
+            <div class="form-group">
+            <label for="myInputFirst">City</label>
+            <input id="myInputFirst" class="form-control" placeholder="Enter City...." type="text" width="50%" required>
+            
+        </div>
+        <div class="form-group">
+            <label for="myInputSecond">Date & Time</label>
+            <input id="myInputSecond" class="form-control" placeholder="Enter Date & Time...." type="datetime-local" width="50%" required>
+            <span class="nav-link-inner--text"><button type="button" class="btn btn-link" id="select-city" onclick="latest()"> Take Latest</button></span>
+        </div>
+        <span class="nav-link-inner--text"><button type="Submit" class="btn btn-primary" id="submit">Submit</button></span>
+        <span class="nav-link-inner--text"><button type="reset" class="btn btn-primary" id="reset" onclick="resetit()">Reset</button></span>
+        </form>
+        </div>
+    </div>
+    <!--<div class="container" style="margin:10px;padding:10px">
+    
+    
+        <div class="row d-flex justify-content-center">
+           <p> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;City:&ensp;&ensp;</p>
+            <div>
+                <div class="  map-data d-flex" style="width:100%;">
+                    
+                        
+                            <div class="autocomplete input-group" style="width:100%;">
+                                <input id="myInputFirst" class="form-control" placeholder="Enter City...." type="text" width="50%" required>
+                            </div>
+                        
+                </div>
+            </div>
+            <div class="col-sm-2"></div>
+
+            
+        </div>
+
+        
+        <div class="row d-flex justify-content-center" style="padding-top:1rem;">
+            <p>Date & Time:&ensp;&ensp;</p>
+            <div>
+                <div class="  map-data d-flex" style="width:100%;">
+                    
+                            <div class="autocomplete input-group" style="width:100%;">
+                                <input id="myInputSecond" class="form-control" placeholder="Enter Date & Time...." type="datetime-local" width="50%" required>
+                            </div>
+                       
+                </div>
+            </div>
+            
+            <div  >
+               
+                    <span class="nav-link-inner--text"><button type="button" class="btn btn-link" id="select-city" onclick="latest()"> Take Latest</button></span>
+               
+            </div>
+        </div>-->
+        <!--<div class="row d-flex justify-content-center" >
+            <p style="color:red">(* implies required)<p>
+        </div>-->
+       
+        
+           <!-- <div class="col-md-2"></div>
+            <div class="col-md-2">
+                <div class="col-md  map-data d-flex" style="width:100%;">
+                    <form role="form" autocomplete="off" method="GET">
+                        <div class="form-group">
+                            <div class="autocomplete input-group" style="width:100%;">
+                                <input id="myInputFirst" class="form-control" placeholder="Enter City...." type="text" width="50%" required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>-->
+           
+         <!--  
+        <div class="row d-flex justify-content-center" style="padding-top:1rem;">
+            <div >
+               
+                    <span class="nav-link-inner--text"><button type="button" class="btn btn-primary" id="submit" onclick="getloc()">Submit</button></span>
+               
+            </div>
+           
+            <div style="padding-left:1rem;">
+               
+                    <span class="nav-link-inner--text"><button type="button" class="btn btn-primary" id="reset" onclick="reset()">Reset</button></span>
+               
+            </div>-->
+           <!-- <div id="mod4" class="col-md-2" style="padding-left: 40px;display:none">
+                <a href="#" class="nav-link" data-toggle="dropdown" href="#" role="button">
+                    <span class="nav-link-inner--text"><button type="button" class="btn btn-primary" id="hr-choose">Choose Hourwise</button></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
+                    <a class="dropdown-item" modelno="405" onclick="onModelChange(this)" href="#">0.5 hour</a>
+                    <a class="dropdown-item" modelno="410" onclick="onModelChange(this)" href="#">1 hour</a>
+                    <a class="dropdown-item" modelno="415" onclick="onModelChange(this)" href="#">1.5 hour</a>
+                    <a class="dropdown-item" modelno="420" onclick="onModelChange(this)" href="#">2 hour</a>
+                    <a class="dropdown-item" modelno="425" onclick="onModelChange(this)" href="#">2.5 hour</a>
+                    <a class="dropdown-item" modelno="4" onclick="onModelChange(this)" href="#">3 hour</a>-->
+                    <!-- <a class="dropdown-item" modelno="460" onclick="onModelChange(this)" href="#">6 hour</a> -->
+
+               <!-- </div>
+            </div>-->
+            </div>
+            
+        
+    </div>
+    </form>
+     
+    <div class="container" style="height: 100vh">
+        
+        <div class="card shadow">
+
+            <div class="card-body rounded " style="padding:1rem 2rem 1rem 0rem; " >
+                <div class="col">
+                    <div class="container" style="font-size:26px;color:red;">
+                            Fog
+                    </div>
+                    <div class="text-center"  style="margin-top:1rem;font-size:21px;" id="address">
+                
+                    </div>
+                    <div class="text-center"  style="font-size:21px;" id="fogval">
+                    
+                    </div>
+                    <div class="d-flex justify-content-center" style="height: 100vh">
+                        <div id="map" class="map w-75 h-100"></div>
+                    </div>  
+                   <!-- <div class="d-flex justify-content-center" style="height: 100vh">
+                        <div id="root" class="map w-75 h-100"></div>
+                    </div>  -->
+                     <!--<iframe width='500' height='400' frameborder='0' scrolling='no' marginwidth='0'src=https://bhuvan.nrsc.gov.in/map/bhuvan/embed.html?l=47.85&b=9.51416015625&r=115.35&t=35.48583984375&val=m></iframe> 
+                -->
+                        <!--<div class=" con "  id="imagediv">
+                            <img id="fogimage" src="process/fog_output/Fog_for_website_default.jpg" class="w-75  mx-auto d-block map" id="fog">
+                            
+                        </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+            <!-- <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;">
+                <div id="rmse" align="center"></div>
+            </div> -->
+           <!-- <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;">
+                <div id="rmsec"></div>
+            </div>
+            
+        </div>        
+    </div>
+    <section id="footr" class="section  pb-0" style="padding-top:1rem;margin-bottom:1rem;display: none;">
+        <div class="container-fuild">
+            <div class="card shadow">
+                <div class="card-body bg-gradient-primary rounded ">
+                    <div class="row justify-content-center" style="color:white;">
+                        <a href="./about.html" target="_blank" style="color: #ffffff;"><p>© Fog Prediction , IIT Kanpur. All rights reserved.</p></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>-->
+
+    
+    
+
+
+    
+
+    <script src="./assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="./assets/js/core/jquery.min.js" type="text/javascript"></script>
+    <script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
+    <script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+    <script src="./assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <script src="./assets/js/plugins/bootstrap-switch.js"></script>
+    <script src="./assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
+    <script src="./assets/js/plugins/moment.min.js"></script>
+
+    <script src="./assets/js/plugins/datetimepicker.js" type="text/javascript"></script>
+    <script src="./assets/js/plugins/bootstrap-datepicker.min.js"></script>
+    <script src="./assets/js/argon-design-system.min.js?v=1.2.0" type="text/javascript"></script>
+
+    <script src="./assets/js/plugins/bootstrap-datepicker.min.js"></script>
+    <script src="./assets/js/argon-design-system.min.js?v=1.2.0" type="text/javascript"></script>
+
+    <script src="./assets/chart-library/core.js"></script>
+    <script src="./assets/chart-library/charts.js"></script>
+    <script src="./assets/chart-library/themes/material.js"></script>
+    <script src="./assets/chart-library/themes/animated.js"></script>
+
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
+
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/data.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
+
+    <!--<script src="./js/curvspred.js"></script>
+    <script>
+        document.getElementById("myInputFirst").value = 'Lucknow'
+        loaddata(4,"Gradient Boosting Regressor")
+    </script>
+    <script type="text/javascript" src="js/google_map.js"></script>
+    <script src="assets/v6.5.0/build/ol.js"></script>
+    <script src="assets/ol-layerswitcher/dist/ol-layerswitcher.js"></script>-->
+    
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <!--<script src="https://gipong.github.io/shp2geojson.js"></script>-->
+    <!--<script src="https://openlayers.org/en/v6.4.3/build/ol.js"></script>
+    <script src="https://raw.githack.com/walkermatt/ol-layerswitcher/master/dist/ol-layerswitcher.js"></script>
+    <script src="https://raw.githack.com/walkermatt/ol-layerswitcher/master/examples/layerswitcher.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.9.0/build/ol.js"></script>
+    <script src="https://unpkg.com/ol-layerswitcher@3.8.3"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>-->
+    <script>
+        
+         /*var map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    title: 'OSM',
+                    type: 'base',
+                    source: new ol.source.OSM()
+                })
+            ],
+            
+            view: new ol.View({
+                projection: 'EPSG:4326',
+                center: [78.0,23.0],
+                zoom: 5,
+            })
+          });*/
+          var map = new ol.Map({
+            target: 'map',
+            layers: [
+                /*new ol.layer.Tile({
+                    source: new ol.source.OSM(),
+                }),*/
+                new ol.layer.Tile({
+                    title: 'Bhuvan',
+                    type: 'base',
+                    source: new ol.source.TileWMS({
+                        //url: "https://bhuvan-vec2.nrsc.gov.in/bhuvan/wms",
+                        url:"https://bhuvan-ras1.nrsc.gov.in/",
+                        params: {'LAYERS': "'Bhuvan_Lite_Sat_V2"},
+                        ratio: 1,
+                        serverType: 'geoserver'
+                    })
+                })
+            ],
+           view: new ol.View({
+                projection: 'EPSG:4326',
+                center: [78.0,23.0],
+                zoom: 5,
+            })
+          })
+          var layerSwitcher = new ol.control.LayerSwitcher({
+            activationMode: 'click',
+            startActive: true,
+            tipLabel: 'Layers', // Optional label for button
+            groupSelectStyle: 'children', // Can be 'children' [default], 'group' or 'none'
+            collapseTipLabel: 'Collapse layers',
+        });
+        
+        /*var bhuvanLayer = L.tileLayer('http://bhuvan3.nrsc.gov.in/tiles/bhuvan/tile/map/{z}/{x}/{y}.png', {
+       maxZoom: 18,
+       attribution: 'Bhuvan Map',
+     }).addTo(map);*/
+                //zIndex: 1,
+         
+    map.addControl(layerSwitcher);
+    
+     /*new ol.layer.Image({
+      title: 'india_district',
+     // extent: [-180, -90, -180, 90],
+      source: new ol.source.ImageWMS({
+        url: 'http://localhost:8080/geoserver/wms',
+        params: {'LAYERS': 'india:india_dist'},
+        ratio: 1,
+        serverType: 'geoserver'
+      })
+    }),
+    new ol.layer.Image({
+      title: 'india_state',
+     // extent: [-180, -90, -180, 90],
+      source: new ol.source.ImageWMS({
+        url: 'http://localhost:8080/geoserver/wms',
+        params: {'LAYERS': 'india:india_state'},
+        ratio: 1,
+        serverType: 'geoserver'
+      })
+    })*/
+    
+    
+    /*const staticImageLayer = new ol.layer.ImageLayer({
+        source: new ol.source.StaticImage({
+            opacity: imageOpacity,
+            url: 'process/fog_output/Fog_for_website_default.jpg',
+            imageExtent: extent,
+            projection: 'EPSG:4326',
+        }),
+        zIndex: 200,
+    });*/
+    
+        //layerSwitcher.renderPanel();
+        var canvas;
+        var context;
+        $( "#cityform" ).submit(function(event) {
+            event.preventDefault();
+            getloc();
+        });
+        $(document).on({
+            ajaxStart: function(){
+                $("#page").LoadingOverlay("show");
+
+            },
+            ajaxStop: function(){
+                $("#page").LoadingOverlay("hide");
+            document.getElementById('footr').style["display"] = "block";
+
+            }    
+        });
+
+        function latest(){
+            const now = new Date();
+            var mon=(now.getMonth()<10)? '0'+now.getMonth() : now.getMonth()
+            var date=(now.getDate()<10)? '0'+now.getDate() : now.getDate()
+            var minite=(now.getMinutes()<10)? '0'+now.getMinutes() : now.getMinutes()
+            var hour=(now.getHours()<10)? '0'+now.getHours() : now.getHours()
+            var today=now.getFullYear()+'-'+mon+'-'+date+'T'+hour+':'+minite;
+            //now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            $('#myInputSecond').val(today);
+            
+        }
+        function resetit(){
+            $.ajax({
+                url: "apis/findloc.php?address=default",
+                success: function(result) {
+         
+                    
+                    //var arr=result.split(";");
+                    $("#address").empty();
+                    $("#fogval").empty();
+                   // $('#imagediv').empty();
+                   // $('#imagediv').append('<img src="process/fog_output/Fog_for_website_default.jpg" class="w-75  mx-auto d-block map" id="fog">');
+                   $('#fogimage').attr("src","process/fog_output/Fog_for_website_default.jpg?"+ new Date().getTime());
+                }
+            });
+        }   
+        function getloc(){
+            
+            
+            var inp=document.getElementById("myInputFirst").value;
+            var inp2=document.getElementById("myInputSecond").value;
+            /*var geocoder = new google.maps.Geocoder();
+            alert(inp);
+            geocoder.geocode( { 'address': inp}, function(results, status) {
+            alert(results);
+            if (status == google.maps.GeocoderStatus.OK) {
+                var latitude = results[0].geometry.location.lat();
+                var longitude = results[0].geometry.location.lng();
+                alert(latitude);
+                alert(longitude);
+                } 
+            }); 
+            return;*/
+            if(inp=='' || inp2==''){
+                alert('Invalid Input');
+                return;
+            }
+           
+            $.ajax({
+                url: "apis/findloc.php?address="+inp,
+                success: function(result) { 
+                    
+                    var arr=result.split(';');
+                    var kay='';
+                    if(arr[1]==0)
+                        kay='Fog Absent'
+                    else if(arr[1]==1)
+                        kay='Fog Present'
+                    else
+                        kay='No Result'
+                    //var arr=result.split(";");
+                    document.getElementById("address").innerHTML="Address: "+arr[0];
+                    document.getElementById("fogval").innerHTML="Fog Status: "+kay;
+                    //$('#imagediv').empty(); 
+                    //$('#imagediv').append('<img src="process/fog_output/Fog_for_website_'+inp+'.jpg" class="w-75  mx-auto d-block map" id="fog">');
+                    $('#fogimage').attr("src","process/fog_output/Fog_for_website.jpg?"+ new Date().getTime());
+                   /* var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                    var inpu=arr[2].split(',');
+                    var x=0,y=0;
+                    for(var pos=0;pos<inpu.length;pos+=2){
+                        x=parseInt(inpu[pos],10);
+                        y=parseInt(inpu[pos+1],10);
+                        var j=((x*canvas.width)+y)*4;
+                        imageData.data[j]=imageData.data[j]^255;
+                        imageData.data[j+1]=imageData.data[j+1]^0;
+                        imageData.data[j+2]=imageData.data[j+2]^0;
+
+                    }
+                    context.putImageData(imageData, 0, 0);
+                    var pos=arr[1].split(" ");
+                    alert(pos);
+                    //pos[0]=parseInt(pos[0],10);
+                    //pos[1]=parseInt(pos[1],10);
+                    pos[0]=300;
+                    pos[1]=400;
+                    $('.circle').css('top', pos[0]); //or wherever you want it
+                    $('.circle').css('left', pos[1]);
+                   // var e=$();
+                    $('#canvas' ).append('<div class="circle" id="circle"></div>');*/
+                    /*fill = '<v:fill color="white" opacity="0" />';
+			        opacity = '<v:stroke opacity="10"/>';
+                    e=$('<v:oval name="'+inp+'" fillcolor="green"  style="zoom:1;margin:0;padding:0;display:block;position:absolute;left:'+(pos[0] - 100)+'px;top:'+(pos[1] - 100)+'px;width:200px;height:200px;"></v:oval>');
+                    //e.get(0).innerHTML = fill+opacity;
+                    $(canvas).append(e);*/
+
+                    /*document.getElementById("fogmap").innerHTML=`<area shape="circle" coords="`+ String(pos[0]) + `,` + String(pos[1]) + `,10"  style="background-color:red;">`
+                    var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                    var j=((pos[0]*canvas.width)+parseInt(pos[1]))*4;
+                    alert(j);
+                      imageData.data[j]=imageData.data[j]^255;
+                    imageData.data[j+1]=imageData.data[j+1]^0;
+                    imageData.data[j+2]=imageData.data[j+2]^0;
+                    //imageData.data[j+3]=imageData.data[j+3]^255;
+                    
+                    context.putImageData(imageData, 0, 0);*/
+                }
+            });
+        }
+        
+
+       
+
+        /*function init() {
+            canvas = document.getElementById('canvas');
+            context = canvas.getContext('2d');
+
+            //drawImage(image);
+
+            var image = new Image();
+            image.onload = function () {
+                canvas.width = image.width;
+                canvas.height = image.height;
+               
+                context.drawImage(image, 0, 0);
+            }
+            image.src = 'images/FOG.jpg';
+            
+
+            
+        }
+
+        window.addEventListener('load', init);  */
+    </script>
+</body>
+
+</html>

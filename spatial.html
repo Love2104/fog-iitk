@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png"> -->
+    <link rel="icon" type="image/png" href="./assets/img/iitk.png">
+    <title>Spatial Fog Detection</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+    <link href="./assets/css/font-awesome.css" rel="stylesheet" />
+    <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+    <link href="./assets/css/argon-design-system.css?v=1.2.0" rel="stylesheet" />
+    <!-- <script src="https://cdn.jsdelivr.net/gh/egeriis/zipcelx/lib/standalone.js"></script> -->
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.9.0/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="assets/v6.5.0/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="assets/v6.5.0/examples/resources/layout.css" type="text/css">
+    <link rel="stylesheet" href="assets/ol-layerswitcher/dist/ol-layerswitcher.css" />-->
+    <!--<link rel="stylesheet" href="https://openlayers.org/en/v6.4.3/css/ol.css" />
+    <link rel="stylesheet" href="https://raw.githack.com/walkermatt/ol-layerswitcher/master/src/ol-layerswitcher.css" />
+    <link rel="stylesheet" href="https://raw.githack.com/walkermatt/ol-layerswitcher/master/examples/layerswitcher.css" />
+    <link rel="stylesheet" href="https://unpkg.com/ol-layerswitcher@3.8.3/dist/ol-layerswitcher.css" />-->
+    <link rel="stylesheet" href="assets/v6.5.0/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="assets/v6.5.0/examples/resources/layout.css" type="text/css">
+    <link rel="stylesheet" href="assets/ol-layerswitcher/dist/ol-layerswitcher.css" />
+
+
+    <script src="assets/v6.5.0/build/ol.js"></script>
+    <script src="assets/ol-layerswitcher/dist/ol-layerswitcher.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    
+<!--<link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />-->
+<script src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' rel='stylesheet' />
+
+    <style>
+       
+        .color-legend {
+            width: 200px;
+            height: 20px;
+            background: linear-gradient(to right, white, black);/*red, yellow, green); */
+           
+        }
+
+        
+        .legend-label {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+                .legend {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Define the legend items for each category */
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        /* Define the color or symbol for each category */
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        /* You can add more styles as needed */
+
+        /* Define the colors or symbols for your discrete variables */
+        .category-1 {
+            background-color: white;
+        }
+
+        .category-2 {
+            background-color: black;
+        }
+
+        /* You can add more styles as needed */
+    </style>
+    <style>
+        .layer-switcher.shown.layer-switcher-activation-mode-click {
+            padding-right: 10px;
+          }
+          .layer-switcher.shown.layer-switcher-activation-mode-click > button {
+            right: 0;
+            border-left: 0;
+          }
+        /*.map {
+            height: ;
+            width: 400px;
+          }*/
+          .ol-mouse-position{
+            top:97%;
+            right:20%;
+            position:absolute;
+            font-weight: bold;
+            }
+            .layer-switcher.shown {
+             max-height: 465px;
+            }
+            
+            #legend{
+               z-index: 11;
+               padding: 4px 8px;
+               border: 2px solid grey;
+               position: absolute;
+               bottom: 0px;
+               height: 50%;
+               overflow: scroll;
+               width:15%; 
+               right: 0%;
+               background-color: #ffffff;
+               font-weight: bold;
+             }
+        v\:* { behavior: url(#default#VML);}
+        o\:* { behavior: url(#default#VML);}
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            /*position the autocomplete items to be the same width as the container:*/
+            top: 100%;
+            left: 0;
+            right: 0;
+            max-height: 300px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            text-align: justify;
+        }
+        
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            font: outline;
+            color: azure;
+            background: radial-gradient(rgb(235, 119, 235), rgb(108, 108, 238));
+            border-bottom: 2px solid #d4d4d4;
+        }
+        /*when hovering an item:*/
+        
+        .autocomplete-items div:hover {
+            background: radial-gradient(rgb(28, 226, 160), rgb(61, 214, 241));
+        }
+        /*when navigating through the items using the arrow keys:*/
+        
+        .autocomplete-active {
+            background: radial-gradient(rgb(28, 226, 160), rgb(61, 214, 241)) !important;
+            color: #ffffff;
+        }
+        
+        #compchart-section {
+            display: none;
+        }
+       /*.container #canvas {
+        width: 100%;
+        height: auto;
+        }*/
+       
+        .circle {
+            width: 10px;
+            height: 10px;
+            background: red;
+            border-radius: 50%;
+            z-index:1;
+        }
+        /*.con .circle {
+        position: absolute;
+        top:300px;
+        left:300px;
+        
+        border: none;
+        cursor: pointer;
+       
+        }*/
+    </style>
+</head>
+
+<body id="page" class="index-page" style="font-family: 'Libre Baskerville', serif;">
+
+    <!-- Navigation bar starts -->
+
+    <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom">
+        <div class="container">
+            <a class="navbar-brand mr-md-6" href="../fog-prediction/"><img class="img-fluid" src="./assets/img/fps1.png" style="height: 60px;width: 350px;"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+            <div class="collapse navbar-collapse" id="navbar-default">
+                <div class="navbar-collapse-header">
+                    <div class="row">
+                        <div class="col-6 collapse-brand">
+
+                        </div>
+                        <div class="col-6 collapse-close">
+                            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
+                            <span></span>
+                            <span></span>
+                        </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="navbar-nav flex-row mr-auto ml-4 d-none d-md-flex">
+                    <h2 style="color: #ffffff; margin-left: 100px;font-weight: bold;">Spatial Fog Detection</h2>
+                </div>
+                <ul class="navbar-nav ml-lg-auto">
+                    <li>
+                        <div class="row">
+                            <div class="col-md-12" style="height:60px;">
+                                <form role="form" autocomplete="off" method="GET">
+                                    <div class="form-group">
+                                        <div class="autocomplete input-group">
+                                            <a href="../fog-prediction/" class="nav-link">
+                                                <span class="nav-link-inner--text"><button type="button" class="btn btn-primary btn-fab btn-icon btn-round fa fa-home">Home</button></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Navigation bar ends -->
+
+
+   <div class="wrapper container-fuild">
+        <section class="section section-shaped rounded" style="padding-bottom:2rem;">
+            <div class="shape shape-primary" style="height: 100px;">
+            </div>
+        </section>
+    </div>
+    
+    <!--<div class="container" style="margin:10px;padding:10px">
+    
+    
+        <div class="row d-flex justify-content-center">
+           <p> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;City:&ensp;&ensp;</p>
+            <div>
+                <div class="  map-data d-flex" style="width:100%;">
+                    
+                        
+                            <div class="autocomplete input-group" style="width:100%;">
+                                <input id="myInputFirst" class="form-control" placeholder="Enter City...." type="text" width="50%" required>
+                            </div>
+                        
+                </div>
+            </div>
+            <div class="col-sm-2"></div>
+
+            
+        </div>
+
+        
+        <div class="row d-flex justify-content-center" style="padding-top:1rem;">
+            <p>Date & Time:&ensp;&ensp;</p>
+            <div>
+                <div class="  map-data d-flex" style="width:100%;">
+                    
+                            <div class="autocomplete input-group" style="width:100%;">
+                                <input id="myInputSecond" class="form-control" placeholder="Enter Date & Time...." type="datetime-local" width="50%" required>
+                            </div>
+                       
+                </div>
+            </div>
+            
+            <div  >
+               
+                    <span class="nav-link-inner--text"><button type="button" class="btn btn-link" id="select-city" onclick="latest()"> Take Latest</button></span>
+               
+            </div>
+        </div>-->
+        <!--<div class="row d-flex justify-content-center" >
+            <p style="color:red">(* implies required)<p>
+        </div>-->
+       
+        
+           <!-- <div class="col-md-2"></div>
+            <div class="col-md-2">
+                <div class="col-md  map-data d-flex" style="width:100%;">
+                    <form role="form" autocomplete="off" method="GET">
+                        <div class="form-group">
+                            <div class="autocomplete input-group" style="width:100%;">
+                                <input id="myInputFirst" class="form-control" placeholder="Enter City...." type="text" width="50%" required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>-->
+           
+         <!--  
+        <div class="row d-flex justify-content-center" style="padding-top:1rem;">
+            <div >
+               
+                    <span class="nav-link-inner--text"><button type="button" class="btn btn-primary" id="submit" onclick="getloc()">Submit</button></span>
+               
+            </div>
+           
+            <div style="padding-left:1rem;">
+               
+                    <span class="nav-link-inner--text"><button type="button" class="btn btn-primary" id="reset" onclick="reset()">Reset</button></span>
+               
+            </div>-->
+           <!-- <div id="mod4" class="col-md-2" style="padding-left: 40px;display:none">
+                <a href="#" class="nav-link" data-toggle="dropdown" href="#" role="button">
+                    <span class="nav-link-inner--text"><button type="button" class="btn btn-primary" id="hr-choose">Choose Hourwise</button></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
+                    <a class="dropdown-item" modelno="405" onclick="onModelChange(this)" href="#">0.5 hour</a>
+                    <a class="dropdown-item" modelno="410" onclick="onModelChange(this)" href="#">1 hour</a>
+                    <a class="dropdown-item" modelno="415" onclick="onModelChange(this)" href="#">1.5 hour</a>
+                    <a class="dropdown-item" modelno="420" onclick="onModelChange(this)" href="#">2 hour</a>
+                    <a class="dropdown-item" modelno="425" onclick="onModelChange(this)" href="#">2.5 hour</a>
+                    <a class="dropdown-item" modelno="4" onclick="onModelChange(this)" href="#">3 hour</a>-->
+                    <!-- <a class="dropdown-item" modelno="460" onclick="onModelChange(this)" href="#">6 hour</a> -->
+
+               <!-- </div>
+            </div>-->
+            </div>
+            
+        
+    </div>
+    
+    </form>
+    <div class="row mt-4" style="padding:1rem 2rem 1rem 1rem; ">
+
+     <div class=" container col-md-4" >
+        <!--<div class="card shadow">
+
+            <div class="card-body rounded " style="padding:1rem 2rem 1rem 0rem; " >
+        <div class="row d-flex justify-content-center">
+        
+        <form  autocomplete="off" method="GET" id="cityform" >
+        <h5>Select the City and Time of data to be viewed</h5>
+            <div class="form-group">
+            <label for="myInputFirst">City</label>
+            <input id="myInputFirst" class="form-control" placeholder="Enter City...." type="text" width="50%" required>
+            
+            </div>
+           <div class="form-group">
+                <label for="myInputSecond">Date & Time</label>
+                <input id="myInputSecond" class="form-control" placeholder="Enter Date & Time...." type="datetime-local" width="50%" required>
+                <span class="nav-link-inner--text"><button type="button" class="btn btn-link" id="select-city" onclick="latest()"> Take Latest</button></span>
+                
+            </div> 
+            
+            
+        <span class="nav-link-inner--text"><button type="Submit" class="btn btn-primary" id="submit">Submit</button></span>
+        <span class="nav-link-inner--text"><button type="reset" class="btn btn-primary" id="reset" onclick="resetit()">Reset</button></span>
+        
+        </form>
+        </div>
+        </div>
+        </div>-->
+        
+        
+        
+        <div class="card shadow mt-3">
+
+            <div class="card-body rounded " style="padding:1rem 2rem 1rem 0rem; " >
+        <div class="row d-flex justify-content-center">
+        
+        <form  autocomplete="off" method="GET" id="layerform" >
+
+        <div class="form-group mt-3">
+            <h5>Select the type of data to be viewed</h5>
+           
+            <!--<div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="layer1" checked>
+                <label class="form-check-label" for="flexRadioDefault1">
+                    Fog 
+                </label>
+            </div>-->
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="layer2" checked>
+                <label class="form-check-label" for="flexRadioDefault1">
+                    Fog Probability
+                </label>
+            </div>
+            <!--<div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="layer2">
+                <label class="form-check-label" for="flexRadioDefault2">
+                    Fog Probability
+                </label>
+            </div>-->
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="layer3" >
+                <label class="form-check-label" for="flexRadioDefault3">
+                    Epistemic Uncertainty
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="layer4" >
+                <label class="form-check-label" for="flexRadioDefault4">
+                    Aleatoric Uncertainty
+                </label>
+            </div>
+            <!--<div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="layer5" >
+                <label class="form-check-label" for="flexRadioDefault5">
+                    INSAT
+                </label>
+            </div>-->
+            <div class="form-check mt-3">
+                <input type="range" class="form-range" id="opacity" min="0" max="1" step="0.1" value="0.7">
+                <p>Opacity: <span id="demo">0.5</span></p>
+            </div>
+
+                <!--<label>
+                    <input type='checkbox' id='overlay-checkbox' checked>
+                    Layer1
+                </label>-->
+                
+            </div>
+            </form>
+        </div>
+        </div>
+        </div>
+    </div>
+    
+    <div class="container col-md-8" style="height: 100vh">
+        
+        <div class="card shadow">
+
+            <div class="card-body rounded " style="padding:1rem 2rem 1rem 0rem; " >
+            <div class="text-center"  style="margin-top:1rem;font-size:21px;" id="address">
+                
+                    </div>
+                    <!--<p style="color:red; padding:10px;text-align:center;" >Note: Real-time fog detection has been paused as the winter season is over. It will resume on November 1, 2025.</p>-->
+
+                    <h4 style="text-align:center;">Fog results for:<span id="dt"></span> IST (GMT+5:30)</h4>
+                    <div class="text-center"  style="font-size:21px;" id="fogval">
+                    
+                    </div>
+                <div class="d-flex justify-content-center w-100 " id="whileg" script="text-align:center">
+                    <!--<div class="legend">
+                        <div class="row">
+                        <div class="legend-item ml-4" >
+                             <div class=" rounded" style=" border: 2px solid; "><div class="legend-color w-100 category-1" id="legen"></div></div>
+                            <span>Fog</span>
+                        </div>
+                        <div class="legend-item ml-4 " >
+                             <div class=" rounded" style=" border: 2px solid; "><div class="legend-color w-100 category-2" id="legen"></div></div>
+                            <span>No Fog</span>
+                        </div>
+                        </div>
+                    </div>-->
+                    <div class=" w-75" style=" justify-content: center;align-items: center;" >
+                        <div class="rounded" style=" border: 2px solid; "><div class="color-legend w-100   " id="legen"></div></div>
+
+                        <div class="legend-label">
+                            <span>1(Fog)</span>    
+                            <!--<span>Mid</span>-->
+                            <span>0(No Fog)</span>
+                        </div>
+                    </div>
+                    
+                </div>
+                   <!--<div class="container w-100" style="font-size:26px;color:red;">
+                            Fog
+                    </div>--> 
+                    
+                    <!--<div class=" w-75" style=" justify-content: center;align-items: center;" >
+                        <div class="rounded" style=" border: 2px solid; "><div class="color-legend w-100   " id="legen"></div></div>
+
+                        <div class="legend-label">
+                            <span>1</span>    
+                            
+                            <span>0</span>
+                        </div>
+                    </div>-->
+                    
+                    
+                    <!-- <div class="d-flex justify-content-center" style="height: 100vh">
+                        <div id="map" class="map w-75 h-100"></div>
+                    </div>   -->
+                    
+                    <div class="d-flex justify-content-center" style="height: 100vh;padding:10px;">
+                        <div id="map1" class="map1 w-100 h-100"></div>
+                        
+                        <!--<input id='range' class='range' type='range' min='0' max='1.0' step='any' />-->
+                    </div>  
+                    <p style="color:red; padding:10px;">Disclaimer: The above data is for educational use only. Raw data provided by the Space Application Center by Indian Space Research Organisation (SAC-ISRO)<p>
+                     <!--<iframe width='500' height='400' frameborder='0' scrolling='no' marginwidth='0'src=https://bhuvan.nrsc.gov.in/map/bhuvan/embed.html?l=47.85&b=9.51416015625&r=115.35&t=35.48583984375&val=m></iframe> 
+                -->
+                        <!--<div class=" con "  id="imagediv">
+                            <img id="fogimage" src="process/fog_output/Fog_for_website_default.jpg" class="w-75  mx-auto d-block map" id="fog">
+                            
+                        </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+            <!-- <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;">
+                <div id="rmse" align="center"></div>
+            </div> -->
+           <!-- <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;">
+                <div id="rmsec"></div>
+            </div>
+            
+        </div>        
+    </div>
+    <section id="footr" class="section  pb-0" style="padding-top:1rem;margin-bottom:1rem;display: none;">
+        <div class="container-fuild">
+            <div class="card shadow">
+                <div class="card-body bg-gradient-primary rounded ">
+                    <div class="row justify-content-center" style="color:white;">
+                        <a href="./about.html" target="_blank" style="color: #ffffff;"><p>© Fog Prediction , IIT Kanpur. All rights reserved.</p></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>-->
+
+    
+    
+
+
+    
+
+    <script src="./assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="./assets/js/core/jquery.min.js" type="text/javascript"></script>
+    <script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
+    <script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+    <script src="./assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <script src="./assets/js/plugins/bootstrap-switch.js"></script>
+    <script src="./assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
+    <script src="./assets/js/plugins/moment.min.js"></script>
+
+    <script src="./assets/js/plugins/datetimepicker.js" type="text/javascript"></script>
+    <script src="./assets/js/plugins/bootstrap-datepicker.min.js"></script>
+    <script src="./assets/js/argon-design-system.min.js?v=1.2.0" type="text/javascript"></script>
+
+    <script src="./assets/js/plugins/bootstrap-datepicker.min.js"></script>
+    <script src="./assets/js/argon-design-system.min.js?v=1.2.0" type="text/javascript"></script>
+
+    <script src="./assets/chart-library/core.js"></script>
+    <script src="./assets/chart-library/charts.js"></script>
+    <script src="./assets/chart-library/themes/material.js"></script>
+    <script src="./assets/chart-library/themes/animated.js"></script>
+
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
+
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/data.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!--<script src="./js/curvspred.js"></script>
+    <script>
+        document.getElementById("myInputFirst").value = 'Lucknow'
+        loaddata(4,"Gradient Boosting Regressor")
+    </script>
+    <script type="text/javascript" src="js/google_map.js"></script>
+    <script src="assets/v6.5.0/build/ol.js"></script>
+    <script src="assets/ol-layerswitcher/dist/ol-layerswitcher.js"></script>-->
+    <!--<script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>-->
+    
+
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <!--<script src="https://gipong.github.io/shp2geojson.js"></script>-->
+    <!--<script src="https://openlayers.org/en/v6.4.3/build/ol.js"></script>
+    <script src="https://raw.githack.com/walkermatt/ol-layerswitcher/master/dist/ol-layerswitcher.js"></script>
+    <script src="https://raw.githack.com/walkermatt/ol-layerswitcher/master/examples/layerswitcher.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.9.0/build/ol.js"></script>
+    <script src="https://unpkg.com/ol-layerswitcher@3.8.3"></script>-->
+    <script src='apis/files.php'>
+    
+    </script>
+    <script>
+    var epi_path;
+    var api_path;
+    var fog_path;
+    console.log(files)
+    for(let o=0;o<files.length;o+=1){
+        let x=files[o].split('_')
+        console.log(x)
+        
+        if(x[x.length-1]=='alea.png'){
+            api_path=files[o]
+        }
+        else if(x[x.length-1]=='epi.png'){
+            epi_path=files[o]
+        }
+        else if(x.length==3){
+            var fog_path=files[o]
+            
+            var date1=x[1].substring(6,)
+            //console.log(date1)
+            var time=parseInt(x[2])+530
+            var min=time%100
+            
+            var hour=parseInt(time/100)
+            if(min==60){
+                hour+=1
+                
+                min='00'
+            }
+            if(hour>24){
+                hour=hour-24
+                let day=String(parseInt(date1.substring(0,2))+1)
+                //console.log(day)
+                date1=((day.length==1)?'0'+day:day)+date1.substring(2,)
+            }
+            hour=String(hour)
+            //console.log(hour,min)
+            var date2=date1.substring(0,2)+" "+date1.substring(2,5)+" "+date1.substring(5)
+            //console.log(date2,hour,min)
+
+        }
+    }
+    console.log(date1, date2, hour, min, fog_path)
+    $('#dt').append(' '+date2+' '+hour+':'+min)
+
+    
+    //L.mapbox.accessToken = 'pk.eyJ1IjoieWFzaC1mb2ciLCJhIjoiY2xtNHJ2ejdmMmVvMzNycDN6bjRsdjJ0NiJ9.UpTTnXM_BE9px7z4zQg8Dw'
+    //var map1 = L.mapbox.map('map1').setView([23, 78], 5).addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/satellite-streets-v12'))
+    //var overlay = L.imageOverlay('process/fog_output/fog70.png', [[-2,61.05], [38,99]])
+    var map1 = L.map('map1').setView([25, 80], 5);
+
+// Add the Bhuvan layer
+    var india3Layer = L.tileLayer.wms('https://bhuvan-vec1.nrsc.gov.in/bhuvan/gwc/service/wms', {
+        layers: 'india3',
+        format: 'image/png',
+        //transparent: true,
+        //crs: L.CRS.EPSG4326,
+        //attribution: '© Bhuvan',
+        //bbox: '44.4999999999765166,-9.9999999998705409,105.5000000000234905,45.4999999996179056'//,minx + ',' + miny + ',' + maxx + ',' + maxy
+    }).addTo(map1);
+    /*var india3Layer = L.tileLayer.wms('https://bhuvan-vec1.nrsc.gov.in/bhuvan/gwc/service/wms?service=WMS&request=GetMap&layers=india3&styles=&format=image%2Fpng&transparent=true&version=1.1.1&width=256&height=256&srs=EPSG%3A4326&bbox=44.4999999999765166,-9.9999999998705409,105.5000000000234905,45.4999999996179056', {
+        layers: 'india3',
+        format: 'image/png',
+        transparent: true,
+        crs: L.CRS.EPSG4326,
+        attribution: '© Bhuvan',
+        // Set the BBOX parameter
+        //bbox: minx + ',' + miny + ',' + maxx + ',' + maxy
+    }).addTo(map1);*/
+    /*var india3Layer =   L.tileLayer('https://bhuvan-vec1.nrsc.gov.in/bhuvan/gwc/service/wms', {
+            maxZoom: 18, // You can adjust this value as needed
+            tileSize:1024
+        }).addTo(map1);*/
+    var imgext=[[32.47422,67.48520] , [21.22717,90.83019 ]]
+    //var imgext=[[-9.9999999998705409,44.4999999999765166] , [45.4999999996179056,105.5000000000234905]]
+    //var fs = require('fs');
+    //var files = fs.readdirSync('prashad/26DEC2019_0200PNG/');
+    
+    
+    //var fog = L.imageOverlay('prashad/BNN/fog_image.png',imgext)// [[-2,61.05], [38,99]])
+    var fog_pro = L.imageOverlay('prashad/26DEC2019_0200PNG/'+fog_path,imgext).setOpacity(0.5)// [[-2,61.05], [38,99]])
+    //var insat = L.imageOverlay('prashad/BNN/output_image_insat.png',imgext).setOpacity(0.5)// [[-2,61.05], [38,99]])
+    var epi = L.imageOverlay('prashad/26DEC2019_0200PNG/'+epi_path,imgext).setOpacity(0.5)// [[-2,61.05], [38,99]])
+    var alea = L.imageOverlay('prashad/26DEC2019_0200PNG/'+api_path,imgext).setOpacity(0.5)// [[-2,61.05], [38,99]])
+
+    //.addTo(map1)
+    var layers={
+        //Insat:overlay,
+        Fog:fog_pro,
+        //Insat:insat
+    
+    }
+    function changeopa(lay,val){
+        //console.log(lay)
+        lay.setOpacity(val);
+        document.getElementById("opacity").value=val
+        document.getElementById("demo").innerHTML=val
+        document.getElementById("legen").style.opacity = val
+    }
+    
+    //layers.Insat.addTo(map1);
+    function toggleLayerVisibility(overlay1) {
+        //if (map1.hasLayer(overlay1)) {
+            map1.removeLayer(prevlayer); // Hide the layer
+        //} else {
+            prevlayer=overlay1
+            map1.addLayer(overlay1); // Show the layer
+            changeopa(prevlayer,0.5)
+            /*overlay1.setOpacity(0.5);
+            document.getElementById("opacity").value=0.5
+            document.getElementById("demo").innerHTML=0.5*/
+        //}
+    }
+    var prevlayer=fog_pro;
+    fog_pro.addTo(map1);
+    changeopa(fog_pro,0.5)
+    
+    //var radios = document.forms["layersform"].elements["flexRadioDefault"];
+    //console.log(radios)
+    /*var radios=[["layer1",fog],["layer5",insat]]
+    for(var i = 0, max = radios.length; i < max; i++) {*/
+        /*radios[i].onclick = function() {
+            if(i==0)
+                toggleLayerVisibility(overlay1)
+            if(i==radios.length-1)
+                toggleLayerVisibility(insat)
+        }*/
+    function togglelegend(st){
+        let whileg=document.getElementById("whileg")
+        if(st=='cont')
+            whileg.innerHTML=`<div class=" w-75" style=" justify-content: center;align-items: center;" >
+                        <div class="rounded" style=" border: 2px solid; "><div class="color-legend w-100   " id="legen"></div></div>
+
+                        <div class="legend-label">
+                            <span>1(Fog)</span>    
+                            <!--<span>Mid</span>-->
+                            <span>0(No Fog)</span>
+                        </div>
+                    </div>`
+        else if(st=='alea' || st=='epi')
+        whileg.innerHTML=`<div class=" w-75" style=" justify-content: center;align-items: center;" >
+            <div class="rounded" style=" border: 2px solid; "><div class="color-legend w-100   " id="legen"></div></div>
+
+            <div class="legend-label">
+                <span>0.5</span>    
+                <!--<span>Mid</span>-->
+                <span>0</span>
+            </div>
+        </div>`
+        else 
+        whileg.innerHTML=`<div class="legend">
+                        <div class="row">
+                        <div class="legend-item ml-4" >
+                             <div class=" rounded" style=" border: 2px solid; "><div class="legend-color w-100 category-1" id="legen"></div></div>
+                            <span>Fog</span>
+                        </div>
+                        <div class="legend-item ml-4 " >
+                             <div class=" rounded" style=" border: 2px solid; "><div class="legend-color w-100 category-2" id="legen"></div></div>
+                            <span>No Fog</span>
+                        </div>
+                        <!-- Add more legend items for additional categories as needed -->
+                    </div>`
+
+    }
+   /* document.getElementById("layer1").addEventListener('click', function (event) {
+        if (event.target && event.target.matches("input[type='radio']")) {
+            // do something here ...
+            togglelegend('disc')
+            toggleLayerVisibility(fog)
+            
+        }
+    });*/
+    document.getElementById("layer2").addEventListener('click', function (event) {
+        if (event.target && event.target.matches("input[type='radio']")) {
+            // do something here ...
+            togglelegend('cont')
+            toggleLayerVisibility(fog_pro)
+            
+        }
+    });
+    document.getElementById("layer3").addEventListener('click', function (event) {
+        if (event.target && event.target.matches("input[type='radio']")) {
+            // do something here ...
+            togglelegend('epi')
+            toggleLayerVisibility(epi)
+            
+        }
+    });
+    document.getElementById("layer4").addEventListener('click', function (event) {
+        if (event.target && event.target.matches("input[type='radio']")) {
+            // do something here ...
+            togglelegend('alea')
+            toggleLayerVisibility(alea)
+            
+        }
+    });
+    /*document.getElementById("layer5").addEventListener('click', function (event) {
+        if (event.target && event.target.matches("input[type='radio']")) {
+            // do something here ...
+            togglelegend('disc')
+            toggleLayerVisibility(insat)
+            
+        }
+    });*/
+    var slider = document.getElementById("opacity");
+    var output = document.getElementById("demo");
+    
+
+    // Update the current slider value (each time you drag the slider handle)
+   /* function updateOpacity() {
+    var opacityValue = document.getElementById('opacitySlider').value;
+    
+}*/
+    
+    slider.oninput = function() {
+       // console.log(this.value)
+    /*prevlayer.setOpacity(this.value);
+    output.innerHTML = this.value;*/
+    changeopa(prevlayer,this.value)
+    }
+    //}
+    
+    
+/*var toggleButton = document.createElement('overlay-checkbox');
+toggleButton.textContent = 'Toggle Layer Visibility';
+toggleButton.addEventListener('click', toggleLayerVisibility);
+toggleButton.addTo(map1);*/
+  //L.control.layers(layers).addTo(map1); 
+  //map1.on('idle', () => {
+  /*var toggle = document.getElementById('overlay-checkbox');
+    toggle.addEventListener('change', function () {
+        toggleLayerVisibility(insat) 
+        //var visibility = toggle.checked ? 'visible' : 'none';
+        //L.setLayoutProperty('Insat1', 'visibility', visibility);
+    });*/
+  //})
+    /*var range = document.getElementById('range');
+
+            function clip() {
+            var nw = map1.containerPointToLayerPoint([0, 0]),
+                se = map1.containerPointToLayerPoint(map1.getSize()),
+                clipX = nw.x + (se.x - nw.x) * range.value;
+
+            overlay.getContainer().style.clip = 'rect(' + [nw.y, clipX, se.y, nw.x].join('px,') + 'px)';
+            }
+
+            range['oninput' in range ? 'oninput' : 'onchange'] = clip;
+            map1.on('move', clip);
+            clip();*/
+        /*const map1 = new mapboxgl.Map({
+            //accessToken:'pk.eyJ1IjoieWFzaC1mb2ciLCJhIjoiY2xtNHMxcXpmMDNicjNrbW0ybmI1dGF4aCJ9.qtGAYVH5VRjBE3AMBpVnOA',
+            accessToken:'pk.eyJ1IjoieWFzaC1mb2ciLCJhIjoiY2xtNHJ2ejdmMmVvMzNycDN6bjRsdjJ0NiJ9.UpTTnXM_BE9px7z4zQg8Dw',
+            container: 'map1',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [78.0,23.0],
+            zoom: 4
+            });
+            map1.on('load', () => {
+                map1.addLayer({id: 'INSAT-fog',
+
+                    type: 'fill',
+                    source:{
+                        type: 'image',
+                        url: "./process/fog_output/fog70.png",
+                        coordinates: [
+                       
+                            [61.05,38.5],
+                            [99,38.5],
+                            [99,10],
+                            [61.05,10]
+                        ]
+                    },
+                    layout: {
+                        visibility: 'visible'
+                        },
+                })
+            })*/
+            //[61.05,0.3, 99,38.5]
+    </script>
+    <script>
+        /*var map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    title: 'OSM',
+                    type: 'base',
+                    source: new ol.source.OSM()
+                })
+            ],
+            
+            view: new ol.View({
+                projection: 'EPSG:4326',
+                center: [78.0,23.0],
+                zoom: 5,
+            })
+          });*/
+        var map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    title: 'OSM',
+                    type: 'base',
+                    source: new ol.source.OSM()
+                })
+            ],
+            
+            view: new ol.View({
+                projection: 'EPSG:4326',
+                center: [78.0,23.0],
+                zoom: 5,
+            })
+          });
+          
+          var layerSwitcher = new ol.control.LayerSwitcher({
+            activationMode: 'click',
+            startActive: true,
+            tipLabel: 'Layers', // Optional label for button
+            groupSelectStyle: 'children', // Can be 'children' [default], 'group' or 'none'
+            collapseTipLabel: 'Collapse layers',
+        });
+        const vectorSource1 = new ol.source.Vector({
+              format: new ol.format.GeoJSON(),
+          url: './assets/india_st.geojson'
+            });
+         /*loadshp({url: './assets/india_state.shp', encoding: 'utf-8'}, function(geojson) {
+            const features = new ol.format.GeoJSON().readFeatures(
+              geojson,
+              { featureProjection: map.getView().getProjection() }
+            );
+            const vectorSource1 = new ol.source.Vector({
+              features: features
+            });
+            /*map.addLayer(
+              new ol.layer.Vector({
+                source: vectorSource,
+                style: featureStyle
+              })
+            );
+            map.getView().fit(vectorSource.getExtent());
+          }); */
+        
+         const imageExtent = [61.05,0.3, 99,38.5];
+        // const imageExtent = [60.5,0, 99,38];
+        var overlays = new ol.layer.Group({
+            'title': 'Overlays',
+            layers: [
+            new ol.layer.Image({
+                title: 'image',
+                source: new ol.source.ImageStatic({
+                    opacity: 1,
+                    url: 'process/fog_output/fog70.png',
+                    imageExtent: imageExtent,
+                    projection: 'EPSG:4326',
+                }),
+            }),
+            new ol.layer.Vector({
+                //title: 'india_state',
+                source: vectorSource1,
+                style: new ol.style.Style({
+                    fill: new ol.style.Stroke({
+                        color: "transparent",
+                    }),
+                    stroke: new ol.style.Stroke({
+                        color: "#000000",
+                        width: 2,
+                    }),
+                }),
+              }),
+              
+                //zIndex: 1,
+            
+     /*new ol.layer.Image({
+      title: 'india_district',
+     // extent: [-180, -90, -180, 90],
+      source: new ol.source.ImageWMS({
+        url: 'http://localhost:8080/geoserver/wms',
+        params: {'LAYERS': 'india:india_dist'},
+        ratio: 1,
+        serverType: 'geoserver'
+      })
+    }),
+    new ol.layer.Image({
+      title: 'india_state',
+     // extent: [-180, -90, -180, 90],
+      source: new ol.source.ImageWMS({
+        url: 'http://localhost:8080/geoserver/wms',
+        params: {'LAYERS': 'india:india_state'},
+        ratio: 1,
+        serverType: 'geoserver'
+      })
+    })*/
+    
+    ]
+    });
+    /*const staticImageLayer = new ol.layer.ImageLayer({
+        source: new ol.source.StaticImage({
+            opacity: imageOpacity,
+            url: 'process/fog_output/Fog_for_website_default.jpg',
+            imageExtent: extent,
+            projection: 'EPSG:4326',
+        }),
+        zIndex: 200,
+    });*/
+    map.addLayer(overlays);
+    map.addControl(layerSwitcher);
+        //layerSwitcher.renderPanel();
+        var canvas;
+        var context;
+        $( "#cityform" ).submit(function(event) {
+            event.preventDefault();
+            getloc();
+        });
+        $(document).on({
+            ajaxStart: function(){
+                $("#page").LoadingOverlay("show");
+
+            },
+            ajaxStop: function(){
+                $("#page").LoadingOverlay("hide");
+            document.getElementById('footr').style["display"] = "block";
+
+            }    
+        });
+
+        function latest(){
+            const now = new Date();
+            var mon=(now.getMonth()<10)? '0'+now.getMonth() : now.getMonth()
+            var date=(now.getDate()<10)? '0'+now.getDate() : now.getDate()
+            var minite=(now.getMinutes()<10)? '0'+now.getMinutes() : now.getMinutes()
+            var hour=(now.getHours()<10)? '0'+now.getHours() : now.getHours()
+            var today=now.getFullYear()+'-'+mon+'-'+date+'T'+hour+':'+minite;
+            //now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            $('#myInputSecond').val(today);
+            
+        }
+        function resetit(){
+            $.ajax({
+                url: "apis/findloc.php?address=default",
+                success: function(result) {
+         
+                    
+                    //var arr=result.split(";");
+                    $("#address").empty();
+                    $("#fogval").empty();
+                   // $('#imagediv').empty();
+                   // $('#imagediv').append('<img src="process/fog_output/Fog_for_website_default.jpg" class="w-75  mx-auto d-block map" id="fog">');
+                   $('#fogimage').attr("src","process/fog_output/Fog_for_website_default.jpg?"+ new Date().getTime());
+                }
+            });
+        }   
+        function getloc(){
+            
+            
+            var inp=document.getElementById("myInputFirst").value;
+            var inp2=document.getElementById("myInputSecond").value;
+            /*var geocoder = new google.maps.Geocoder();
+            alert(inp);
+            geocoder.geocode( { 'address': inp}, function(results, status) {
+            alert(results);
+            if (status == google.maps.GeocoderStatus.OK) {
+                var latitude = results[0].geometry.location.lat();
+                var longitude = results[0].geometry.location.lng();
+                alert(latitude);
+                alert(longitude);
+                } 
+            }); 
+            return;*/
+            if(inp=='' || inp2==''){
+                alert('Invalid Input');
+                return;
+            }
+           
+            $.ajax({
+                url: "apis/findloc.php?address="+inp,
+                success: function(result) { 
+                    //console.log(result)
+                    var arr=result.split(';');
+                    var kay='';
+                    if(arr[1]==0)
+                        kay='Fog Absent'
+                    else if(arr[1]==1)
+                        kay='Fog Present'
+                    else
+                        kay='No Result'
+                    //var arr=result.split(";");
+                    document.getElementById("address").innerHTML="Address: "+arr[0];
+                    document.getElementById("fogval").innerHTML="Fog Status: "+kay;
+                    //$('#imagediv').empty(); 
+                    //$('#imagediv').append('<img src="process/fog_output/Fog_for_website_'+inp+'.jpg" class="w-75  mx-auto d-block map" id="fog">');
+                    $('#fogimage').attr("src","process/fog_output/Fog_for_website.jpg?"+ new Date().getTime());
+                   /* var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                    var inpu=arr[2].split(',');
+                    var x=0,y=0;
+                    for(var pos=0;pos<inpu.length;pos+=2){
+                        x=parseInt(inpu[pos],10);
+                        y=parseInt(inpu[pos+1],10);
+                        var j=((x*canvas.width)+y)*4;
+                        imageData.data[j]=imageData.data[j]^255;
+                        imageData.data[j+1]=imageData.data[j+1]^0;
+                        imageData.data[j+2]=imageData.data[j+2]^0;
+
+                    }
+                    context.putImageData(imageData, 0, 0);
+                    var pos=arr[1].split(" ");
+                    alert(pos);
+                    //pos[0]=parseInt(pos[0],10);
+                    //pos[1]=parseInt(pos[1],10);
+                    pos[0]=300;
+                    pos[1]=400;
+                    $('.circle').css('top', pos[0]); //or wherever you want it
+                    $('.circle').css('left', pos[1]);
+                   // var e=$();
+                    $('#canvas' ).append('<div class="circle" id="circle"></div>');*/
+                    /*fill = '<v:fill color="white" opacity="0" />';
+			        opacity = '<v:stroke opacity="10"/>';
+                    e=$('<v:oval name="'+inp+'" fillcolor="green"  style="zoom:1;margin:0;padding:0;display:block;position:absolute;left:'+(pos[0] - 100)+'px;top:'+(pos[1] - 100)+'px;width:200px;height:200px;"></v:oval>');
+                    //e.get(0).innerHTML = fill+opacity;
+                    $(canvas).append(e);*/
+
+                    /*document.getElementById("fogmap").innerHTML=`<area shape="circle" coords="`+ String(pos[0]) + `,` + String(pos[1]) + `,10"  style="background-color:red;">`
+                    var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                    var j=((pos[0]*canvas.width)+parseInt(pos[1]))*4;
+                    alert(j);
+                      imageData.data[j]=imageData.data[j]^255;
+                    imageData.data[j+1]=imageData.data[j+1]^0;
+                    imageData.data[j+2]=imageData.data[j+2]^0;
+                    //imageData.data[j+3]=imageData.data[j+3]^255;
+                    
+                    context.putImageData(imageData, 0, 0);*/
+                }
+            });
+        }
+        
+
+       
+
+        /*function init() {
+            canvas = document.getElementById('canvas');
+            context = canvas.getContext('2d');
+
+            //drawImage(image);
+
+            var image = new Image();
+            image.onload = function () {
+                canvas.width = image.width;
+                canvas.height = image.height;
+               
+                context.drawImage(image, 0, 0);
+            }
+            image.src = 'images/FOG.jpg';
+            
+
+            
+        }
+
+        window.addEventListener('load', init);  */
+         
+    </script>
+    <script>
+     window.addEventListener('load', function() {
+        console.log(window.performance.timing.navigationStart)
+        var renderTime = window.performance.timing.domContentLoadedEventEnd - window.performance.timing.navigationStart;
+        console.log('Render time: ' + renderTime + ' milliseconds');
+    });
+  </script>
+</body>
+
+</html>

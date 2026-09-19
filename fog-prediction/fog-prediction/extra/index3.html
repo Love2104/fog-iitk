@@ -1,0 +1,340 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="./assets/img/favicon.png">
+  <title>Fog Prediction</title>
+    <link rel="stylesheet" href="css/main.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link href="./assets/css/font-awesome.css" rel="stylesheet" />
+  <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link href="./assets/css/argon-design-system.css?v=1.2.0" rel="stylesheet" />
+
+  <script type="text/javascript" src="./amcharts4/ammap.js"></script>
+  <script type="text/javascript" src="./geodata/indiaLow.js"></script>
+
+  <script src="https://code.highcharts.com/stock/highstock.js"></script>
+  <script src="https://code.highcharts.com/stock/modules/data.js"></script>
+  <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
+
+  
+  <style>
+  .autocomplete-items {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 300px;
+    overflow-x: hidden; 
+    overflow-y: auto; 
+    text-align:justify; 
+  }
+  .autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+    font: outline;
+    color: azure;
+    background:radial-gradient(rgb(235, 119, 235),rgb(108, 108, 238)); 
+    border-bottom: 2px solid #d4d4d4; 
+  }
+  
+  /*when hovering an item:*/
+  .autocomplete-items div:hover {
+    background:radial-gradient(rgb(28, 226, 160),rgb(61, 214, 241)); 
+  }
+  
+  /*when navigating through the items using the arrow keys:*/
+  .autocomplete-active {
+    background: radial-gradient(rgb(28, 226, 160),rgb(61, 214, 241)) !important; 
+    color: #ffffff; 
+  }
+  </style>
+</head>
+<body class="index-page">
+
+  <!-- Navigation bar starts -->
+
+  <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom">
+    <div class="container">
+        <a class="navbar-brand mr-md-6" href="/fog/website"><img class = "img-fluid" src="./assets/img/fps1.png" style="height: 50px;"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-default">
+            <div class="navbar-collapse-header">
+                <div class="row">
+                    <div class="col-6 collapse-brand">
+                      
+                    </div>
+                    <div class="col-6 collapse-close">
+                        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
+                            <span></span>
+                            <span></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <ul class="navbar-nav ml-lg-auto">
+              <li>
+                <div class="row">
+                  <div class="col-md-12" style="height:60px;">
+                    <form role="form" autocomplete="off" method="GET">
+                      <div class="form-group">
+                        <div class="autocomplete input-group" style="padding-top: 17px ;">
+                          <input id="myInput" class="form-control" placeholder="Search" type="text">
+                          <input type="button" class="btn btn-primary btn-fab btn-icon btn-round" value="Click" onclick="checkCity(this)" >
+                          
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </li>
+              
+              <li class="nav-item dropdown">
+                <a href="#" class="nav-link" data-toggle="dropdown" href="#" role="button">
+                  <span class="nav-link-inner--text"><button type="button" class="btn btn-primary">Choose Model</button></span>
+                </a>
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
+                    <a class="dropdown-item" modelno="1" onclick="loaddata(this)" href="#" >Model 1</a>
+                    <a class="dropdown-item" modelno="2" onclick="loaddata(this)" href="#" >Model 2</a>
+                    <a class="dropdown-item" modelno="3" onclick="loaddata(this)" href="#" >Model 3</a>
+                    <a class="dropdown-item" modelno="4" onclick="loaddata(this)" href="#" >Model 4</a>
+                    <a class="dropdown-item" modelno="5" onclick="loaddata(this)" href="#" >Model 5</a>
+                      
+                  </div>
+              </li>
+              <li class="nav-item dropdown">
+                <a href="download.html" class="nav-link">
+                  <span class="nav-link-inner--text"><button type="button" class="btn btn-secondary">Download Data</button></span>
+                </a>
+                <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
+                    <a class="dropdown-item" href="#">Fog</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Temperature</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Humidity</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Wind</a>
+                </div> -->
+              </li>
+            </ul>
+            
+        </div>
+    </div>
+</nav>
+
+
+  <!-- Navigation bar ends -->
+
+  
+  <div class="wrapper">
+    <section class="section section-shaped" style="padding-bottom:2rem;">
+      <div class="shape shape-primary" style="height: 100px;">
+      </div>
+    </section>
+  </div>
+
+
+  <div class="container"><h3 id="cityname">City : Select the city</h3><span id="latlong" style="visibility: hidden;"></span></div>
+  <!-- <section class="section  pb-0" id="Map-section" style="padding-top:1rem;display: none">
+    <section class="section  pb-0" style="padding-top:1rem;">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-8 map-data d-flex justify-content-center">
+            <img src="img/cords.jpg" alt="Map" style="width: 70%;height: 90%;" >
+          </div>
+        </div>
+      </div>
+    </section>
+  </section> -->
+
+  <section class="section  pb-0" id="other-section" style="padding-top:1rem;">
+    <section class="section  pb-0" style="padding-top:1rem;">
+      <div class="container">
+        <div class="card shadow">
+          <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;height: 500px;">
+            <div class="row">
+              <div class="container">
+                <div class="col-md data-column">
+                  <h1>This is the  Website For Fog Prediction.</h1>
+                </div>
+              </div>
+            </div> 
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <!-- <section class="section  pb-0" id="Fog-section" style="padding-top:1rem;">
+    <section class="section  pb-0" style="padding-top:1rem;">
+      <div class="container">
+        <div class="card shadow">
+          <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;"> -->
+
+            <!-- <div class="row">
+              <div class="col-md-4" >
+                <div style="text-align: center;"><br><h5><b>TIR</b></h5></div>
+                <div  style="position: relative;">
+                  <img class="img-fluid rounded shadow-lg" src="./img/bk.png"  style="z-index: 2;position: absolute;top: 0;left: 0;">
+                  <img class="img-fluid rounded shadow-lg" src="./img/1.gif"   style="z-index: 1;position: absolute;top: 0;left: 0;">
+                </div>
+              </div>
+              <div class="col-md-12 map-data">
+                <div class="map-column">
+                    <img src="img/india.png" style="margin:0; padding: 0;width: 100%;">
+                    <input title="Delhi" cityid="1" onclick="loaddata(this)" id="delhi-radio" name="city" type="radio" style="width:1%; height:1%; padding:0px; margin:0px; position: absolute; left:34.6%; top: 30.5%" onclick="">
+                    <input title="Lucknow" cityid="2" onclick="loaddata(this)" id="lucknow-radio" name="city" type="radio" style="width:1%; height:1%; padding:0px; margin:0px; position: absolute; left:47.73%; top: 37%;" onclick="">
+                </div>
+              </div>
+            </div> -->
+            
+            <!-- <div class="row">
+              <div class="container">
+                <div class="col-md data-column">
+                  <div id="Fog"></div>
+                </div>
+              </div>
+            </div> 
+          </div>
+        </div>
+      </div>
+    </section>
+  </section> -->
+
+  <section class="secton pb-0" id="mapFog-section" style="padding-top:1rem;display: none">
+    <div class="container"> 
+      <div class="row">
+        <div class="col-md-6">
+          <div class="container">
+            <div class="card">
+              <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;">
+                <div class="row">
+                  <div class="container-fluid">
+                    <div class="col-md data-column">
+                      <div id="Fog"></div>
+                    </div>
+                  </div>
+                </div> 
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+              <div class="col-lg  map-data d-flex justify-content-center">
+                <div id="map1" style="width: 100%;height: 500px"></div>
+                <!-- <img src="img/cords.jpg" alt="Map" style="height:90%;max-height: 532px;" > -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> 
+    </div>
+  </section>
+
+  <section class="section  pb-0" id="Temperature-section" style="padding-top:1rem;">
+    <section class="section  pb-0" style="padding-top:1rem;">
+      <div class="container">
+        <div class="card shadow">
+          <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;">
+            <div class="row">
+              <div class="container">
+                <div class="col-md data-column">
+                  <div id="Temperature"></div>
+                </div>
+              </div>
+            </div> 
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+  <section class="section  pb-0" id="Humidity-section" style="padding-top:1rem;">
+    <section class="section  pb-0" style="padding-top:1rem;">
+      <div class="container">
+        <div class="card shadow">
+          <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;">
+            <div class="row">
+              <div class="container">
+                <div class="col-md data-column">
+                  <div id="Humidity"></div>
+                </div>
+              </div>
+            </div> 
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+  <section class="section  pb-0" id="Wind-section" style="padding-top:1rem;">
+    <section class="section  pb-0" style="padding-top:1rem;">
+      <div class="container">
+        <div class="card shadow">
+          <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;">
+            <div class="row">
+              <div class="container">
+                <div class="col-md data-column">
+                  <div id="Wind"></div>
+                </div>
+              </div>
+            </div> 
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+ 
+<section class="section  pb-0" style="padding-top:1rem;margin-bottom:1rem">
+  <div class="container">
+    <div class="card shadow">
+      <div class="card-body bg-gradient-primary rounded " style="padding:1rem 2rem 1rem 2rem;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="./assets/js/core/jquery.min.js" type="text/javascript"></script>
+<script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+<script src="./assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+<script src="./assets/js/plugins/bootstrap-switch.js"></script>
+<script src="./assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
+<script src="./assets/js/plugins/moment.min.js"></script>
+<script src="./assets/js/plugins/datetimepicker.js" type="text/javascript"></script>
+<script src="./assets/js/plugins/bootstrap-datepicker.min.js"></script>
+<script src="./assets/js/argon-design-system.min.js?v=1.2.0" type="text/javascript"></script>
+<script src="./assets/chart-library/core.js"></script>
+<script src="./assets/chart-library/charts.js"></script>
+<script src="./assets/chart-library/themes/material.js"></script>
+<script src="./assets/chart-library/themes/animated.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script>
+        window.jQuery || document.write('<script src="js/vendor/jquery-3.4.1.min.js"><\/script>')
+    </script>
+    <script src="js/main.js"></script>
+
+    <script>
+      document.getElementById('myInput').value = 'Lucknow';
+      checkCity(document.getElementById(myInput));
+    </script>
+</body>
+
+</html>
