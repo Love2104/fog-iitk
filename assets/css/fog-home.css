@@ -255,7 +255,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
   position: relative;
   z-index: 1;
   min-height: calc(100svh - var(--header-h, 150px));
-  padding: clamp(60px, 10vh, 120px) 0 clamp(40px, 6vh, 80px);
+  padding: clamp(16px, 4vh, 40px) 0 clamp(40px, 6vh, 80px);
   display: flex;
   flex-direction: column;
   justify-content: center;
