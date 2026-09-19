@@ -1,0 +1,102 @@
+{
+  "fontFamily": "\"Instrument Sans\", system-ui, -apple-system, sans-serif",
+  "tabularNumCheck": true,
+  "widthCheck": {
+    "0%": 232,
+    "50%": 232,
+    "100%": 232
+  },
+  "headerStackHeight": {
+    "390": {
+      "bottom": 110.671875,
+      "gaugeBottom": 696.8125,
+      "viewportHeight": 844
+    },
+    "1440": {
+      "bottom": 118.671875,
+      "gaugeBottom": 740.421875,
+      "viewportHeight": 900
+    }
+  },
+  "gaugeBottom": {},
+  "contrasts": {
+    "light": {
+      "10km": {
+        "hero-num": "17.04",
+        "hero-unit": "7.89",
+        "gauge-tick": "5.54"
+      },
+      "800m": {
+        "hero-num": "17.04",
+        "hero-unit": "7.89",
+        "gauge-tick": "5.54"
+      },
+      "60m": {
+        "hero-num": "17.04",
+        "hero-unit": "7.89",
+        "gauge-tick": "5.54"
+      },
+      "stale": {
+        "hero-num": "17.04",
+        "hero-unit": "7.89",
+        "hero-stale-banner": "7.36",
+        "gauge-tick": "5.54"
+      }
+    },
+    "dark": {
+      "10km": {
+        "hero-num": "15.33",
+        "hero-unit": "8.10",
+        "gauge-tick": "6.59"
+      },
+      "800m": {
+        "hero-num": "15.33",
+        "hero-unit": "8.10",
+        "gauge-tick": "6.59"
+      },
+      "60m": {
+        "hero-num": "15.33",
+        "hero-unit": "8.10",
+        "gauge-tick": "6.59"
+      },
+      "stale": {
+        "hero-num": "15.33",
+        "hero-unit": "8.10",
+        "hero-stale-banner": "7.64",
+        "gauge-tick": "6.59"
+      }
+    }
+  },
+  "fogCurve": {
+    "10km": {
+      "density": "0.100",
+      "l1": "0.04",
+      "l2": "0.06",
+      "l3": "0.09"
+    },
+    "4km": {
+      "density": "0.250",
+      "l1": "0.10",
+      "l2": "0.15",
+      "l3": "0.07"
+    },
+    "800m": {
+      "density": "0.600",
+      "l1": "0.24",
+      "l2": "0.36",
+      "l3": "0.04"
+    },
+    "200m": {
+      "density": "0.800",
+      "l1": "0.32",
+      "l2": "0.48",
+      "l3": "0.02"
+    },
+    "60m": {
+      "density": "0.950",
+      "l1": "0.38",
+      "l2": "0.57",
+      "l3": "0.01"
+    }
+  }
+}

@@ -2017,3 +2017,60 @@ details[open] > .fognav-sheet {
 }
 
 /*# sourceMappingURL=fog-redesign.css.map */
+
+/* ---- Chart Enhancements -------------------------------------------------- */
+.obs-area {
+  fill: url(#obs-gradient);
+  pointer-events: none;
+}
+
+/* ---- Animations ---------------------------------------------------------- */
+.fog-reveal {
+  opacity: 0;
+  animation: fogReveal 0.6s var(--ease-out) forwards;
+}
+
+@keyframes fogReveal {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fog-reveal {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---- Chart SVG Now Marker & Seams ---------------------------------------- */
+.fog-chart .now {
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  stroke-dasharray: 2 2;
+}
+
+.fog-chart .now-flag {
+  fill: var(--accent);
+  rx: 3;
+}
+
+.fog-chart .now-flag-lab {
+  fill: var(--surface);
+  font-family: var(--ff-sans);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.fog-chart .seam {
+  stroke: var(--rule-2);
+  stroke-width: 1;
+  stroke-dasharray: 2 2;
+}
+
+.fog-chart .seam-lab {
+  fill: var(--ink-3);
+  font-family: var(--ff-mono);
+  font-size: 9px;
+}

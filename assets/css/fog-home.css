@@ -1,0 +1,1603 @@
+/* ==========================================================================
+   Fog IITK — homepage styles ("Now" page).
+   Scoped entirely under .fog-home so nothing here can reach the 12 other
+   pages that share navbar.php and fog-redesign.css.
+
+   Font pairing: Inter Tight (sans) + IBM Plex Mono (mono).
+   Every number is mono. Every label is sans. Serif only for rare captions.
+   ========================================================================== */
+
+/* ── LOCAL TOKEN OVERRIDES ─────────────────────────────────────────────── */
+/* These override the :root tokens ONLY inside .fog-home. The navbar sits
+   outside .fog-home and keeps its own :root tokens untouched. */
+
+.fog-home {
+  --ff-sans: "Instrument Sans", system-ui, -apple-system, sans-serif;
+  --ff-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Spacing / shape */
+  --home-shell: 1200px;
+  --home-radius: 16px;
+  --home-radius-sm: 10px;
+
+  /* Fog atmosphere - driven by --fog-density (0..1, set on <main> by PHP) */
+  --fog-density: 0;
+
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--ff-sans);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ── PROGRESSIVE ENHANCEMENT ───────────────────────────────────────────── */
+/* Elements that animate on entrance are hidden ONLY when JS is confirmed.
+   Without JS they render immediately — no blank page. */
+html.js .fog-home .fog-reveal {
+  opacity: 0;
+  transform: translateY(12px);
+}
+html.js .fog-home .fog-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
+}
+
+/* Stagger children */
+html.js .fog-home .fog-reveal.is-visible:nth-child(2) { transition-delay: 80ms; }
+html.js .fog-home .fog-reveal.is-visible:nth-child(3) { transition-delay: 160ms; }
+html.js .fog-home .fog-reveal.is-visible:nth-child(4) { transition-delay: 240ms; }
+html.js .fog-home .fog-reveal.is-visible:nth-child(5) { transition-delay: 320ms; }
+html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .fog-home .fog-reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .fog-home *,
+  .fog-home *::before,
+  .fog-home *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+/* ── LAYOUT ────────────────────────────────────────────────────────────── */
+.fog-shell {
+  max-width: var(--home-shell);
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 40px);
+}
+
+/* ── FOG ATMOSPHERE LAYERS ─────────────────────────────────────────────── */
+/* Three translucent radial layers that drift horizontally. Their combined
+   opacity is driven by --fog-density so clear air looks crisp and dense
+   fog whites out. Only transform + opacity are animated (compositing only). */
+.fog-atmos {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.fog-atmos-layer {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform, opacity;
+}
+
+.fog-atmos-layer--1 {
+  width: 120%;
+  height: 600px;
+  top: -100px;
+  left: -10%;
+  background: radial-gradient(ellipse at center, var(--paper-3) 0%, transparent 70%);
+  opacity: calc(0.3 + var(--fog-density) * 0.5);
+  animation: fog-drift-1 45s ease-in-out infinite alternate;
+}
+
+.fog-atmos-layer--2 {
+  width: 80%;
+  height: 500px;
+  top: 50px;
+  right: -20%;
+  background: radial-gradient(ellipse at center, var(--rule) 0%, transparent 65%);
+  opacity: calc(0.15 + var(--fog-density) * 0.6);
+  animation: fog-drift-2 55s ease-in-out infinite alternate;
+}
+
+.fog-atmos-layer--3 {
+  width: 60%;
+  height: 400px;
+  top: 200px;
+  left: 20%;
+  background: radial-gradient(ellipse at center, var(--paper-2) 0%, transparent 60%);
+  opacity: calc(0.1 + var(--fog-density) * 0.7);
+  animation: fog-drift-3 65s ease-in-out infinite alternate;
+}
+
+@keyframes fog-drift-1 {
+  from { transform: translate3d(-3%, 0, 0); }
+  to   { transform: translate3d(3%, -2%, 0); }
+}
+@keyframes fog-drift-2 {
+  from { transform: translate3d(2%, -1%, 0); }
+  to   { transform: translate3d(-4%, 1%, 0); }
+}
+@keyframes fog-drift-3 {
+  from { transform: translate3d(1%, 2%, 0); }
+  to   { transform: translate3d(-2%, -1%, 0); }
+}
+
+/* ── HERO ──────────────────────────────────────────────────────────────── */
+.premium-hero {
+  position: relative;
+  z-index: 1;
+  min-height: calc(100svh - var(--header-h, 150px));
+  padding: clamp(60px, 10vh, 120px) 0 clamp(40px, 6vh, 80px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* Atmosphere */
+.hero-atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.fog-layer {
+  position: absolute;
+  inset: -20%;
+  background: var(--ink);
+  opacity: var(--fog-density);
+  transition: opacity 1s linear;
+}
+
+.fog-layer-1 {
+  background: radial-gradient(circle at 50% 120%, var(--state-fog) 0%, transparent 60%);
+  opacity: calc(var(--fog-density) * 0.4);
+  transform: translateY(calc(10% * (1 - var(--fog-density))));
+}
+
+.fog-layer-2 {
+  background: linear-gradient(to top, rgba(255,255,255,0.1), transparent 50%);
+  opacity: calc(var(--fog-density) * 0.6);
+  filter: blur(20px);
+}
+
+.fog-layer-3 {
+  background: radial-gradient(circle at top left, var(--state-clear) 0%, transparent 40%);
+  opacity: calc((1 - var(--fog-density)) * 0.1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fog-layer-1 { animation: fog-drift 40s ease-in-out infinite alternate; }
+  .fog-layer-2 { animation: fog-drift 30s ease-in-out infinite alternate-reverse; }
+}
+
+@keyframes fog-drift {
+  0% { transform: translate(-2%, 2%) scale(1); }
+  100% { transform: translate(2%, -2%) scale(1.05); }
+}
+
+/* Station picker */
+.station-picker {
+  position: relative;
+  margin-bottom: clamp(20px, 3vh, 32px);
+}
+
+.station-picker-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  font-family: var(--ff-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: 100px;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  transition: background 200ms var(--ease-out), border-color 200ms var(--ease-out);
+}
+
+.station-picker-btn::-webkit-details-marker {
+  display: none;
+}
+
+.station-picker-btn:hover {
+  background: var(--paper);
+  border-color: var(--rule-2);
+}
+
+.station-picker[open] .station-picker-btn {
+  background: var(--paper);
+  border-color: var(--ink-3);
+}
+
+.station-picker[open] .station-picker-btn svg {
+  transform: rotate(180deg);
+}
+
+.station-picker-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  max-width: 90vw;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  z-index: 100;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.station-search-wrap {
+  padding: 12px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.station-search {
+  width: 100%;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-family: var(--ff-sans);
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.station-search:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.station-list {
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.station-group {
+  padding: 8px 16px 4px;
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  letter-spacing: 0.05em;
+}
+
+.station-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  text-decoration: none;
+  color: var(--ink-2);
+  transition: background 150ms ease;
+}
+
+.station-row:hover,
+.station-row:focus {
+  background: var(--paper-2);
+  color: var(--ink);
+  outline: none;
+}
+
+.station-row[aria-current="true"] {
+  background: var(--measured-tint);
+  color: var(--ink);
+}
+
+.station-id {
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  font-weight: 500;
+  width: 44px;
+}
+
+.station-name {
+  font-family: var(--ff-sans);
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Super label */
+.hero-super {
+  font-family: var(--ff-mono);
+  font-size: clamp(10px, 1.2vw, 11px);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 8px;
+}
+
+/* Giant number */
+.hero-reading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.hero-num-wrap {
+  display: inline-flex;
+  align-items: baseline;
+  gap: clamp(8px, 1.5vw, 12px);
+  line-height: 0.92;
+}
+
+.hero-num {
+  font-family: var(--ff-sans);
+  font-weight: 400;
+  font-size: clamp(4rem, 15vw, 10rem);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.hero-unit {
+  font-family: var(--ff-sans);
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-weight: 400;
+  color: var(--ink-2);
+  letter-spacing: -0.01em;
+}
+
+/* State pill */
+.hero-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 100px;
+  font-family: var(--ff-mono);
+  font-size: clamp(13px, 1.5vw, 15px);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: clamp(20px, 4vh, 40px);
+}
+
+.hero-state--clear     { color: var(--state-clear);     background: var(--tint-clear); }
+.hero-state--fog       { color: var(--state-fog);       background: var(--tint-fog); }
+.hero-state--dense     { color: var(--state-dense);     background: var(--tint-dense); }
+.hero-state--verydense { color: var(--state-verydense); background: var(--tint-verydense); }
+.hero-state--nodata    { color: var(--state-nodata);    background: var(--tint-nodata); }
+
+.hero-state[data-stale="true"] {
+  filter: grayscale(1);
+  opacity: 0.8;
+}
+
+.hero-stale-banner {
+  background: var(--paper-2);
+  color: var(--ink-2);
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-family: var(--ff-sans);
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  display: inline-block;
+}
+
+/* Live dot — pulsing green only when data is fresh */
+.hero-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.hero-live-dot[data-live="true"] {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.4; }
+}
+
+/* Freshness and time */
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--ff-sans);
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.hero-obs-time time {
+  color: var(--ink-3);
+}
+
+.hero-freshness {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.hero-freshness::before {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.hero-freshness[data-tone="green"] { color: var(--state-clear); }
+.hero-freshness[data-tone="orange"] { color: var(--state-dense); }
+.hero-freshness[data-tone="red"] { color: var(--state-verydense); }
+.hero-freshness[data-tone="gray"] { color: var(--ink-3); }
+
+
+
+.hero-note {
+  font-family: var(--ff-sans);
+  font-size: 13px;
+  color: var(--ink-3);
+  margin-top: 12px;
+  max-width: 400px;
+  line-height: var(--lh-prose);
+}
+
+/* ── VISIBILITY SCALE ──────────────────────────────────────────────────── */
+.fog-scale {
+  width: 100%;
+  max-width: 620px;
+  margin: clamp(24px, 4vh, 48px) auto 0;
+  position: relative;
+}
+
+.fog-scale-track {
+  height: 4px;
+  background: var(--paper-3);
+  border-radius: 2px;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+}
+
+/* Five zone segments, widths match the rail: each is 20% of the track */
+.fog-scale-zone {
+  height: 100%;
+  flex: 1;
+}
+.fog-scale-zone--verydense { background: var(--tint-verydense); }
+.fog-scale-zone--dense     { background: var(--tint-dense); }
+.fog-scale-zone--fog       { background: var(--tint-fog); }
+.fog-scale-zone--clear     { background: var(--tint-clear); }
+.fog-scale-zone--clear2    { background: var(--paper-3); }
+
+/* Marker: positioned by inline --marker-pos custom property */
+.fog-scale-marker {
+  position: absolute;
+  top: -6px;
+  width: 3px;
+  height: 16px;
+  background: var(--ink);
+  border-radius: 1.5px;
+  z-index: 3;
+  left: var(--marker-pos, 50%);
+  transform: translateX(-50%);
+  transition: left 800ms var(--ease-out);
+}
+
+/* 1km threshold line */
+.fog-scale-gate {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 1px;
+  background: var(--state-fog);
+  z-index: 2;
+  left: 60%; /* matches FOG_RAIL_GATE_PCT */
+}
+
+.fog-scale-gate-label {
+  position: absolute;
+  top: -20px;
+  left: 60%;
+  transform: translateX(-50%);
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--state-fog);
+  white-space: nowrap;
+}
+
+.fog-scale-ticks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  color: var(--ink-3);
+}
+
+.fog-scale-ticks span {
+  min-width: 0;
+  text-align: center;
+}
+
+/* Zone tooltips */
+.fog-scale-zones-row {
+  display: flex;
+  margin-top: 6px;
+}
+
+.fog-scale-zones-row span {
+  flex: 1;
+  text-align: center;
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: 0.03em;
+  color: var(--ink-3);
+  opacity: 0.6;
+}
+
+/* ── CONDITIONS BENTO ──────────────────────────────────────────────────── */
+.conditions-grid {
+  position: relative;
+  z-index: 1;
+  padding: clamp(24px, 4vh, 48px) 0;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1px;
+  background: var(--rule);
+}
+
+/* Each cell */
+.cond-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: clamp(16px, 2vw, 24px);
+  background: var(--paper);
+}
+
+/* Depression gets double width to show the temp→dew bar */
+.cond-cell--depression {
+  grid-column: span 2;
+}
+
+.cond-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--ink-3);
+}
+
+.cond-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cond-label {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.cond-val {
+  font-family: var(--ff-mono);
+  font-size: clamp(18px, 2.5vw, 24px);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.cond-unit {
+  font-size: 0.6em;
+  font-weight: 400;
+  color: var(--ink-2);
+  margin-left: 2px;
+}
+
+/* Depression bar: shows how close temp is to dew point */
+.cond-spread-bar {
+  height: 4px;
+  background: var(--paper-3);
+  border-radius: 2px;
+  margin-top: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cond-spread-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 600ms var(--ease-out);
+}
+
+/* Wind direction */
+.cond-wind-dir {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  color: var(--ink-3);
+  margin-top: 2px;
+}
+
+/* Responsive: 3-col on tablet, 2-col on mobile */
+@media (max-width: 1024px) {
+  .conditions-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .cond-cell--depression {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .conditions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ── FORECAST SECTION ──────────────────────────────────────────────────── */
+.forecast-section {
+  position: relative;
+  z-index: 1;
+  padding: clamp(40px, 6vh, 80px) 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.forecast-header {
+  margin-bottom: clamp(24px, 4vh, 48px);
+}
+
+.section-eyebrow {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 8px;
+}
+
+.forecast-headline {
+  font-family: var(--ff-sans);
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.forecast-subline {
+  font-family: var(--ff-sans);
+  font-size: clamp(13px, 1.5vw, 15px);
+  color: var(--ink-2);
+  max-width: 480px;
+  line-height: var(--lh-prose);
+  margin-top: 8px;
+}
+
+/* Preset segmented control */
+.forecast-presets {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--rule);
+  border-radius: var(--home-radius-sm);
+  overflow: hidden;
+  margin-bottom: 16px;
+  width: fit-content;
+}
+
+.preset-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 16px;
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-2);
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--rule);
+  transition: color 150ms var(--ease-out), background 150ms var(--ease-out);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.preset-btn:last-child {
+  border-right: none;
+}
+
+.preset-btn:hover {
+  color: var(--ink);
+  background: var(--paper-2);
+}
+
+.preset-btn[aria-pressed="true"],
+.preset-btn.is-active {
+  color: var(--ink);
+  background: var(--paper-3);
+  font-weight: 600;
+}
+
+/* Custom range disclosure */
+.forecast-custom {
+  margin-bottom: 24px;
+}
+
+.forecast-custom summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink-3);
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  padding: 4px 0;
+  list-style: none;
+}
+
+.forecast-custom summary::-webkit-details-marker { display: none; }
+.forecast-custom summary::marker { content: ""; }
+
+.forecast-custom summary .caret {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-right: 1.3px solid currentColor;
+  border-bottom: 1.3px solid currentColor;
+  transform: rotate(45deg) translateY(-1px);
+  transition: transform 150ms var(--ease-out);
+}
+
+.forecast-custom[open] summary .caret {
+  transform: rotate(-135deg) translateY(-1px);
+}
+
+.forecast-custom-body {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  padding: 12px 0 0;
+  flex-wrap: wrap;
+}
+
+.fog-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fog-field label {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.fog-field input[type="date"] {
+  background: var(--paper-3);
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-family: var(--ff-mono);
+  font-size: 13px;
+  transition: border-color 150ms var(--ease-out);
+}
+
+.fog-field input[type="date"]:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.fog-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 16px;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  border-radius: 6px;
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 200ms var(--ease-out);
+}
+
+.fog-btn:hover {
+  opacity: 0.85;
+}
+
+/* Chart card */
+.forecast-chart-card {
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: var(--home-radius);
+  padding: clamp(12px, 2vw, 24px);
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.forecast-chart-container {
+  height: clamp(280px, 40vh, 420px);
+  width: 100%;
+  position: relative;
+}
+
+/* Chart readout */
+.fog-readout {
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  color: var(--ink-2);
+  min-height: 20px;
+  padding: 8px 0 0;
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.fog-readout time {
+  color: var(--ink-3);
+}
+
+.fog-readout b {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.fog-readout .prov {
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  opacity: 0.7;
+}
+
+/* Forecast timeline — horizontal scroll-snap */
+.forecast-timeline {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding: 0;
+  border: 1px solid var(--rule);
+  border-radius: var(--home-radius-sm);
+}
+
+.forecast-timeline::-webkit-scrollbar { display: none; }
+
+.tl-step {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 16px;
+  min-width: 80px;
+  border-right: 1px solid var(--rule);
+  transition: background 150ms var(--ease-out);
+}
+
+.tl-step:last-child { border-right: none; }
+
+.tl-step--fog       { background: var(--tint-fog); }
+.tl-step--dense     { background: var(--tint-dense); }
+.tl-step--verydense { background: var(--tint-verydense); }
+.tl-step--clear     { background: transparent; }
+
+.tl-step--min {
+  box-shadow: inset 0 -2px 0 var(--state-fog);
+}
+
+.tl-time {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--ink-3);
+  letter-spacing: 0.02em;
+}
+
+.tl-val {
+  font-family: var(--ff-mono);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+/* ── EVIDENCE SECTION ──────────────────────────────────────────────────── */
+.evidence-section {
+  position: relative;
+  z-index: 1;
+  padding: clamp(40px, 6vh, 80px) 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(24px, 4vw, 60px);
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (max-width: 768px) {
+  .evidence-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+.evidence-block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.evidence-title {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.evidence-dl {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+}
+
+.evidence-pair {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.evidence-pair dt {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.evidence-pair dd {
+  font-family: var(--ff-mono);
+  font-size: 13px;
+  color: var(--ink);
+  margin: 0;
+}
+
+/* METAR terminal */
+.metar-terminal {
+  position: relative;
+  background: var(--paper-3);
+  border: 1px solid var(--rule);
+  padding: 16px 20px;
+  border-radius: 8px;
+  font-family: var(--ff-mono);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink-2);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.metar-copy {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  color: var(--ink-3);
+  cursor: pointer;
+  transition: color 150ms var(--ease-out), border-color 150ms var(--ease-out);
+}
+
+.metar-copy:hover {
+  color: var(--ink);
+  border-color: var(--rule-2);
+}
+
+.metar-copy svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.metar-copy[data-copied="true"] {
+  color: var(--state-clear);
+  border-color: var(--state-clear);
+}
+
+/* METAR token highlights */
+.metar-vis  { color: var(--state-fog); font-weight: 500; }
+.metar-temp { color: var(--measured); }
+.metar-wind { color: var(--ink); }
+
+/* ── NETWORK MAP ───────────────────────────────────────────────────────── */
+.network-section {
+  position: relative;
+  z-index: 1;
+  padding: clamp(40px, 6vh, 80px) 0;
+}
+
+.network-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: clamp(16px, 3vw, 40px);
+  align-items: start;
+  margin-top: clamp(16px, 3vh, 32px);
+}
+
+@media (max-width: 900px) {
+  .network-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.map-card {
+  border: 1px solid var(--rule);
+  border-radius: var(--home-radius);
+  overflow: hidden;
+  background: var(--paper-2);
+  aspect-ratio: 10 / 11;
+  max-height: 560px;
+}
+
+/* Theme-aware map fills */
+.fog-map {
+  width: 100%;
+  height: 100%;
+}
+
+.fog-map .land {
+  fill: var(--paper-3);
+}
+
+.fog-map .states {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 0.5;
+}
+
+.fog-map .dot {
+  fill: var(--ink-3);
+  opacity: 0.5;
+}
+
+.fog-map .hit {
+  fill: transparent;
+  cursor: pointer;
+}
+
+.fog-map .dot-validated {
+  fill: var(--ink-2);
+}
+
+.fog-map .ring {
+  fill: transparent;
+  stroke: var(--accent);
+  stroke-width: 1;
+  opacity: 0;
+  transition: opacity 200ms var(--ease-out);
+}
+
+/* Focus and hover both show ring */
+.fog-map a:hover .ring,
+.fog-map a:focus-visible .ring {
+  opacity: 1;
+}
+
+.fog-map a:focus-visible {
+  outline: none;
+}
+
+.fog-map .sel {
+  fill: var(--accent);
+}
+
+.fog-map .sel-ring {
+  fill: transparent;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  animation: pulse-ring 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse-ring {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}
+
+.fog-map .sel-label {
+  fill: var(--ink);
+  font-family: var(--ff-sans);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Station list beside map */
+.station-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--rule);
+  border-radius: var(--home-radius-sm);
+  overflow: hidden;
+  max-height: 560px;
+  overflow-y: auto;
+}
+
+.station-list-head {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  padding: 10px 14px;
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--rule);
+  position: sticky;
+  top: 0;
+}
+
+.station-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  color: var(--ink-2);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  transition: background 150ms var(--ease-out);
+}
+
+.station-list-item:last-child { border-bottom: none; }
+
+.station-list-item:hover {
+  background: var(--paper-2);
+  color: var(--ink);
+}
+
+.station-list-item[aria-current="true"] {
+  background: var(--measured-tint);
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.station-list-item code {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  color: var(--ink-3);
+}
+
+/* Map legend */
+.map-legend {
+  display: flex;
+  gap: 16px;
+  padding: 10px 14px;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  color: var(--ink-3);
+  border-top: 1px solid var(--rule);
+  background: var(--paper-2);
+}
+
+.map-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.map-legend-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.map-legend-dot--validated { background: var(--ink-2); }
+.map-legend-dot--archive   { background: var(--ink-3); opacity: 0.5; }
+.map-legend-dot--selected  { background: var(--accent); }
+
+/* ── FOOTER ────────────────────────────────────────────────────────────── */
+.fog-foot {
+  background: var(--paper-2);
+  border-top: 1px solid var(--rule);
+}
+
+.fog-foot-inner {
+  max-width: var(--home-shell);
+  margin: 0 auto;
+  padding: clamp(32px, 6vh, 64px) clamp(16px, 4vw, 40px);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(16px, 3vw, 40px);
+}
+
+@media (max-width: 768px) {
+  .fog-foot-inner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .fog-foot-inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fog-foot h2 {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 12px;
+}
+
+.fog-foot ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fog-foot li {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.fog-foot a {
+  font-size: 14px;
+  color: var(--ink-2);
+  text-decoration: none;
+  transition: color 150ms var(--ease-out);
+}
+
+.fog-foot a:hover {
+  color: var(--ink);
+}
+
+.fog-foot li span {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  color: var(--ink-3);
+}
+
+.fog-colophon {
+  border-top: 1px solid var(--rule);
+  background: var(--paper);
+}
+
+.fog-colophon-inner {
+  max-width: var(--home-shell);
+  margin: 0 auto;
+  padding: 16px clamp(16px, 4vw, 40px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.fog-disclaimer {
+  font-size: 12px;
+  color: var(--ink-3);
+  line-height: 1.5;
+  max-width: 600px;
+}
+
+.fog-colophon p:last-child {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  color: var(--ink-3);
+}
+
+/* ── CHART STYLES (override/enhance fog_chart.php output) ──────────────── */
+.fog-chart {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.fog-chart .obs {
+  stroke: var(--measured);
+  stroke-width: 1.8;
+  fill: none;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.fog-chart .fcst {
+  stroke: var(--predicted);
+  stroke-width: 1.8;
+  stroke-dasharray: 6 4;
+  fill: none;
+  stroke-linejoin: round;
+}
+
+.fog-chart .fcst-node {
+  fill: var(--predicted);
+}
+
+.fog-chart .grid {
+  stroke: var(--rule);
+  stroke-width: 0.5;
+}
+
+.fog-chart .axis {
+  stroke: var(--rule-2);
+  stroke-width: 1;
+}
+
+.fog-chart .zone {
+  opacity: 0.6;
+}
+
+.fog-chart .zone-fog       { fill: var(--zone-fog); }
+.fog-chart .zone-dense     { fill: var(--zone-dense); }
+.fog-chart .zone-verydense { fill: var(--zone-verydense); }
+
+.fog-chart .thr {
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+.fog-chart .thr-1         { stroke: var(--state-fog); }
+.fog-chart .thr-dense     { stroke: var(--state-dense); }
+.fog-chart .thr-verydense { stroke: var(--state-verydense); }
+
+.fog-chart .thr-lab {
+  fill: var(--ink-3);
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  font-weight: 500;
+}
+
+.fog-chart text {
+  fill: var(--ink-3);
+  font-family: var(--ff-mono);
+  font-size: 10px;
+}
+
+.fog-chart .ax { font-size: 10px; }
+.fog-chart .ax-mon { font-size: 9px; fill: var(--ink-3); opacity: 0.7; }
+.fog-chart .ax-tz { font-size: 9px; fill: var(--ink-3); opacity: 0.5; }
+.fog-chart .axis-title { font-size: 10px; fill: var(--ink-3); }
+
+.fog-chart .now {
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 2;
+}
+
+.fog-chart .now-flag {
+  fill: var(--accent);
+  rx: 3;
+  ry: 3;
+}
+
+.fog-chart .now-flag-lab {
+  fill: var(--paper);
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.fog-chart .seam {
+  stroke: var(--predicted);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+
+.fog-chart .seam-lab {
+  fill: var(--predicted);
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  font-weight: 500;
+}
+
+.fog-chart .void {
+  fill: url(#fog-void);
+  opacity: 0.15;
+}
+
+.fog-chart .void-line {
+  stroke: var(--ink-3);
+  stroke-width: 0.8;
+}
+
+/* Hover: the line and dot are hidden until .is-hovering */
+.fog-chart .hover-line,
+.fog-chart .hover-dot {
+  opacity: 0;
+  transition: opacity 100ms linear;
+}
+
+.fog-chart.is-hovering .hover-line {
+  opacity: 1;
+  stroke: var(--ink-3);
+  stroke-width: 1;
+  stroke-dasharray: 3 2;
+}
+
+.fog-chart.is-hovering .hover-dot {
+  opacity: 1;
+  fill: var(--ink);
+  stroke: var(--paper);
+  stroke-width: 2;
+}
+
+/* Gradient area fill added by JS */
+.fog-chart .obs-area {
+  fill: url(#obs-gradient);
+  opacity: 0.25;
+}
+
+/* Map Layout Additions */
+.map-layout {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.map-container {
+  flex: 1;
+  min-width: 0;
+}
+
+.map-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  max-height: 500px;
+}
+
+.map-sidebar-title {
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-3);
+  color: var(--ink-2);
+}
+
+.map-station-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+}
+
+.map-station-list li a {
+  display: block;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: var(--ink-2);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.map-station-list li a:hover {
+  background: var(--surface-hover);
+  color: var(--ink-1);
+}
+
+.map-station-list li a.is-sel {
+  background: var(--accent-light, rgba(0, 102, 255, 0.1));
+  color: var(--accent);
+  font-weight: 500;
+}
+
+@media (max-width: 991px) {
+  .desktop-only { display: none !important; }
+}
+
+/* Cond Cell Subval */
+.cond-subval {
+  display: block;
+  font-size: 13px;
+  color: var(--ink-3);
+  margin-top: 4px;
+  font-weight: 400;
+}
+
+/* Chart CSS Updates */
+.fog-chart .fcst {
+  stroke-dasharray: 4, 4;
+}
+
+.fog-chart .zone-fog {
+  fill: var(--accent-light, rgba(0, 102, 255, 0.05));
+}
+
+.fog-chart .zone-dense {
+  fill: var(--accent-light, rgba(0, 102, 255, 0.1));
+}
+
+.fog-chart .zone-verydense {
+  fill: var(--accent-light, rgba(0, 102, 255, 0.15));
+}
+
+.fog-chart .obs-area {
+  fill: url(#obs-gradient);
+}
