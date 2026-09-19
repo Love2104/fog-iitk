@@ -184,6 +184,8 @@ $state    = fog_state_for_km($visKm);
 $obsAge   = fog_age_seconds($obsTime);
 $obsTone  = ($obsTime === null) ? 'error' : fog_age_tone($obsAge, $readCadence);
 $isStale  = $obsTone !== 'ok';
+$fogDensity = $visKm !== null ? max(0.0, min(1.0, 1.0 - ($visKm / 5.0))) : 0.0;
+
 [$visNum, $visUnit] = fog_vis_display($visKm);
 
 /* --------------------------------------------------------- the rail ------
@@ -267,11 +269,12 @@ define('FOG_HEAD_DONE', true);
 <link rel="icon" type="image/png" href="./assets/img/iitk.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Source+Sans+3:wght@400;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Instrument+Sans:wght@400;500;600;700&amp;family=Source+Sans+3:wght@400;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap">
 <link href="./assets/css/nucleo-icons.css" rel="stylesheet">
 <link href="./assets/css/nucleo-svg.css" rel="stylesheet">
 <link id="pagestyle" href="./assets/css/argon-design-system.css?v=1.0.2" rel="stylesheet">
 <link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="assets/css/fog-home.css">
 <link rel="stylesheet" href="assets/css/fog-redesign.css?v=1789772589">
 <script>
 (function () {
@@ -288,16 +291,34 @@ define('FOG_HEAD_DONE', true);
 
 <?php include __DIR__ . '/navbar.php'; ?>
 
-<main class="fog-home fog-premium" id="main">
+<main class="fog-home" id="main" style="--fog-density: <?php echo $fogDensity; ?>;">
+  <div class="fog-atmos">
+    <div class="fog-layer fog-layer-1"></div>
+    <div class="fog-layer fog-layer-2"></div>
+    <div class="fog-layer fog-layer-3"></div>
+  </div>
   <div class="fog-shell">
     
     <!-- 1. HERO / CURRENT ATMOSPHERE -->
     <section class="premium-hero" aria-labelledby="read-h">
+      <?php if ($isStale): ?>
+      <div class="hero-stale-banner">
+        <div class="hero-live-dot" style="display:inline-block; background:var(--state-fog); margin-right:6px;"></div>
+        Historical observation &middot; <time datetime="<?php echo $obsTime !== null ? date('c', strtotime($obsTime)) : ''; ?>"><?php echo $obsTime !== null ? fog_fmt($obsTime, 'd M Y &middot; H:i') . ' IST' : 'Unknown'; ?></time>
+      </div>
+      <?php endif; ?>
       
       <details class="station-picker fog-reveal" id="station-picker" style="position: relative; z-index: 50;">
         <summary class="hero-super" style="cursor: pointer; list-style: none; outline: none;">
           Current visibility &middot; <?php echo fog_e($sname); ?> (<?php echo fog_e((string) $sid); ?>)
           <svg style="width:12px;height:12px;margin-left:6px;display:inline-block;" viewBox="0 0 16 16" fill="none" stroke="currentColor"><path d="M4 6l4 4 4-4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <?php if ($station !== null): ?>
+            <div class="map-legend">
+              <div class="map-legend-item"><div class="map-legend-dot map-legend-dot--validated"></div>Validated station</div>
+              <div class="map-legend-item"><div class="map-legend-dot map-legend-dot--selected"></div>Selected</div>
+            </div>
+            <?php endif; ?>
+
         </summary>
         <div class="picker-panel" style="position: absolute; top: 100%; left: 0; background: var(--paper-2); border: 1px solid var(--rule-2); border-radius: 8px; width: 320px; max-height: 320px; display: flex; flex-direction: column; overflow: hidden; margin-top: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
           <div style="padding: 12px; border-bottom: 1px solid var(--rule-2);">
@@ -312,11 +333,11 @@ define('FOG_HEAD_DONE', true);
             ?>
             <div class="station-group" style="padding: 8px 12px; font-size: 11px; font-weight: 600; color: var(--ink-3); text-transform: uppercase;">Primary Network</div>
             <?php foreach ($primary as $s): ?>
-              <a href="index.php?station=<?php echo fog_e(rawurlencode($s['id'])); ?>" class="station-row" style="display: block; padding: 12px 16px; color: var(--ink); text-decoration: none; font-size: 14px; border-bottom: 1px solid var(--rule); transition: background 0.15s ease; min-height: 44px;"><?php echo fog_e($s['name']); ?> <span style="color:var(--ink-3); font-family:var(--ff-mono); font-size:12px; float:right;"><?php echo fog_e($s['id']); ?></span></a>
+              <a href="index.php?station=<?php echo fog_e(rawurlencode($s['id'])); ?>" class="station-list-item" style="display: block; padding: 12px 16px; color: var(--ink); text-decoration: none; font-size: 14px; border-bottom: 1px solid var(--rule); transition: background 0.15s ease; min-height: 44px;"><?php echo fog_e($s['name']); ?> <span style="color:var(--ink-3); font-family:var(--ff-mono); font-size:12px; float:right;"><?php echo fog_e($s['id']); ?></span></a>
             <?php endforeach; ?>
             <div class="station-group" style="padding: 8px 12px; font-size: 11px; font-weight: 600; color: var(--ink-3); text-transform: uppercase; margin-top: 8px;">Other Stations</div>
             <?php foreach ($others as $s): ?>
-              <a href="index.php?station=<?php echo fog_e(rawurlencode($s['id'])); ?>" class="station-row" style="display: block; padding: 12px 16px; color: var(--ink-2); text-decoration: none; font-size: 14px; border-bottom: 1px solid var(--rule); transition: background 0.15s ease; min-height: 44px;"><?php echo fog_e($s['name']); ?> <span style="color:var(--ink-3); font-family:var(--ff-mono); font-size:12px; float:right;"><?php echo fog_e($s['id']); ?></span></a>
+              <a href="index.php?station=<?php echo fog_e(rawurlencode($s['id'])); ?>" class="station-list-item" style="display: block; padding: 12px 16px; color: var(--ink-2); text-decoration: none; font-size: 14px; border-bottom: 1px solid var(--rule); transition: background 0.15s ease; min-height: 44px;"><?php echo fog_e($s['name']); ?> <span style="color:var(--ink-3); font-family:var(--ff-mono); font-size:12px; float:right;"><?php echo fog_e($s['id']); ?></span></a>
             <?php endforeach; ?>
             <div class="station-empty" style="display:none; padding: 16px; text-align: center; color: var(--ink-3); font-size: 14px;">No stations match</div>
           </div>
@@ -329,11 +350,11 @@ define('FOG_HEAD_DONE', true);
         <span class="unit hero-unit"><?php echo fog_e($visUnit); ?> visibility</span>
       </div>
 
-      <div class="hero-status" style="color: var(--state-<?php echo fog_e($state === 'nodata' || $state === 'clear' ? 'clear' : $state); ?>);">
+      <div class="hero-state" style="color: var(--state-<?php echo fog_e($state === 'nodata' || $state === 'clear' ? 'clear' : $state); ?>);">
         <?php echo fog_e(strtoupper(fog_state_word($state))); ?>
       </div>
 
-      <div class="hero-meta">
+      <div class="hero-obs-time">
         <div class="data-status" data-stale="<?php echo $isStale ? 'true' : 'false'; ?>">
           <div class="data-status-dot" style="color: var(--state-<?php echo $isStale ? 'fog' : 'clear'; ?>);"></div>
           <?php echo $isStale ? 'Historical observation' : 'Live observation'; ?>
@@ -355,11 +376,11 @@ define('FOG_HEAD_DONE', true);
       <?php endif; ?>
 
       <!-- Horizontal Continuous Scale -->
-      <div class="scale-container">
-        <div class="scale-track">
+      <div class="fog-scale">
+        <div class="fog-scale-track">
           <?php if ($railPos !== null): ?>
             <div class="scale-fill" style="width: <?php echo fog_pct($railPos); ?>"></div>
-            <div class="scale-marker" style="left: <?php echo fog_pct($railPos); ?>"></div>
+            <div class="fog-scale-marker" style="left: <?php echo fog_pct($railPos); ?>"></div>
           <?php endif; ?>
           <div class="scale-threshold" style="left: <?php echo fog_pct(FOG_RAIL_GATE_PCT); ?>"></div>
         </div>
@@ -375,7 +396,7 @@ define('FOG_HEAD_DONE', true);
     </section>
 
     <!-- 2. CURRENT CONDITIONS STRIP -->
-    <section class="conditions-strip">
+    <section class="conditions-grid">
       <?php
       $o = ($latest !== null && $latest !== []) ? $latest : null;
       $spread = $o['spread_c'] ?? null;
@@ -392,17 +413,17 @@ define('FOG_HEAD_DONE', true);
           [$label, $value, $dp, $unit] = $m;
           $isDep = ($label === 'Depression');
       ?>
-      <div class="condition-item <?php echo $isDep ? 'cond-cell--depression' : ''; ?> fog-reveal">
-        <div class="condition-label"><?php echo $label; ?></div>
-        <div class="condition-value">
+      <div class="cond-cell <?php echo $isDep ? 'cond-cell--depression' : ''; ?> fog-reveal">
+        <div class="cond-label"><?php echo $label; ?></div>
+        <div class="cond-val">
           <?php echo $value !== null ? fog_e(fog_dp($value, $dp)) : '--'; ?>
           <span class="unit"><?php echo $unit; ?></span>
         </div>
         <?php if ($isDep && $value !== null): 
             $depPct = max(0, min(100, ($value / 10) * 100));
         ?>
-        <div class="dep-bar-track" style="margin-top:8px; height:4px; background:var(--rule); border-radius:2px; overflow:hidden;">
-            <div class="dep-bar-fill" style="width:<?php echo fog_pct(100 - $depPct); ?>; height:100%; background:var(--state-dense);"></div>
+        <div class="cond-spread-bar" style="margin-top:8px; height:4px; background:var(--rule); border-radius:2px; overflow:hidden;">
+            <div class="cond-spread-fill" style="width:<?php echo fog_pct(100 - $depPct); ?>; height:100%; background:var(--state-dense);"></div>
         </div>
         <?php endif; ?>
       </div>
@@ -434,11 +455,11 @@ define('FOG_HEAD_DONE', true);
             </div>
             <button type="submit" style="background: var(--ink); color: var(--paper); border: none; padding: 6px 12px; border-radius: 4px; font-weight: 500; cursor: pointer; transition: opacity 0.2s;">Apply</button>
           </form>
-          <div class="preset-links" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;">
+          <div class="forecast-presets" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;">
             <?php foreach ($presets as $label => $p): 
                $isActive = fog_preset_active($p[0], $p[1], $winFrom, $winTo);
             ?>
-              <a href="index.php?station=<?php echo fog_e(rawurlencode((string) $sid)); ?>&amp;from=<?php echo fog_fmt($p[0], 'Y-m-d'); ?>&amp;to=<?php echo fog_fmt($p[1], 'Y-m-d'); ?>" class="preset-pill <?php echo $isActive ? 'is-active' : ''; ?>" <?php echo $isActive ? 'aria-current="true"' : ''; ?> style="font-size: 11px; padding: 4px 8px; border-radius: 4px; border: 1px solid var(--rule); color: var(--ink-2); text-decoration: none; font-weight: 500; <?php echo $isActive ? 'background: var(--measured-tint); color: var(--accent); border-color: var(--accent);' : 'background: var(--surface);'; ?> transition: background 0.15s ease, color 0.15s ease;">
+              <a href="index.php?station=<?php echo fog_e(rawurlencode((string) $sid)); ?>&amp;from=<?php echo fog_fmt($p[0], 'Y-m-d'); ?>&amp;to=<?php echo fog_fmt($p[1], 'Y-m-d'); ?>" class="preset-btn <?php echo $isActive ? 'is-active' : ''; ?>" <?php echo $isActive ? 'aria-current="true"' : ''; ?> style="font-size: 11px; padding: 4px 8px; border-radius: 4px; border: 1px solid var(--rule); color: var(--ink-2); text-decoration: none; font-weight: 500; <?php echo $isActive ? 'background: var(--measured-tint); color: var(--accent); border-color: var(--accent);' : 'background: var(--surface);'; ?> transition: background 0.15s ease, color 0.15s ease;">
                 <?php echo fog_e($label); ?>
               </a>
             <?php endforeach; ?>
@@ -490,9 +511,9 @@ define('FOG_HEAD_DONE', true);
           if ($st['vis_km'] === null) continue;
           $lead = $st['lead_min'] < 60 ? '+' . $st['lead_min'] . 'm' : '+' . rtrim(rtrim(number_format($st['lead_min'] / 60, 1, '.', ''), '0'), '.') . 'h';
         ?>
-        <div class="timeline-step">
-          <div class="timeline-time"><?php echo $lead; ?></div>
-          <div class="timeline-val"><?php echo fog_dp($st['vis_km'], 2); ?> km</div>
+        <div class="tl-step">
+          <div class="tl-time"><?php echo $lead; ?></div>
+          <div class="tl-val"><?php echo fog_dp($st['vis_km'], 2); ?> km</div>
         </div>
         <?php endforeach; ?>
       </div>
@@ -500,17 +521,17 @@ define('FOG_HEAD_DONE', true);
     </section>
 
     <!-- 4. MODEL CONTEXT & RAW METAR -->
-    <section class="meta-section">
+    <section class="evidence-section">
       <!-- Model Context -->
-      <div class="meta-block">
-        <div class="meta-title">MODEL CONTEXT</div>
+      <div class="evidence-block">
+        <div class="evidence-title">MODEL CONTEXT</div>
         <?php if (is_array($ladder) && !empty($ladder['steps']) && $ladder['base'] !== null): ?>
-        <dl class="meta-rail">
-          <dt>Model</dt><dd>Gradient Boosting Regressor</dd>
-          <dt>Run</dt><dd><?php echo fog_fmt($ladder['base'], 'd M Y H:i'); ?> IST</dd>
-          <dt>Interval</dt><dd>30 min</dd>
+        <dl class="evidence-dl">
+          <div class="evidence-pair"><dt>Model</dt><dd>Gradient Boosting Regressor</dd></div>
+          <div class="evidence-pair"><dt>Run</dt><dd><?php echo fog_fmt($ladder['base'], 'd M Y H:i'); ?> IST</dd></div>
+          <div class="evidence-pair"><dt>Interval</dt><dd>30 min</dd></div>
           <?php if ($ladder['base_vis'] !== null): ?>
-            <dt>Observed at run</dt><dd><?php echo fog_dp($ladder['base_vis'], 2); ?> km</dd>
+            <div class="evidence-pair"><dt>Observed at run</dt><dd><?php echo fog_dp($ladder['base_vis'], 2); ?> km</dd></div>
           <?php endif; ?>
         </dl>
         <?php else: ?>
@@ -519,15 +540,15 @@ define('FOG_HEAD_DONE', true);
       </div>
 
       <!-- Raw METAR -->
-      <div class="meta-block">
-        <div class="meta-title">OBSERVATION EVIDENCE</div>
-        <dl class="meta-rail">
-           <dt>Source</dt><dd><?php echo $readSource !== null ? fog_e($readSource) : 'Source unavailable'; ?></dd>
-           <dt>ICAO</dt><dd><?php echo fog_e((string) $sid); ?></dd>
-           <dt>Timestamp</dt><dd><?php echo $obsTime !== null ? fog_fmt($obsTime, 'd M Y &middot; H:i') . ' IST' : 'N/A'; ?></dd>
+      <div class="evidence-block">
+        <div class="evidence-title">OBSERVATION EVIDENCE</div>
+        <dl class="evidence-dl">
+           <div class="evidence-pair"><dt>Source</dt><dd><?php echo $readSource !== null ? fog_e($readSource) : 'Source unavailable'; ?></dd></div>
+           <div class="evidence-pair"><dt>ICAO</dt><dd><?php echo fog_e((string) $sid); ?></dd></div>
+           <div class="evidence-pair"><dt>Timestamp</dt><dd><?php echo $obsTime !== null ? fog_fmt($obsTime, 'd M Y &middot; H:i') . ' IST' : 'N/A'; ?></dd></div>
         </dl>
         <?php if ($latest !== null && $latest !== [] && !empty($latest['metar'])): ?>
-          <div class="terminal-block">
+          <div class="metar-terminal">
             <?php
               $metarSafe = fog_e($latest['metar']);
               // Highlight wind: e.g. 27005KT or VRB02KT
@@ -592,6 +613,13 @@ define('FOG_HEAD_DONE', true);
               <text class="sel-label" x="<?php echo round($x + 17, 1); ?>" y="<?php echo round($y + 5, 1); ?>"><?php echo fog_e($station['name']); ?></text>
             <?php endif; ?>
           </svg>
+            <?php if ($station !== null): ?>
+            <div class="map-legend">
+              <div class="map-legend-item"><div class="map-legend-dot map-legend-dot--validated"></div>Validated station</div>
+              <div class="map-legend-item"><div class="map-legend-dot map-legend-dot--selected"></div>Selected</div>
+            </div>
+            <?php endif; ?>
+
         </div>
       </div>
     </section>
