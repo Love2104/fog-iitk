@@ -1,3 +1,118 @@
+
+:root {
+  color-scheme: light;
+
+  /* Type Scale */
+  --text-micro: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-md: 18px;
+  --text-lg: 20px;
+  --text-xl: 24px;
+  --text-2xl: clamp(32px, 5vw, 40px);
+  --text-hero: clamp(5.5rem, 16vw, 12rem);
+
+  --bg: #f3f5f8;
+  --surface: #ffffff;
+  --surface-2: #e9edf2;
+  --line: #d3dae3;
+  --ink: #0e1620;
+  --ink-2: #3a4a5c;
+  --ink-3: #566779;
+  --accent: #0b5cab;
+  --clear: #0a7a5a;
+  --fog: #8a5a00;
+  --dense: #a8470a;
+  --verydense: #b0102a;
+  --stale: #566779;
+  
+  --state-clear: var(--clear);
+  --state-fog: var(--fog);
+  --state-dense: var(--dense);
+  --state-verydense: var(--verydense);
+  --state-nodata: var(--stale);
+  
+  --rule: var(--line);
+  --rule-2: rgba(0, 0, 0, 0.1);
+  --shadow: rgba(0, 0, 0, 0.1);
+  --paper: var(--bg);
+  --paper-2: var(--surface);
+  --paper-3: var(--surface-2);
+  --accent-light: rgba(11, 92, 171, 0.1);
+  --accent-light-2: rgba(11, 92, 171, 0.05);
+  --accent-light-3: rgba(11, 92, 171, 0.15);
+  --gradient-white: rgba(255, 255, 255, 0.5);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0b1118;
+  --surface: #121a24;
+  --surface-2: #182230;
+  --line: #263344;
+  --ink: #e8eef5;
+  --ink-2: #b4c2d1;
+  --ink-3: #8b9bad;
+  --accent: #7cc4ff;
+  --clear: #4fd1a5;
+  --fog: #f2b84b;
+  --dense: #ff8a4c;
+  --verydense: #ff5468;
+  --stale: #8b9bad;
+  
+  --state-clear: var(--clear);
+  --state-fog: var(--fog);
+  --state-dense: var(--dense);
+  --state-verydense: var(--verydense);
+  --state-nodata: var(--stale);
+  
+  --rule: var(--line);
+  --rule-2: rgba(255, 255, 255, 0.1);
+  --shadow: rgba(0, 0, 0, 0.5);
+  --paper: var(--bg);
+  --paper-2: var(--surface);
+  --paper-3: var(--surface-2);
+  --accent-light: rgba(124, 196, 255, 0.1);
+  --accent-light-2: rgba(124, 196, 255, 0.05);
+  --accent-light-3: rgba(124, 196, 255, 0.15);
+  --gradient-white: rgba(255, 255, 255, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+  --bg: #0b1118;
+  --surface: #121a24;
+  --surface-2: #182230;
+  --line: #263344;
+  --ink: #e8eef5;
+  --ink-2: #b4c2d1;
+  --ink-3: #8b9bad;
+  --accent: #7cc4ff;
+  --clear: #4fd1a5;
+  --fog: #f2b84b;
+  --dense: #ff8a4c;
+  --verydense: #ff5468;
+  --stale: #8b9bad;
+  
+  --state-clear: var(--clear);
+  --state-fog: var(--fog);
+  --state-dense: var(--dense);
+  --state-verydense: var(--verydense);
+  --state-nodata: var(--stale);
+  
+  --rule: var(--line);
+  --rule-2: rgba(255, 255, 255, 0.1);
+  --shadow: rgba(0, 0, 0, 0.5);
+  --paper: var(--bg);
+  --paper-2: var(--surface);
+  --paper-3: var(--surface-2);
+  --accent-light: rgba(124, 196, 255, 0.1);
+  --accent-light-2: rgba(124, 196, 255, 0.05);
+  --accent-light-3: rgba(124, 196, 255, 0.15);
+  --gradient-white: rgba(255, 255, 255, 0.1);
+  }
+}
 /* ==========================================================================
    Fog IITK — homepage styles ("Now" page).
    Scoped entirely under .fog-home so nothing here can reach the 12 other
@@ -173,7 +288,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
 }
 
 .fog-layer-2 {
-  background: linear-gradient(to top, rgba(255,255,255,0.1), transparent 50%);
+  background: linear-gradient(to top, var(--gradient-white), transparent 50%);
   opacity: calc(var(--fog-density) * 0.6);
   filter: blur(20px);
 }
@@ -205,7 +320,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
   gap: 8px;
   padding: 6px 14px;
   font-family: var(--ff-mono);
-  font-size: 13px;
+  font-size: var(--text-sm);
   font-weight: 500;
   letter-spacing: 0.02em;
   color: var(--ink);
@@ -246,7 +361,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
   background: var(--paper);
   border: 1px solid var(--rule);
   border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 30px var(--shadow);
   z-index: 100;
   text-align: left;
   display: flex;
@@ -265,7 +380,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
   border-radius: 4px;
   padding: 8px 12px;
   font-family: var(--ff-sans);
-  font-size: 14px;
+  font-size: var(--text-base);
   color: var(--ink);
 }
 
@@ -321,7 +436,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
 
 .station-name {
   font-family: var(--ff-sans);
-  font-size: 14px;
+  font-size: var(--text-base);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -402,7 +517,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
   padding: 8px 16px;
   border-radius: 4px;
   font-family: var(--ff-sans);
-  font-size: 14px;
+  font-size: var(--text-base);
   font-weight: 500;
   margin-bottom: 16px;
   display: inline-block;
@@ -434,7 +549,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
   align-items: center;
   gap: 12px;
   font-family: var(--ff-sans);
-  font-size: 14px;
+  font-size: var(--text-base);
   color: var(--ink-2);
 }
 
@@ -467,7 +582,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
 
 .hero-note {
   font-family: var(--ff-sans);
-  font-size: 13px;
+  font-size: var(--text-sm);
   color: var(--ink-3);
   margin-top: 12px;
   max-width: 400px;
@@ -829,7 +944,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
   padding: 6px 10px;
   border-radius: 6px;
   font-family: var(--ff-mono);
-  font-size: 13px;
+  font-size: var(--text-sm);
   transition: border-color 150ms var(--ease-out);
 }
 
@@ -953,7 +1068,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
 
 .tl-val {
   font-family: var(--ff-mono);
-  font-size: 14px;
+  font-size: var(--text-base);
   font-variant-numeric: tabular-nums;
   color: var(--ink);
 }
@@ -1017,7 +1132,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
 
 .evidence-pair dd {
   font-family: var(--ff-mono);
-  font-size: 13px;
+  font-size: var(--text-sm);
   color: var(--ink);
   margin: 0;
 }
@@ -1030,7 +1145,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
   padding: 16px 20px;
   border-radius: 8px;
   font-family: var(--ff-mono);
-  font-size: 13px;
+  font-size: var(--text-sm);
   line-height: 1.7;
   color: var(--ink-2);
   word-wrap: break-word;
@@ -1212,7 +1327,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
   justify-content: space-between;
   gap: 8px;
   padding: 8px 14px;
-  font-size: 13px;
+  font-size: var(--text-sm);
   color: var(--ink-2);
   text-decoration: none;
   border-bottom: 1px solid var(--rule);
@@ -1320,7 +1435,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
 }
 
 .fog-foot a {
-  font-size: 14px;
+  font-size: var(--text-base);
   color: var(--ink-2);
   text-decoration: none;
   transition: color 150ms var(--ease-out);
@@ -1533,7 +1648,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
 .map-sidebar-title {
   padding: 12px 16px;
   font-weight: 600;
-  font-size: 13px;
+  font-size: var(--text-sm);
   letter-spacing: -0.01em;
   border-bottom: 1px solid var(--border);
   background: var(--surface-3);
@@ -1550,7 +1665,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
 .map-station-list li a {
   display: block;
   padding: 10px 16px;
-  font-size: 14px;
+  font-size: var(--text-base);
   color: var(--ink-2);
   text-decoration: none;
   border-bottom: 1px solid var(--border);
@@ -1563,7 +1678,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
 }
 
 .map-station-list li a.is-sel {
-  background: var(--accent-light, rgba(0, 102, 255, 0.1));
+  background: var(--accent-light);
   color: var(--accent);
   font-weight: 500;
 }
@@ -1575,7 +1690,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
 /* Cond Cell Subval */
 .cond-subval {
   display: block;
-  font-size: 13px;
+  font-size: var(--text-sm);
   color: var(--ink-3);
   margin-top: 4px;
   font-weight: 400;
@@ -1587,15 +1702,15 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
 }
 
 .fog-chart .zone-fog {
-  fill: var(--accent-light, rgba(0, 102, 255, 0.05));
+  fill: var(--accent-light-2);
 }
 
 .fog-chart .zone-dense {
-  fill: var(--accent-light, rgba(0, 102, 255, 0.1));
+  fill: var(--accent-light);
 }
 
 .fog-chart .zone-verydense {
-  fill: var(--accent-light, rgba(0, 102, 255, 0.15));
+  fill: var(--accent-light-3);
 }
 
 .fog-chart .obs-area {
@@ -1657,4 +1772,54 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
   fill: var(--ink-3);
   font-family: var(--ff-mono);
   font-size: 9px;
+}
+
+.hero-num {
+  font-size: var(--text-hero);
+  font-weight: 500;
+  font-family: var(--ff-sans);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.hero-unit {
+  font-size: var(--text-xl);
+  margin-left: 0.28em;
+  color: var(--ink-3);
+  font-weight: 400;
+}
+.hero-state {
+  font-size: clamp(20px, 3vw, 24px);
+  font-weight: 600;
+}
+.hero-super {
+  font-size: var(--text-base);
+}
+.hero-obs-time {
+  font-size: var(--text-base);
+}
+.cond-val {
+  font-size: var(--text-2xl);
+  font-weight: 500;
+}
+.cond-label {
+  font-size: var(--text-sm);
+}
+.tl-val {
+  font-size: var(--text-md);
+}
+.tl-time {
+  font-size: var(--text-sm);
+}
+.metar-terminal {
+  font-size: 15px;
+}
+.fog-foot a {
+  font-size: var(--text-base);
+}
+.station-list-item {
+  min-height: 44px;
+  font-size: var(--text-base);
+}
+.station-picker-btn {
+  min-height: 44px;
 }

@@ -1431,28 +1431,7 @@ details[open] > .fognav-sheet {
    ========================================================================== */
 .fog-home {
   /* Local Overrides for Premium Atmospheric Look (leaves navbar untouched) */
-  --paper: #090a0c;
-  --paper-2: #0e0f12;
-  --paper-3: #121418;
-  --paper-predicted: #0b0a09;
-  --surface: rgba(255, 255, 255, 0.02);
-  --ink: #f0f2f5;
-  --ink-2: #a0a5b0;
-  --ink-3: #6b7280;
-  --rule: rgba(255, 255, 255, 0.06);
-  --rule-2: rgba(255, 255, 255, 0.1);
-  --accent: #e2e8f0;
-  --accent-hover: #ffffff;
-  --state-clear: #4ade80;
-  --state-fog: #fbbf24;
-  --state-dense: #f97316;
-  --state-verydense: #ef4444;
-  --state-nodata: #6b7280;
-  --fog-glow-clear: rgba(74, 222, 128, 0.15);
-  --fog-glow-fog: rgba(251, 191, 36, 0.15);
-  --fog-glow-dense: rgba(249, 115, 22, 0.15);
-  --fog-glow-verydense: rgba(239, 68, 68, 0.2);
-  --fog-glow-nodata: rgba(255, 255, 255, 0.05);
+
   --ff-sans: 'Inter', system-ui, sans-serif;
   --ff-mono: 'JetBrains Mono', 'IBM Plex Mono', monospace;
   --ff-display: 'Inter', system-ui, sans-serif; /* Keep strictly sans-serif as requested, clean */
