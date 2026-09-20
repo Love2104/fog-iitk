@@ -265,7 +265,7 @@ function fog_chart_render(
     }
 
     foreach ($days as $d) {
-        $svg .= '<line class="grid" x1="' . $r($d['x']) . '" y1="' . $r($plotT)
+        $svg .= '<line class="grid grid-v" x1="' . $r($d['x']) . '" y1="' . $r($plotT)
               . '" x2="' . $r($d['x']) . '" y2="' . $r($plotB) . '"/>';
     }
 
@@ -277,10 +277,10 @@ function fog_chart_render(
     foreach (fog_chart_ticks($vmax) as $t) {
         $y = $sy($t);
         if ($t > 0.0 && !in_array($t, $thrVals, true)) {
-            $svg .= '<line class="grid" x1="' . $r($plotL) . '" y1="' . $r($y)
+            $svg .= '<line class="grid grid-h" x1="' . $r($plotL) . '" y1="' . $r($y)
                   . '" x2="' . $r($plotR) . '" y2="' . $r($y) . '"/>';
         }
-        $svg .= '<text x="' . $r($plotL - 8) . '" y="' . $r($y + 3.2) . '" text-anchor="end">'
+        $svg .= '<text x="' . $r($plotL - 16) . '" y="' . $r($y + 3.2) . '" text-anchor="end">'
               . fog_chart_label_km($t) . '</text>';
     }
 
@@ -292,7 +292,16 @@ function fog_chart_render(
 
     /* Measurement before model: if the two overlap, the forecast is the one
        that should be seen to depart from the record. */
-    if ($obsPath !== '')  { $svg .= '<path class="obs" d="' . $obsPath . '"/>'; }
+    if ($obsPath !== '') { 
+        if (count($segments) > 0 && count($segments[0]) > 0) {
+            $firstP = explode(',', $segments[0][0]);
+            $lastSeg = end($segments);
+            $lastP = explode(',', end($lastSeg));
+            $areaPath = $obsPath . 'L' . $lastP[0] . ',' . $r($plotB) . 'L' . $firstP[0] . ',' . $r($plotB) . 'Z';
+            $svg .= '<path class="obs-area" d="' . $areaPath . '"/>';
+        }
+        $svg .= '<path class="obs" d="' . $obsPath . '"/>'; 
+    }
     if ($fcstPath !== '') { $svg .= '<path class="fcst" d="' . $fcstPath . '"/>'; }
     /* A diamond on every model step -- discrete predictions, not a measured
        trace, and a shape the round hover dot can never be mistaken for. Drawn
@@ -356,7 +365,7 @@ function fog_chart_render(
     /* Threshold captions last: nothing may overprint the only text that says
        what the bands mean. */
     foreach ($zones as $z) {
-        $svg .= '<text class="thr-lab" x="' . $r($plotR) . '" y="' . $r($sy($z[3]) - 4.0)
+        $svg .= '<text class="thr-lab" x="' . $r($plotR) . '" y="' . $r($sy($z[3]) + 4.0)
               . '" text-anchor="end">' . $z[4] . '</text>';
     }
 
