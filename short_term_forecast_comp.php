@@ -1,5 +1,5 @@
-<?php include 'apis/start_admin.php'; ?>
 <?php 
+    include 'apis/start_admin.php';
     // $page='past_prediction';
     // if($_SESSION['last_page_visited'] != $page ) {
     //     $flag=0;
@@ -106,6 +106,14 @@
             display: none;
         }
     </style>
+<script>
+(function () {
+  try {
+    var t = localStorage.getItem('fog-theme');
+    if (t === 'dark' || t === 'light') { document.documentElement.setAttribute('data-theme', t); }
+  } catch (e) {}
+})();
+</script>
 </head>
 
 <body id="page" class="index-page" style="font-family: 'Libre Baskerville', serif;">
@@ -162,81 +170,144 @@
     <!-- Navigation bar ends -->
 
 
-    <div class="wrapper container-fuild">
-        <section class="section section-shaped rounded" style="padding-bottom:2rem;">
-            <div class="shape shape-primary" style="height: 100px;">
-            </div>
-        </section>
-    </div>
+    <!-- REDESIGNED CONTENT AREA -->
+    <style>
+        body.index-page {
+            background-color: #F8FAFC !important;
+        }
+        .scientific-container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding-top: 64px;
+        }
+        .scientific-header {
+            margin-bottom: 24px;
+            padding: 0 16px;
+        }
+        .scientific-header h1 {
+            font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+            font-size: 26px;
+            font-weight: 600;
+            color: #0F172A;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+        .scientific-header p {
+            font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+            font-size: 14px;
+            color: #64748B;
+            font-weight: 500;
+            margin: 0;
+        }
+        .scientific-divider {
+            border: 0;
+            border-top: 1px solid #E2E8F0;
+            margin-bottom: 32px;
+            margin-left: 16px;
+            margin-right: 16px;
+        }
+        .scientific-input {
+            background: #FFFFFF;
+            border: 1px solid #CBD5E1;
+            border-radius: 4px;
+            font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+            font-size: 14px;
+            color: #334155;
+            padding: 10px 12px;
+            width: 100%;
+            transition: all 0.2s ease;
+        }
+        .scientific-input:focus {
+            border-color: #0F172A;
+            outline: none;
+            box-shadow: 0 0 0 1px #0F172A;
+        }
+        .scientific-label {
+            display: block;
+            font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748B;
+            margin-bottom: 6px;
+        }
+        .scientific-btn {
+            background: #0F172A !important;
+            color: #fff !important;
+            font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif !important;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            letter-spacing: 0.05em !important;
+            text-transform: uppercase !important;
+            padding: 10px 24px !important;
+            border-radius: 6px !important;
+            border: none !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            box-shadow: none !important;
+            height: auto !important;
+        }
+        .scientific-btn:hover {
+            background: #334155 !important;
+        }
+        .form-grid {
+            display: flex;
+            gap: 16px;
+            align-items: flex-end;
+            padding: 0 16px;
+            margin-bottom: 40px;
+        }
+        .form-group-custom {
+            flex: 1;
+            min-width: 200px;
+        }
+    </style>
 
-    <div class="container" style="margin:10px;padding:10px">
-        <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-md-2">
-                <div class="col-md  map-data d-flex" style="width:100%;">
-                    <form role="form" autocomplete="off" method="GET">
-                        <div class="form-group">
-                            <div class="autocomplete input-group" style="width:100%;">
-                                <input id="myInputFirst" class="form-control" placeholder="Enter City...." type="text" width="50%" required>
-                            </div>
-                        </div>
-                    </form>
+    <div class="scientific-container">
+        <div class="scientific-header">
+            <h1>Short-Term Forecast Comparison</h1>
+            <p>Compare predicted vs observed visibility by lead time.</p>
+        </div>
+        <hr class="scientific-divider">
+
+        <div class="form-grid">
+            <div class="form-group-custom">
+                <label class="scientific-label">City / Station</label>
+                <form role="form" autocomplete="off" method="GET" style="margin:0;">
+                    <div class="autocomplete" style="width:100%;">
+                        <input id="myInputFirst" class="scientific-input" placeholder="Enter City...." type="text" required>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="form-group-custom">
+                <label class="scientific-label">Model</label>
+                <button type="button" class="scientific-btn" id="model-choose" onclick="checkModel(this)" modelno="4" style="width:100%; text-align: left;">Gradient Boosting Regressor</button>
+                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="model-choose" style="display:none;">
                 </div>
             </div>
-            <div class="col-md-4" style="padding-left: 40px;">
-                <!-- <a href="#" class="nav-link" data-toggle="dropdown" href="#" role="button"> -->
-                    <!-- <span class="nav-link-inner--text"><button type="button" class="btn btn-primary dropdown-toggle" id="model-choose">Choose Model</button></span> -->
-                     <span class="nav-link-inner--text"> <button type="button" class="btn btn-primary" id="model-choose" onclick="checkModel(this)"  modelno="4" >Gradient Boosting Regressor</button> </span>
-                <!-- </a> -->
-                
-                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbar-default_dropdown_1" style="display:none;">
-                    <!--<a class="dropdown-item" modelno="1" onclick="checkModel(this)" href="#">Gradient Boosting Multiclassifier</a>
-                    <a class="dropdown-item" modelno="2" onclick="checkModel(this)" href="#" style="pointer-events: none;cursor:default">Multilayer Perceptron (MLP)</a>
-                    <a class="dropdown-item" modelno="3" onclick="checkModel(this)" href="#" style="pointer-events: none;cursor:default">Gradient Boosting 1</a>-->
-                    <!-- <a class="dropdown-item" modelno="4" onclick="checkModel(this)" href="#">Gradient Boosting Regressor</a> -->
-                    
-                    <!-- <a class="dropdown-item" modelno="5" onclick="checkModel(this)" href="#" style="cursor:default">GBR_Past Visibility</a>
-                    <a class="dropdown-item" modelno="6" onclick="checkModel(this)" href="#" style="cursor:default">GBR_Rolling Mean</a> -->
 
-                     <!-- <a class="dropdown-item" modelno="7" onclick="checkModel(this)" href="#" style="cursor:default">LSTM</a> 
-                    <a class="dropdown-item" modelno="8" onclick="checkModel(this)" href="#" style="cursor:default">Light GBM</a>
-                    <a class="dropdown-item" modelno="9" onclick="checkModel(this)" href="#" style="cursor:default">Ensemble</a>
-                    <a class="dropdown-item" modelno="10" onclick="checkModel(this)" href="#" style="cursor:default">GBR Non-Winter Month</a>
-                    
-                    <a class="dropdown-item" modelno="11" onclick="checkModel(this)" href="#" style="cursor:default">ALL</a>
-                    <a class="dropdown-item" modelno="12" onclick="checkModel(this)" href="#" style="cursor:default">IIT Kanpur Model</a>  -->
-
-                </div>
-            </div>
-            <div id="mod4" class="col-md-2" style="padding-left: 40px;display:none">
-                <a href="#" class="nav-link" data-toggle="dropdown" href="#" role="button">
-                    <span class="nav-link-inner--text"><button type="button" class="btn btn-primary" id="hr-choose">Choose Hourwise</button></span>
+            <div class="form-group-custom" id="mod4" style="display:none;">
+                <label class="scientific-label">Lead Time</label>
+                <a href="#" data-toggle="dropdown" role="button" style="text-decoration:none;">
+                    <button type="button" class="scientific-btn" id="hr-choose" style="width:100%; text-align: left;">Choose Hourwise</button>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
+                <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" modelno="405" onclick="onModelChange(this)" href="#">0.5 hour</a>
                     <a class="dropdown-item" modelno="410" onclick="onModelChange(this)" href="#">1 hour</a>
                     <a class="dropdown-item" modelno="415" onclick="onModelChange(this)" href="#">1.5 hour</a>
                     <a class="dropdown-item" modelno="420" onclick="onModelChange(this)" href="#">2 hour</a>
                     <a class="dropdown-item" modelno="425" onclick="onModelChange(this)" href="#">2.5 hour</a>
                     <a class="dropdown-item" modelno="4" onclick="onModelChange(this)" href="#">3 hour</a>
-                    <!-- <a class="dropdown-item" modelno="460" onclick="onModelChange(this)" href="#">6 hour</a> -->
-
                 </div>
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="card shadow" id="curvspred-div" style="display: none;">
-            <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;height: 660px">
-                <div id="curvspred"></div>
-            </div>
-            <!-- <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;">
-                <div id="rmse" align="center"></div>
-            </div> -->
-            <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;">
-                <div id="rmsec"></div>
-            </div>
-            
+    <div class="scientific-container">
+        <div id="curvspred-div" style="display: none; border: 1px solid #E2E8F0; padding: 24px; border-radius: 4px; background: #FFFFFF; margin-bottom: 40px;">
+            <div id="curvspred" style="height: 600px; margin-bottom: 24px;"></div>
+            <div id="rmsec" style="height: 400px;"></div>
         </div>        
     </div>
     <section id="footr" class="section  pb-0" style="padding-top:1rem;margin-bottom:1rem;display: none;">

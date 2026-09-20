@@ -26,8 +26,16 @@
     <link href="./assets/css/font-awesome.css" rel="stylesheet" />
     <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
     <link href="./assets/css/argon-design-system.css?v=1.2.0" rel="stylesheet" />
+<script>
+(function () {
+  try {
+    var t = localStorage.getItem('fog-theme');
+    if (t === 'dark' || t === 'light') { document.documentElement.setAttribute('data-theme', t); }
+  } catch (e) {}
+})();
+</script>
 </head>
-<body id="page" class="index-page" style="font-family: 'Libre Baskerville', serif;">
+<body id="page" class="index-page" style="background-color: #F8FAFC; font-family: system-ui, -apple-system, sans-serif; font-size: 16px; line-height: 1.6; color: #334155;">
 
   <!-- Navigation bar starts -->
 
@@ -92,18 +100,16 @@
   <!-- Navigation bar ends -->
 
 
-  <div class="wrapper container-fuild">
-      <section class="section section-shaped rounded" style="padding-bottom:2rem;">
-          <div class="shape shape-primary" style="height: 100px;">
-          </div>
-      </section>
-  </div>
+  
 
     <section class="section  pb-0" style="padding-top:1rem;">
-      <div class="container">
-        <div class="card shadow">
-          <div class="card-body rounded" style="padding:2rem;">
-            <h1 class="heading-title text-warning" style="text-align: center; margin-bottom: 2rem;"><b>Publications</b></h1>
+      <div style="max-width: 960px; margin: 48px auto; padding: 0 16px;">
+          <div style="margin-bottom: 32px;">
+            <h1 style="font-family: system-ui, -apple-system, sans-serif; font-size: 28px; font-weight: 600; color: #0F172A; letter-spacing: -0.02em; margin-bottom: 12px; text-align: left;">Paper Publications</h1>
+            <hr style="border: 0; border-top: 1px solid #E2E8F0; margin: 0;">
+          </div>
+          <div>
+            
             
             <div class="publications-grid">
               <?php 
@@ -196,7 +202,7 @@
   <section class="section pb-0" style="padding-top:1rem;margin-bottom:1rem">
     <div class="container-fluid">
         <div class="card shadow">
-            <div class="card-body bg-gradient-primary rounded ">
+            <div class="card-body rounded" style="background-color: #0F172A;">
                 <div class="row justify-content-center" style="color:white;">
                     <p>© Fog Prediction , IIT Kanpur. All rights reserved.</p>
                 </div>

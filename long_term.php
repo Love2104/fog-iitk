@@ -86,6 +86,14 @@
         }
     </style>
     
+<script>
+(function () {
+  try {
+    var t = localStorage.getItem('fog-theme');
+    if (t === 'dark' || t === 'light') { document.documentElement.setAttribute('data-theme', t); }
+  } catch (e) {}
+})();
+</script>
 </head>
 
 <body id="page" class="index-page" style="font-family: 'Libre Baskerville', serif;">

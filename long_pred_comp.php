@@ -1,6 +1,5 @@
- <?php include 'apis/start_admin.php'; ?>
- <?php 
-    
+<?php 
+    include 'apis/start_admin.php';
     // session_start();
     // // $page='past_prediction';
     // // if($_SESSION['last_page_visited'] != $page ) {
@@ -133,6 +132,14 @@
             display: none;
         }
     </style>
+<script>
+(function () {
+  try {
+    var t = localStorage.getItem('fog-theme');
+    if (t === 'dark' || t === 'light') { document.documentElement.setAttribute('data-theme', t); }
+  } catch (e) {}
+})();
+</script>
 </head>
 
 <body id="page" class="index-page" style="font-family: 'Libre Baskerville', serif;">
@@ -190,72 +197,126 @@
     <!-- Navigation bar ends -->
 
     
-    <div class="wrapper container-fuild">
-        <section class="section section-shaped rounded" style="padding-bottom:2rem;">
-            <div class="shape shape-primary" style="height: 100px;">
-            </div>
-        </section>
-    </div>
+    <!-- REDESIGNED CONTENT AREA -->
+    <style>
+        body.index-page {
+            background-color: #F8FAFC !important;
+        }
+        .scientific-container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding-top: 64px;
+        }
+        .scientific-header {
+            margin-bottom: 24px;
+            padding: 0 16px;
+        }
+        .scientific-header h1 {
+            font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+            font-size: 26px;
+            font-weight: 600;
+            color: #0F172A;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+        .scientific-header p {
+            font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+            font-size: 14px;
+            color: #64748B;
+            font-weight: 500;
+            margin: 0;
+        }
+        .scientific-divider {
+            border: 0;
+            border-top: 1px solid #E2E8F0;
+            margin-bottom: 32px;
+            margin-left: 16px;
+            margin-right: 16px;
+        }
+        .scientific-input {
+            background: #FFFFFF;
+            border: 1px solid #CBD5E1;
+            border-radius: 4px;
+            font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+            font-size: 14px;
+            color: #334155;
+            padding: 10px 12px;
+            width: 100%;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+        .scientific-input:focus {
+            border-color: #0F172A;
+            outline: none;
+            box-shadow: 0 0 0 1px #0F172A;
+        }
+        .scientific-label {
+            display: block;
+            font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748B;
+            margin-bottom: 6px;
+        }
+        .scientific-btn {
+            background: #0F172A !important;
+            color: #fff !important;
+            font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif !important;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            letter-spacing: 0.05em !important;
+            text-transform: uppercase !important;
+            padding: 10px 24px !important;
+            border-radius: 6px !important;
+            border: none !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            box-shadow: none !important;
+            height: auto !important;
+            box-sizing: border-box;
+            display: inline-block;
+        }
+        .scientific-btn:hover {
+            background: #334155 !important;
+        }
+        .form-grid {
+            display: flex;
+            gap: 16px;
+            align-items: flex-end;
+            padding: 0 16px;
+            margin-bottom: 40px;
+        }
+        .form-group-custom {
+            flex: 1;
+            max-width: 400px;
+        }
+    </style>
 
-    <div class="container" style="margin:10px;padding:10px">
-        <div class="row">
-            <div class="col-md-5"></div>
-            <!-- <div class="col-md-2">
-                <div class="col-md  map-data d-flex" style="width:100%;">
-                    <form role="form" autocomplete="off" method="GET">
-                        <div class="form-group">
-                            <div class="autocomplete input-group" style="width:100%;">
-                                <input id="myInputFirst" class="form-control" placeholder="Enter City...." type="text" width="50%" required>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div> -->
-             
-            
+    <div class="scientific-container">
+        <div class="scientific-header">
+            <h1>Long-Term Forecast Comparison</h1>
+            <p>Evaluate the forecast fog index against the observed record.</p>
+        </div>
+        <hr class="scientific-divider">
+
+        <div class="form-grid">
+            <div class="form-group-custom">
+                <form role="form" autocomplete="off" method="GET" style="margin:0;">
+                    <label class="scientific-label">City / Station</label>
+                    <div class="autocomplete" style="display: flex; gap: 12px;">
+                        <input id="myInput" class="scientific-input" placeholder="Select a location" type="text" value="Lucknow">
+                        <input type="button" class="scientific-btn" value="Go" onclick="loaddata(4)">
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-    <div class="container w-50" >
-                      
-                    <form role="form" autocomplete="off" method="GET">
-                        <div class="form-group">
-                            <div class="autocomplete input-group">
-                                <div class="container pt-3">
-                                    <div class="d-flex flex-row justify-content-center">
-                                        <div class="">
-                                            <input id="myInput" class="form-control" placeholder="Select a location" type="text" value="Lucknow">
-                                        </div>
-                                        <div class="" >
-                                            <input type="button" class="btn btn-primary btn-fab btn-icon btn-round ml-3" value="Go" onclick="loaddata(4)">
-                                        </div>
-                                    <!--<a href="#" class="nav-link" data-toggle="dropdown" href="#" role="button">
-                                        <span class="nav-link-inner--text"><button type="button" class="btn btn-primary dropdown-toggle" id="model-choose">Choose Model</button></span>
-                                    </a>-->
-                                    <!--<div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbar-default_dropdown_1">-->
-                                        <!--<a class="dropdown-item" modelno="1" onclick="checkModel(this)" href="#">Gradient Boosting Multiclassifier</a>-->
-                                        <!--<a class="dropdown-item" modelno="2" onclick="checkModel(this)" href="#" style="pointer-events: none;cursor:default">Multilayer Perceptron (MLP)</a>
-                                        <a class="dropdown-item" modelno="3" onclick="checkModel(this)" href="#" style="pointer-events: none;cursor:default">Gradient Boosting 1</a>-->
-                                        <!-- <a class="dropdown-item" modelno="4" onclick="loaddata(this)" href="#">Gradient Boosting Regressor</a>
-                                        <a class="dropdown-item" modelno="5" onclick="loaddata(this)" href="#" style="cursor:default">Model 5</a>-->
-                                    <!--</div>-->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-    <div class="container">
-        <div class="card shadow" id="curvspred-div" style="display: none;">
-            <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;height: 660px">
-                <div id="curvspred"></div>
-            </div>
-            <!-- <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;">
-                <div id="rmse" align="center"></div>
-            </div> -->
-            <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;">
-                <div id="rmsec"></div>
-            </div>
-            
+    <div class="scientific-container">
+        <div id="curvspred-div" style="display: none; border: 1px solid #E2E8F0; padding: 24px; border-radius: 4px; background: #FFFFFF; margin-bottom: 40px;">
+            <div id="curvspred" style="height: 600px; margin-bottom: 24px;"></div>
+            <div id="rmsec" style="height: 400px;"></div>
         </div>        
     </div>
     <section id="footr" class="section  pb-0" style="padding-top:1rem;margin-bottom:1rem;display: none;">

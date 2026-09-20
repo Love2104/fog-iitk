@@ -50,3 +50,9 @@ A premium, factual data product interface that communicates current visibility a
 - Elements are staggered by `80ms` increments (`nth-child` delays).
 - Animations are disabled when `prefers-reduced-motion` is active.
 - Animations only execute if JavaScript is enabled (`html.js`), ensuring a fully visible fallback.
+
+# Computer Vision Validation Design System
+- **Gallery Presentation:** Avoid generic sliders/carousels for data visualization. Use CSS grid to present side-by-side matrices (e.g., Cam 1 vs Cam 2, Correct vs Misclassified).
+- **Metadata Framing:** Always accompany image analysis with strict metadata—Data Source, Camera Names, Target Threshold, and Observation Time.
+- **Image Treatment:** Use `object-fit: cover` or `contain` with standardized bounding boxes (`.obs-img-wrap`). Apply subtle hover states (e.g., `1.02` scale) to allow users to inspect features without breaking layout.
+- **Integrity States:** Never mock classification statistics if original arrays (e.g., Ground Truths vs Predictions) are not available. Use clinical messages like "Not available from the current image archive" instead of generating fake charts.

@@ -18,6 +18,14 @@
     <style>
         body { font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; background-color: #FAFAFA; color: #0F172A; }
     </style>
+<script>
+(function () {
+  try {
+    var t = localStorage.getItem('fog-theme');
+    if (t === 'dark' || t === 'light') { document.documentElement.setAttribute('data-theme', t); }
+  } catch (e) {}
+})();
+</script>
 </head>
 
 <body id="page" class="fog-home">

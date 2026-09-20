@@ -62,8 +62,16 @@
     <link href="./assets/css/font-awesome.css" rel="stylesheet" />
     <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
     <link href="./assets/css/argon-design-system.css?v=1.2.0" rel="stylesheet" />
+<script>
+(function () {
+  try {
+    var t = localStorage.getItem('fog-theme');
+    if (t === 'dark' || t === 'light') { document.documentElement.setAttribute('data-theme', t); }
+  } catch (e) {}
+})();
+</script>
 </head>
-<body id="page" class="index-page" style="font-family: 'Libre Baskerville', serif;">
+<body id="page" class="index-page" style="background-color: #F8FAFC; font-family: system-ui, -apple-system, sans-serif; font-size: 16px; line-height: 1.6; color: #334155;">
 
   <!-- Navigation bar starts -->
 
@@ -129,19 +137,14 @@
   <!-- Navigation bar ends -->
 
 
-  <div class="wrapper container-fuild">
-      <section class="section section-shaped rounded" style="padding-bottom:2rem;">
-          <div class="shape shape-primary" style="height: 100px;">
-          </div>
-      </section>
-  </div>
+  
 
   <!-- <section class="section  pb-0" id="section-services" style="padding-top:1rem;">    -->
     <section class="section  pb-0" style="padding-top:1rem;">
       <div class="container">
         <div class="card shadow">
           <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;">
-            <h1 class="heading-title text-warning" style="text-align: center;"><b>Feedback</b></h1>
+            
             <div class="container">
                 <div class="card-body rounded"  style="padding:1rem 2rem 1rem 2rem;">
                 <form method="POST" action="">
@@ -188,7 +191,8 @@
                                     ?><div class="alert alert-warning" style="text-align:center;">Your valuable feedback has been recorded. (Email notification sent)</div><?php
                                 }
                             }
-                            } ?>
+                            }
+                        } ?>
                     <div class="form-group">
 
                         <div class="row">
@@ -252,7 +256,7 @@
   <section class="section pb-0" style="padding-top:1rem;margin-bottom:1rem">
     <div class="container-fluid">
         <div class="card shadow">
-            <div class="card-body bg-gradient-primary rounded ">
+            <div class="card-body rounded" style="background-color: #0F172A;">
                 <div class="row justify-content-center" style="color:white;">
                     <p>© Fog Prediction , IIT Kanpur. All rights reserved.</p>
                 </div>

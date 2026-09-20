@@ -60,8 +60,16 @@
     <link href="./assets/css/font-awesome.css" rel="stylesheet" />
     <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
     <link href="./assets/css/argon-design-system.css?v=1.2.0" rel="stylesheet" />
+<script>
+(function () {
+  try {
+    var t = localStorage.getItem('fog-theme');
+    if (t === 'dark' || t === 'light') { document.documentElement.setAttribute('data-theme', t); }
+  } catch (e) {}
+})();
+</script>
 </head>
-<body id="page" class="index-page" style="font-family: 'Libre Baskerville', serif;">
+<body id="page" class="index-page" style="background-color: #F8FAFC; font-family: system-ui, -apple-system, sans-serif; font-size: 16px; line-height: 1.6; color: #334155;">
 
   <!-- Navigation bar starts -->
 
@@ -127,19 +135,17 @@
   <!-- Navigation bar ends -->
 
 
-  <div class="wrapper container-fuild">
-      <section class="section section-shaped rounded" style="padding-bottom:2rem;">
-          <div class="shape shape-primary" style="height: 100px;">
-          </div>
-      </section>
-  </div>
+  
 
-  <!-- <section class="section  pb-0" id="section-services" style="padding-top:1rem;">    -->
-    <section class="section  pb-0" style="padding-top:1rem;">
-      <div class="container">
-        <div class="card shadow">
-          <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;">
-            <h1 class="heading-title text-warning" style="text-align: center;"><b>Motivation</b></h1>
+  
+    
+            <div style="max-width: 960px; margin: 48px auto; padding: 0 16px;">
+  <div style="margin-bottom: 32px;">
+    <h1 style="font-family: system-ui, -apple-system, sans-serif; font-size: 28px; font-weight: 600; color: #0F172A; letter-spacing: -0.02em; margin-bottom: 12px; text-align: left;">About Us</h1>
+    <hr style="border: 0; border-top: 1px solid #E2E8F0; margin: 0;">
+  </div>
+  <div style="margin-bottom: 40px;">
+    <h2 style="font-family: system-ui, -apple-system, sans-serif; font-size: 20px; font-weight: 600; color: #0F172A; margin-bottom: 16px;">Motivation</h2>
             <div class="container">
                 <div class="card-body rounded"  style="padding:1rem 2rem 1rem 2rem;">
                   <h4>The northern part of India, during winter months (Dec-Jan),
@@ -159,15 +165,11 @@
                     to plan their air-traffic.</h4>
                 </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="section  pb-0" style="padding-top:1rem;">
-      <div class="container">
-        <div class="card shadow">
-          <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;">
-            <h1 class="heading-title text-warning" style="text-align: center;"><b>Onset and  dissipation of fog at Airstrip IITK</b></h1>
+
+    
+            </div>
+  <div style="margin-bottom: 40px;">
+    <h2 style="font-family: system-ui, -apple-system, sans-serif; font-size: 20px; font-weight: 600; color: #0F172A; margin-bottom: 16px;">Onset and dissipation of fog at Airstrip IITK</h2>
             <div class="container">
                 <div class="card-body rounded d-flex justify-content-center"  style="padding:1rem 2rem 1rem 2rem;">
                 <video class="w-100" controls>
@@ -176,18 +178,14 @@
                 </video>
                 </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  <section class="section  pb-0" style="padding-top:1rem;">
-    <div class="container">
-      <div class="card shadow">
-        <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;">
 
-          <h2 id="bridgename" class="heading-title text-warning" style="text-align: center;">Fog Prediction Team</h2>
+  
+
+          </div>
+  <div style="margin-bottom: 40px;">
+    <h2 style="font-family: system-ui, -apple-system, sans-serif; font-size: 24px; font-weight: 600; color: #0F172A; margin-bottom: 24px; text-align: left;">Fog Prediction Team</h2>
           <br>
-          <h2 id="bridgename" class="heading-title text-warning ">Current Team Members</h2>
+          <h3 style="font-family: system-ui, -apple-system, sans-serif; font-size: 18px; font-weight: 600; color: #334155; margin-bottom: 16px;">Current Team Members</h3>
           
           
           <div class="row" >
@@ -227,7 +225,7 @@
           </div>
           
           <br><br><br>
-          <h2 id="bridgename" class="heading-title text-warning ">Mentors</h2>
+          <h3 style="font-family: system-ui, -apple-system, sans-serif; font-size: 18px; font-weight: 600; color: #334155; margin-bottom: 16px;">Mentors</h3>
           <div class="row">
             <div class="col-md" style="text-align: center;margin: 15px;">
               <a href="https://www.cse.iitk.ac.in/users/arnabb/" target="_blank"><img src="./assets/img/team/arnab.jpeg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover" style="width: 50%;"></a>
@@ -243,7 +241,7 @@
             </div>
           </div>
           <br><br>
-          <h2 id="bridgename" class="heading-title text-warning ">Past Team Members</h2>
+          <h3 style="font-family: system-ui, -apple-system, sans-serif; font-size: 18px; font-weight: 600; color: #334155; margin-bottom: 16px;">Past Team Members</h3>
           <div class="row" >
           <div class="col-md" style="text-align: center;margin: 15px;">
               <img src="./assets/img/team/kajal.jpg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover" style="width: 50%;">
@@ -299,15 +297,13 @@
             </div>
           </div>
           <br><br>
-        </div>
-      </div>
+
     </div>
-    <br>
-  </section>
-  <section class="section pb-0" style="padding-top:1rem;margin-bottom:1rem">
+</div>
+<section class="section pb-0" style="padding-top:1rem;margin-bottom:1rem">
     <div class="container-fluid">
         <div class="card shadow">
-            <div class="card-body bg-gradient-primary rounded ">
+            <div class="card-body rounded" style="background-color: #0F172A;">
                 <div class="row justify-content-center" style="color:white;">
                     <p>© Fog Prediction , IIT Kanpur. All rights reserved.</p>
                 </div>

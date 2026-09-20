@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 /* Build entry for assets/css/fog-redesign.css:
  *   sass compile.scss assets/css/fog-redesign.css
  *
@@ -53,7 +54,8 @@
   --lh-head: 1.18;
   --lh-ui: 1.45;
   --lh-prose: 1.62;
-  --tr-label: 0.09em; /* the only tracked-out type on the site */
+  --tr-label: 0.09em;
+  /* the only tracked-out type on the site */
   --tr-tight: -0.014em;
   --measure: 68ch;
   /* ── space (4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 96) ─────────────────── */
@@ -69,23 +71,32 @@
   --shell: 1180px;
   --radius: 3px;
   /* ── ground ───────────────────────────────────────────────────────────── */
-  --paper: #FBFAF8; /* the roll */
-  --paper-2: #F5F2EC; /* alternating ruled band */
-  --paper-3: #EFEBE3; /* recessed wells: inputs, table heads */
-  --paper-predicted: #FAF6EF; /* the ground under anything a model produced */
-  --surface: #FFFFFF; /* the bar, and anything that must sit above paper */
+  --paper: #FBFAF8;
+  /* the roll */
+  --paper-2: #F5F2EC;
+  /* alternating ruled band */
+  --paper-3: #EFEBE3;
+  /* recessed wells: inputs, table heads */
+  --paper-predicted: #FAF6EF;
+  /* the ground under anything a model produced */
+  --surface: #FFFFFF;
+  /* the bar, and anything that must sit above paper */
   --ink: #16181C;
-  --ink-2: #4B4F56; /* secondary prose */
-  --ink-3: #62666C; /* labels, captions; >=4.5:1 on every ground above */
-  --rule: #DED9D0; /* hairline */
-  --rule-2: #C7C0B4; /* emphatic hairline */
+  --ink-2: #4B4F56;
+  /* secondary prose */
+  --ink-3: #62666C;
+  /* labels, captions; >=4.5:1 on every ground above */
+  --rule: #DED9D0;
+  /* hairline */
+  --rule-2: #C7C0B4;
+  /* emphatic hairline */
   /* ── provenance ───────────────────────────────────────────────────────── */
   --measured: #1E3A4C;
   --measured-2: #325B73;
-  --measured-tint:rgba(30, 58, 76, 0.09);
+  --measured-tint: rgba(30, 58, 76, 0.09);
   --predicted: #9A5B22;
   --predicted-2: #B9793C;
-  --predicted-tint:rgba(154, 91, 34, 0.10);
+  --predicted-tint: rgba(154, 91, 34, 0.10);
   /* Interaction inherits the measured hue: controls belong to the instrument. */
   --accent: #1E3A4C;
   --accent-hover: #0F2632;
@@ -106,7 +117,8 @@
   --zone-dense: rgba(163, 62, 30, 0.10);
   --zone-verydense: rgba(110, 30, 16, 0.13);
   --hatch: rgba(107, 112, 120, 0.42);
-  --hatch-soft: rgba(107, 112, 120, 0.20); /* over areas that carry text */
+  --hatch-soft: rgba(107, 112, 120, 0.20);
+  /* over areas that carry text */
   /* ── freshness ────────────────────────────────────────────────────────── */
   --fresh-ok: #2C6E4F;
   --fresh-warn: #A9791F;
@@ -139,7 +151,7 @@
     --measured-tint: rgba(127, 178, 206, 0.13);
     --predicted: #D79A57;
     --predicted-2: #E7B67E;
-    --predicted-tint:rgba(215, 154, 87, 0.14);
+    --predicted-tint: rgba(215, 154, 87, 0.14);
     --accent: #8FC0DA;
     --accent-hover: #B6D8EA;
     --focus: #8FC0DA;
@@ -163,6 +175,7 @@
     --fresh-dead: #DE7454;
   }
 }
+
 :root[data-theme=dark] {
   --paper: #131417;
   --paper-2: #191A1E;
@@ -179,7 +192,7 @@
   --measured-tint: rgba(127, 178, 206, 0.13);
   --predicted: #D79A57;
   --predicted-2: #E7B67E;
-  --predicted-tint:rgba(215, 154, 87, 0.14);
+  --predicted-tint: rgba(215, 154, 87, 0.14);
   --accent: #8FC0DA;
   --accent-hover: #B6D8EA;
   --focus: #8FC0DA;
@@ -239,13 +252,18 @@
 /* Reduced motion is honoured per-surface rather than globally, so this file
    never disables an animation belonging to a page it does not own. */
 @media (prefers-reduced-motion: reduce) {
-  .fognav *, .fog-home *, .fog-foot *, .fog-skip {
+
+  .fognav *,
+  .fog-home *,
+  .fog-foot *,
+  .fog-skip {
     animation-duration: 1ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 1ms !important;
     scroll-behavior: auto !important;
   }
 }
+
 /* ==========================================================================
    Fog IITK — navigation.
    Implements docs/FOG_IITK_WEBSITE_AUDIT.md §39.
@@ -310,7 +328,9 @@
   content: "";
 }
 
-.fognav :where(p), .fognav :where(ul), .fognav :where(li) {
+.fognav :where(p),
+.fognav :where(ul),
+.fognav :where(li) {
   margin: 0;
   padding: 0;
 }
@@ -361,6 +381,7 @@
     --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 26px -14px rgba(0, 0, 0, 0.6);
   }
 }
+
 :root[data-theme=dark] .fognav {
   --shadow-float: 0 1px 2px rgba(0, 0, 0, 0.5), 0 18px 40px -14px rgba(0, 0, 0, 0.72);
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 26px -14px rgba(0, 0, 0, 0.6);
@@ -472,13 +493,16 @@
   .fognav-mark:hover .fognav-glyph .g-f2 {
     opacity: 0.8;
   }
+
   .fognav-mark:hover .fognav-glyph .g-f3 {
     opacity: 0.52;
   }
+
   .fognav-glyph .g-fog {
     transition: opacity var(--dur-hover) var(--ease-spring);
   }
 }
+
 /* ── station well ────────────────────────────────────────────────────────── */
 /* Three compartments, read left to right as instrument hardware: a nameplate
    saying what the channel selects, the field you type into, and the key that
@@ -507,6 +531,7 @@
     border-color: var(--ink-3);
   }
 }
+
 /* Engaged: a slate ring, and every compartment acknowledges it. This is the
    focus indicator -- the input's own is suppressed below, never removed
    without a replacement. */
@@ -585,7 +610,8 @@
   display: none;
 }
 
-.fognav-q:focus, .fognav-q:focus-visible {
+.fognav-q:focus,
+.fognav-q:focus-visible {
   outline: none;
 }
 
@@ -615,6 +641,7 @@
     background: var(--paper-2);
   }
 }
+
 .fognav-find:focus-within .fognav-go {
   color: var(--accent);
   background: var(--measured-tint);
@@ -752,11 +779,14 @@
   .fognav-opt:hover {
     background: var(--paper-2);
   }
+
   .fognav-opt:hover i {
     color: var(--measured);
   }
 }
-.fognav-opt:focus-visible, .fognav-opt.is-cursor {
+
+.fognav-opt:focus-visible,
+.fognav-opt.is-cursor {
   background: var(--paper-2);
 }
 
@@ -800,7 +830,7 @@
   height: 32px;
   margin-top: -16px;
   border-radius: 6px;
-  background: var(--paper-2);
+  background: transparent;
   opacity: 0;
   pointer-events: none;
   transform: translate3d(0, 0, 0);
@@ -840,11 +870,14 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .fognav-link:hover, .fognav-toggle:hover {
+
+  .fognav-link:hover,
+  .fognav-toggle:hover {
     color: var(--ink);
   }
 }
-.fognav-drop[open] > .fognav-toggle {
+
+.fognav-drop[open]>.fognav-toggle {
   color: var(--ink);
 }
 
@@ -854,19 +887,19 @@
    Anchoring it to the word instead keeps it correct at every width, including
    the wrapped two-row bar. Deliberately a different shape from the travelling
    marker: "here" and "under the cursor" must not look alike. */
-.fognav-link > span,
-.fognav-toggle > span:first-child {
+.fognav-link>span,
+.fognav-toggle>span:first-child {
   position: relative;
 }
 
 .fognav-item[data-active=true] .fognav-link,
 .fognav-item[data-active=true] .fognav-toggle {
-  color: var(--ink);
+  color: #0F172A;
   font-weight: 600;
 }
 
-.fognav-item[data-active=true] .fognav-link > span::after,
-.fognav-item[data-active=true] .fognav-toggle > span:first-child::after {
+.fognav-item[data-active=true] .fognav-link>span::after,
+.fognav-item[data-active=true] .fognav-toggle>span:first-child::after {
   content: "";
   position: absolute;
   left: 0;
@@ -874,7 +907,7 @@
   bottom: -6px;
   height: 2px;
   border-radius: 1px;
-  background: var(--accent);
+  background: #0F172A;
 }
 
 /* Keyboard focus borrows the travelling marker's geometry rather than drawing
@@ -907,7 +940,7 @@
   border-bottom: 1.4px solid currentColor;
   transform: translateY(-2px) rotate(45deg);
   opacity: 0.5;
-  transition: transform var(--dur-hover) var(--ease-spring), opacity var(--dur-hover) var(--ease-spring);
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .fognav-drop[open] .fognav-caret {
@@ -929,11 +962,11 @@
   z-index: 40;
   width: 344px;
   max-width: calc(100vw - 2 * var(--sp-5));
-  padding: var(--sp-2);
-  background: var(--surface);
-  border: 1px solid var(--rule-2);
-  border-radius: var(--r-pop);
-  box-shadow: var(--shadow-float);
+  padding: 8px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
   transform-origin: top left;
 }
 
@@ -945,10 +978,12 @@
 
 .fognav-panel-note {
   padding: 6px var(--sp-3) var(--sp-2);
-  font-size: var(--fs-micro);
-  letter-spacing: 0.01em;
-  color: var(--ink-3);
-  border-bottom: 1px solid var(--rule);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #94A3B8;
+  border-bottom: 1px solid #F1F5F9;
   margin-bottom: 5px !important;
 }
 
@@ -969,45 +1004,47 @@
   top: 13px;
   width: 2px;
   height: 0;
-  background: var(--accent);
+  background: #0F172A;
   border-radius: 1px;
   transition: height var(--dur-hover) var(--ease-spring);
 }
 
 .fognav-panel-item strong {
   display: block;
-  font-size: var(--fs-ui);
-  font-weight: 600;
-  letter-spacing: -0.008em;
-  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  color: #0F172A;
   line-height: 1.3;
 }
 
 .fognav-panel-item span {
   display: block;
-  margin-top: 1px;
-  font-size: var(--fs-micro);
+  margin-top: 2px;
+  font-size: 13px;
   line-height: 1.4;
-  color: var(--ink-3);
+  color: #64748B;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .fognav-panel-item:hover {
-    background: var(--paper-2);
+    background: #F1F5F9;
   }
+
   .fognav-panel-item:hover::before {
     height: 20px;
   }
+
   .fognav-panel-item:hover span {
-    color: var(--ink-2);
+    color: #64748B;
   }
 }
+
 .fognav-panel-item:focus-visible {
-  background: var(--paper-2);
+  background: #F1F5F9;
 }
 
 .fognav-panel-item[aria-current=page] {
-  background: var(--paper-2);
+  background: #F8FAFC;
 }
 
 .fognav-panel-item[aria-current=page]::before {
@@ -1018,8 +1055,8 @@
    so it reads as coming out of its trigger rather than fading in from nowhere.
    <details> already removes closed content from the page, so nothing hidden
    here is left in the tab order. */
-details[open] > .fognav-panel,
-details[open] > .fognav-sheet {
+details[open]>.fognav-panel,
+details[open]>.fognav-sheet {
   animation: fognav-pop var(--dur-pop-in) var(--ease-spring);
 }
 
@@ -1028,11 +1065,13 @@ details[open] > .fognav-sheet {
     opacity: 0;
     transform: translateY(-6px) scale(0.965);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
 }
+
 .fognav-sheet {
   transform-origin: top right;
 }
@@ -1065,6 +1104,7 @@ details[open] > .fognav-sheet {
     background: var(--paper-2);
   }
 }
+
 .fognav-icon-btn:active {
   transform: scale(0.94);
 }
@@ -1087,10 +1127,12 @@ details[open] > .fognav-sheet {
   :root:not([data-theme=light]) .fognav-icon-moon {
     display: none;
   }
+
   :root:not([data-theme=light]) .fognav-icon-sun {
     display: block;
   }
 }
+
 :root[data-theme=dark] .fognav-icon-moon {
   display: none;
 }
@@ -1199,7 +1241,7 @@ details[open] > .fognav-sheet {
   align-items: center;
 }
 
-.fognav-burger > summary {
+.fognav-burger>summary {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1209,7 +1251,7 @@ details[open] > .fognav-sheet {
   border-radius: var(--r-ctl);
 }
 
-.fognav-burger[open] > summary {
+.fognav-burger[open]>summary {
   border-color: var(--accent);
 }
 
@@ -1264,7 +1306,7 @@ details[open] > .fognav-sheet {
   box-shadow: var(--shadow-float);
 }
 
-.fognav-sheet-group + .fognav-sheet-group {
+.fognav-sheet-group+.fognav-sheet-group {
   border-top: 1px solid var(--rule);
   margin-top: 5px;
   padding-top: 5px;
@@ -1314,78 +1356,98 @@ details[open] > .fognav-sheet {
   .fognav-bar {
     gap: var(--sp-5);
   }
+
   .fognav-find {
     flex-basis: 236px;
   }
-  .fognav-link, .fognav-toggle {
+
+  .fognav-link,
+  .fognav-toggle {
     padding: 0 9px;
     font-size: 13.5px;
   }
 }
+
 @media (max-width: 1180px) {
   .fognav-sections {
     display: none;
   }
+
   .fognav-burger {
     display: flex;
   }
+
   .fognav-bar {
     gap: var(--sp-4);
     padding: 0 var(--sp-4);
   }
+
   .fognav-find {
     flex: 1 1 auto;
     max-width: 420px;
     margin-right: auto;
   }
+
   .fognav-status-inner {
     padding: 7px var(--sp-4);
   }
 }
+
 @media (max-width: 620px) {
   .fognav-mark-org {
     display: none;
   }
+
   .fognav-bar {
     gap: var(--sp-3);
     margin: 0 var(--sp-3);
     border-radius: 14px;
   }
+
   .fognav {
     padding: var(--sp-2) 0;
   }
+
   .fognav-status {
     margin: var(--sp-2) 0 calc(var(--sp-2) * -1);
   }
+
   .fognav-results {
     width: auto;
     right: 0;
   }
+
   .fognav-status-when {
     display: none;
   }
 }
+
 @media (max-width: 440px) {
   .fognav-well-lab {
     display: none;
   }
+
   .fognav-well-field {
     padding-left: 10px;
   }
+
   .fognav-go {
     padding: 0 11px;
   }
 }
+
 @media (max-width: 400px) {
   .fognav-bar {
     padding: 0 var(--sp-3);
     margin: 0 var(--sp-2);
   }
+
   .fognav-status-inner {
     padding: 7px var(--sp-3);
     gap: var(--sp-4);
   }
 }
+
 /* Below this the well cannot hold a station name and a key in the width left
    over beside the mark. Rather than crush it, it takes its own row: the bar
    becomes two lines and every control keeps its size. */
@@ -1398,35 +1460,43 @@ details[open] > .fognav-sheet {
     padding: 9px var(--sp-3) 10px;
     gap: var(--sp-3);
   }
+
   .fognav-mark {
     order: 1;
   }
+
   .fognav-tools {
     order: 2;
     margin-left: auto;
   }
+
   .fognav-find {
     order: 3;
     flex: 1 0 100%;
     min-width: 0;
     max-width: none;
   }
+
   .fognav-results {
     max-width: none;
   }
 }
+
 /* The pill is an enhancement on a fine pointer. On touch it would lag a tap
    it cannot predict, and under reduced motion it must not travel. */
-@media (hover: none), (pointer: coarse) {
+@media (hover: none),
+(pointer: coarse) {
   .fognav-pill {
     display: none;
   }
 }
+
 @media (prefers-reduced-motion: reduce) {
   .fognav-pill {
     transition: opacity 1ms linear;
   }
 }
+
 /* ==========================================================================
    Fog IITK — the "Now" page (Premium Redesign)
    Anti-template, anti-AI-slop, strong visual hierarchy.
@@ -1436,7 +1506,8 @@ details[open] > .fognav-sheet {
 
   --ff-sans: 'Inter', system-ui, sans-serif;
   --ff-mono: 'JetBrains Mono', 'IBM Plex Mono', monospace;
-  --ff-display: 'Inter', system-ui, sans-serif; /* Keep strictly sans-serif as requested, clean */
+  --ff-display: 'Inter', system-ui, sans-serif;
+  /* Keep strictly sans-serif as requested, clean */
   background-color: var(--paper);
   color: var(--ink);
   font-family: var(--ff-sans);
@@ -1450,7 +1521,10 @@ details[open] > .fognav-sheet {
   box-sizing: border-box;
 }
 
-.fog-home h1, .fog-home h2, .fog-home h3, .fog-home p {
+.fog-home h1,
+.fog-home h2,
+.fog-home h3,
+.fog-home p {
   margin: 0;
   font-weight: normal;
 }
@@ -1477,6 +1551,7 @@ details[open] > .fognav-sheet {
     padding: 0 20px;
   }
 }
+
 /* Atmospheric Glow Background */
 .fog-home::before {
   content: "";
@@ -1530,6 +1605,7 @@ details[open] > .fognav-sheet {
     font-size: 80px;
   }
 }
+
 .hero-main .unit {
   font-size: 32px;
   font-weight: 400;
@@ -1731,6 +1807,7 @@ details[open] > .fognav-sheet {
     grid-template-columns: 1fr;
   }
 }
+
 .meta-block {
   display: flex;
   flex-direction: column;
@@ -1942,3 +2019,96 @@ details[open] > .fognav-sheet {
 }
 
 /*# sourceMappingURL=fog-redesign.css.map */
+/* ==========================================================================
+   Fog IITK — Universal Theme Overrides
+   Ensures that pages with hardcoded Bootstrap or inline styles still obey
+   the active theme setting.
+   ========================================================================== */
+
+html[data-theme] body,
+html:not([data-theme="light"]) body {
+  background-color: var(--paper) !important;
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .bg-white,
+html[data-theme="dark"] .card,
+html[data-theme="dark"] .card-header,
+html[data-theme="dark"] .card-body,
+html[data-theme="dark"] .card-footer {
+  background-color: var(--surface) !important;
+  color: var(--ink) !important;
+  border-color: var(--rule) !important;
+}
+
+html[data-theme="dark"] .text-dark {
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .text-muted {
+  color: var(--ink-3) !important;
+}
+
+html[data-theme="dark"] input:not([type="checkbox"]):not([type="radio"]),
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea {
+  background-color: var(--paper-2) !important;
+  color: var(--ink) !important;
+  border-color: var(--rule) !important;
+}
+
+html[data-theme="dark"] .form-control {
+  background-color: var(--paper-2) !important;
+  color: var(--ink) !important;
+  border-color: var(--rule) !important;
+}
+
+/* ── Highcharts Dark Mode Overrides ───────────────────────────────────────── */
+html[data-theme="dark"] .highcharts-background {
+  fill: var(--surface) !important;
+}
+html[data-theme="dark"] .highcharts-title,
+html[data-theme="dark"] .highcharts-subtitle,
+html[data-theme="dark"] .highcharts-axis-title {
+  fill: var(--ink) !important;
+  color: var(--ink) !important;
+}
+html[data-theme="dark"] .highcharts-axis-labels text,
+html[data-theme="dark"] .highcharts-data-label text {
+  fill: var(--ink-2) !important;
+  color: var(--ink-2) !important;
+}
+html[data-theme="dark"] .highcharts-legend-item text {
+  fill: var(--ink) !important;
+  color: var(--ink) !important;
+}
+html[data-theme="dark"] .highcharts-grid-line {
+  stroke: var(--rule) !important;
+}
+html[data-theme="dark"] .highcharts-axis-line {
+  stroke: var(--rule-2) !important;
+}
+html[data-theme="dark"] .highcharts-tick {
+  stroke: var(--rule-2) !important;
+}
+html[data-theme="dark"] .highcharts-tooltip-box {
+  fill: var(--paper-2) !important;
+  stroke: var(--rule) !important;
+}
+html[data-theme="dark"] .highcharts-tooltip text {
+  fill: var(--ink) !important;
+}
+html[data-theme="dark"] .highcharts-button-box {
+  fill: var(--paper-2) !important;
+}
+html[data-theme="dark"] .highcharts-button text {
+  fill: var(--ink) !important;
+}
+
+/* ── amCharts Dark Mode Overrides ─────────────────────────────────────────── */
+html[data-theme="dark"] .amcharts-bg {
+  fill: var(--surface) !important;
+}
+html[data-theme="dark"] .amcharts-main-div {
+  background-color: var(--surface) !important;
+}

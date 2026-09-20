@@ -1,3 +1,86 @@
+
+Highcharts.setOptions({
+    chart: {
+        backgroundColor: '#FFFFFF',
+        style: {
+            fontFamily: "'Inter', 'Roboto', sans-serif"
+        }
+    },
+    title: {
+        style: { color: '#0F172A', fontSize: '16px', fontWeight: '500' }
+    },
+    xAxis: {
+        lineColor: '#CBD5E1',
+        tickColor: '#CBD5E1',
+        labels: {
+            style: { color: '#64748B' }
+        }
+    },
+    yAxis: {
+        gridLineColor: '#F1F5F9', // Faint horizontal lines
+        gridLineWidth: 1,
+        lineColor: '#CBD5E1',
+        labels: {
+            style: { color: '#64748B' }
+        },
+        title: {
+            style: { 
+                color: '#64748B', 
+                fontSize: '11px', 
+                textTransform: 'uppercase', 
+                letterSpacing: '0.05em', 
+                fontWeight: '600' 
+            }
+        }
+    },
+    legend: {
+        backgroundColor: 'transparent',
+        itemStyle: { color: '#334155', fontWeight: '500', cursor: 'pointer' },
+        itemHoverStyle: { color: '#0F172A' },
+        itemHiddenStyle: { color: '#CBD5E1' }
+    },
+    rangeSelector: {
+        buttonTheme: {
+            fill: '#F8FAFC',
+            stroke: '#CBD5E1',
+            'stroke-width': 1,
+            r: 4, // border radius
+            style: { color: '#334155', fontWeight: '500' },
+            states: {
+                hover: {
+                    fill: '#E2E8F0',
+                    style: { color: '#0F172A' }
+                },
+                select: {
+                    fill: '#0F172A',
+                    style: { color: '#FFFFFF' }
+                }
+            }
+        },
+        inputBoxBorderColor: '#CBD5E1',
+        inputStyle: { color: '#334155' },
+        labelStyle: { color: '#64748B', fontWeight: '500' }
+    },
+    navigator: {
+        maskFill: 'rgba(15, 23, 42, 0.05)',
+        outlineColor: '#CBD5E1',
+        outlineWidth: 1,
+        handles: {
+            backgroundColor: '#FFFFFF',
+            borderColor: '#94A3B8'
+        }
+    },
+    scrollbar: {
+        barBackgroundColor: '#F1F5F9',
+        barBorderColor: '#CBD5E1',
+        buttonArrowColor: '#64748B',
+        buttonBackgroundColor: '#F8FAFC',
+        buttonBorderColor: '#CBD5E1',
+        trackBackgroundColor: '#FFFFFF',
+        trackBorderColor: '#E2E8F0'
+    }
+});
+
 var charts = []
 function comparechart2(allfogdata) {
     document.getElementById('curvspred-div').style["display"] = "block";
@@ -6,7 +89,9 @@ function comparechart2(allfogdata) {
     charts.push(
         Highcharts.stockChart('curvspred', {
             chart: {
-                height: 600,
+    backgroundColor: '#FFFFFF',
+    style: { fontFamily: "'Inter', 'Roboto', sans-serif" },
+    height: 600,
                 events: {
                     load: function () {
                         $(".highcharts-legend-item path").attr('stroke-width', 4);
@@ -38,17 +123,23 @@ function comparechart2(allfogdata) {
                 }]
             },
             scrollbar: {
-                barBackgroundColor: 'gray',
-                barBorderRadius: 7,
-                barBorderWidth: 0,
-                buttonBackgroundColor: 'gray',
-                buttonBorderWidth: 0,
-                buttonBorderRadius: 7,
-                trackBackgroundColor: 'none',
-                trackBorderWidth: 1,
-                trackBorderRadius: 8,
-                trackBorderColor: '#CCC'
-            },
+    barBackgroundColor: '#F1F5F9',
+    barBorderColor: '#CBD5E1',
+    buttonArrowColor: '#64748B',
+    buttonBackgroundColor: '#F8FAFC',
+    buttonBorderColor: '#CBD5E1',
+    trackBackgroundColor: '#FFFFFF',
+    trackBorderColor: '#E2E8F0'
+},
+            navigator: {
+    maskFill: 'rgba(15, 23, 42, 0.05)',
+    outlineColor: '#CBD5E1',
+    outlineWidth: 1,
+    handles: {
+        backgroundColor: '#FFFFFF',
+        borderColor: '#94A3B8'
+    }
+},
             plotOptions: {
                 series: {
                     events: {
@@ -192,7 +283,21 @@ function comparechart2(allfogdata) {
                 }
             },
             rangeSelector: {
-                buttons: [{
+    buttonTheme: {
+        fill: '#F8FAFC',
+        stroke: '#CBD5E1',
+        'stroke-width': 1,
+        r: 4,
+        style: { color: '#334155', fontWeight: '500' },
+        states: {
+            hover: { fill: '#E2E8F0', style: { color: '#0F172A' } },
+            select: { fill: '#0F172A', style: { color: '#FFFFFF' } }
+        }
+    },
+    inputBoxBorderColor: '#CBD5E1',
+    inputStyle: { color: '#334155' },
+    labelStyle: { color: '#64748B', fontWeight: '500' },
+    buttons: [{
                         type: 'day',
                         count: 1,
                         text: '1d'
@@ -219,13 +324,24 @@ function comparechart2(allfogdata) {
 
             },
             title: {
-                text: ' Real-Data VS Forecated-Data',
+                text: ' Real-Data VS Forecasted-Data',
                 style:{
-                    color: "#333333", 
-                    fontSize: "20px" 
+                    color: "#0F172A", 
+                    fontSize: "16px",
+                    fontFamily: "sans-serif",
+                    fontWeight: "500" 
                 }
             },
             xAxis: {
+                lineColor: '#CBD5E1',
+                lineWidth: 1,
+                gridLineWidth: 0,
+                labels: {
+                    style: {
+                        color: '#64748B',
+                        fontSize: '11px'
+                    }
+                },
                 plotLines: [{
                     color: '#FF0000', // Red
                     width: 2,
@@ -364,44 +480,61 @@ function comparechart2(allfogdata) {
                 max:allfogdata[0][allfogdata[0].length-1][0]
             },
             yAxis: [{
+                gridLineColor: '#F1F5F9',
+                gridLineWidth: 1,
+                lineColor: '#CBD5E1',
+                lineWidth: 1,
                 min: 0,
-                gridLineWidth: 2,
                 labels: {
                     align: 'right',
-                    x: -5
+                    x: -5,
+                    style: {
+                        color: '#64748B',
+                        fontSize: '11px'
+                    }
                 },
                 title: {
                     text: 'Fog Index',
                     style: {
-                        fontSize: "16px",
-                        color: "red"
+                        fontSize: "11px",
+                        color: "#64748B",
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em',
+                        fontWeight: '600'
                     }
-
                 },
                 top: '0%',
                 height: '100%',
                 offset: 10,
-                lineWidth: 0,
                 opposite: false,
                 resize: {
                     enabled: true
                 },
-                plotBands:[
-                    {
-                        from:1,
-                        to:0,
-                        color:'rgb(255, 248, 238)'
-                    }
-                ],
+                plotBands: [{
+    from: 0,
+    to: 1,
+    color: 'rgba(254, 243, 199, 0.4)', // Soft transparent amber
+    label: {
+        text: '1 km — Fog Threshold',
+        align: 'right',
+        x: -10,
+        style: {
+            color: '#64748B',
+            fontSize: '11px',
+            fontWeight: '500'
+        }
+    }
+}],
                 plotLines: [{
                     value: 1,
-                    width: 2,
-                    color: 'red',
+                    width: 1,
+                    color: '#94A3B8',
+                    dashStyle: 'Dash',
                     label: {
                         text: '<div data-toggle="modal" class="line_allowable btn_toggle" href="#modal-form1"><span>Fog</span></div>',
                         useHTML: true,
                         style: {
-                            color: 'red',
+                            color: '#94A3B8',
                         },
                         align: 'left',
                         x: -25,
@@ -417,8 +550,11 @@ function comparechart2(allfogdata) {
             }],
             legend: {
                 enabled: true,
+                backgroundColor: '#FFFFFF',
                 itemStyle:{
-                    fontSize:"15px"
+                    color: '#334155',
+                    fontSize:"13px",
+                    fontWeight: "normal"
                 }
             },
             series: [
@@ -500,6 +636,8 @@ function comparechart2(allfogdata) {
             exporting: {
                 buttons: {
                     contextButton: {
+                        symbolStroke: '#334155',
+                        theme: { fill: 'transparent' },
                         menuItems: ["viewFullscreen",  "downloadPDF", "downloadCSV"]
                     }
                 }
@@ -520,33 +658,61 @@ function rmsechart(arr,sp,ep){
     // console.log(arr)
     Highcharts.chart('rmsec',{
         chart:{
+            backgroundColor: '#FFFFFF',
             type:'column',
             height: 400
         },
         title: {
             text: "RMSE Chart",
             style:{
-                color: "#333333", 
-                fontSize: "20px" 
+                color: "#0F172A", 
+                fontSize: "16px",
+                fontFamily: "sans-serif",
+                fontWeight: "500" 
             }
         },
         xAxis:{
+            lineColor: '#CBD5E1',
+            lineWidth: 1,
+            gridLineWidth: 0,
+            labels: {
+                style: {
+                    color: '#64748B',
+                    fontSize: '11px'
+                }
+            },
             categories: ['T+6hr','T+1d','T+3d','T+5d'],
             crosshair:true
         },
         legend: {
             enabled: true,
+            backgroundColor: '#FFFFFF',
             itemStyle:{
-                fontSize:"15px"
+                color: '#334155',
+                fontSize:"13px",
+                fontWeight: "normal"
             }
         },
 	yAxis:[{
+        gridLineColor: '#F1F5F9',
+        gridLineWidth: 1,
+        lineColor: '#CBD5E1',
+        lineWidth: 1,
+        labels: {
+            style: {
+                color: '#64748B',
+                fontSize: '11px'
+            }
+        },
 	    min:0,
 	    title:{
 		    text: 'Fog Index',
 		    style: {
-		        fontSize: "16px",
-			color: "red"
+		        fontSize: "11px",
+			    color: "#64748B",
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em',
+                fontWeight: '600'
 		    }
 	    }
 	}],

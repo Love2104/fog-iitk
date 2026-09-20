@@ -253,6 +253,7 @@
       var next = current === 'dark' ? 'light' : 'dark';
       root.setAttribute('data-theme', next);
       try { localStorage.setItem('fog-theme', next); } catch (err) { /* private mode */ }
+      window.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme: next } }));
     });
   }
 })();

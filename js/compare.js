@@ -1,3 +1,86 @@
+
+Highcharts.setOptions({
+    chart: {
+        backgroundColor: '#FFFFFF',
+        style: {
+            fontFamily: "'Inter', 'Roboto', sans-serif"
+        }
+    },
+    title: {
+        style: { color: '#0F172A', fontSize: '16px', fontWeight: '500' }
+    },
+    xAxis: {
+        lineColor: '#CBD5E1',
+        tickColor: '#CBD5E1',
+        labels: {
+            style: { color: '#64748B' }
+        }
+    },
+    yAxis: {
+        gridLineColor: '#F1F5F9', // Faint horizontal lines
+        gridLineWidth: 1,
+        lineColor: '#CBD5E1',
+        labels: {
+            style: { color: '#64748B' }
+        },
+        title: {
+            style: { 
+                color: '#64748B', 
+                fontSize: '11px', 
+                textTransform: 'uppercase', 
+                letterSpacing: '0.05em', 
+                fontWeight: '600' 
+            }
+        }
+    },
+    legend: {
+        backgroundColor: 'transparent',
+        itemStyle: { color: '#334155', fontWeight: '500', cursor: 'pointer' },
+        itemHoverStyle: { color: '#0F172A' },
+        itemHiddenStyle: { color: '#CBD5E1' }
+    },
+    rangeSelector: {
+        buttonTheme: {
+            fill: '#F8FAFC',
+            stroke: '#CBD5E1',
+            'stroke-width': 1,
+            r: 4, // border radius
+            style: { color: '#334155', fontWeight: '500' },
+            states: {
+                hover: {
+                    fill: '#E2E8F0',
+                    style: { color: '#0F172A' }
+                },
+                select: {
+                    fill: '#0F172A',
+                    style: { color: '#FFFFFF' }
+                }
+            }
+        },
+        inputBoxBorderColor: '#CBD5E1',
+        inputStyle: { color: '#334155' },
+        labelStyle: { color: '#64748B', fontWeight: '500' }
+    },
+    navigator: {
+        maskFill: 'rgba(15, 23, 42, 0.05)',
+        outlineColor: '#CBD5E1',
+        outlineWidth: 1,
+        handles: {
+            backgroundColor: '#FFFFFF',
+            borderColor: '#94A3B8'
+        }
+    },
+    scrollbar: {
+        barBackgroundColor: '#F1F5F9',
+        barBorderColor: '#CBD5E1',
+        buttonArrowColor: '#64748B',
+        buttonBackgroundColor: '#F8FAFC',
+        buttonBorderColor: '#CBD5E1',
+        trackBackgroundColor: '#FFFFFF',
+        trackBorderColor: '#E2E8F0'
+    }
+});
+
 var arr=[];
 // $(document).load(function(){
 //     $("#page-info").LoadingOverlay("show");
@@ -118,7 +201,9 @@ function comparechart(selected, fogdata, temperaturedata, humiditydata, winddata
     charts.push(
         Highcharts.stockChart('compchart', {
             chart: {
-                height: 500,
+    backgroundColor: '#FFFFFF',
+    style: { fontFamily: "'Inter', 'Roboto', sans-serif" },
+    height: 500,
                 events: {
                     redraw: function () {
                         $(".highcharts-legend-item path").attr('stroke-width', 4);
@@ -144,19 +229,30 @@ function comparechart(selected, fogdata, temperaturedata, humiditydata, winddata
                 }]
             },
             scrollbar: {
-                barBackgroundColor: 'gray',
-                barBorderRadius: 7,
-                barBorderWidth: 0,
-                buttonBackgroundColor: 'gray',
-                buttonBorderWidth: 0,
-                buttonBorderRadius: 7,
-                trackBackgroundColor: 'none',
-                trackBorderWidth: 1,
-                trackBorderRadius: 8,
-                trackBorderColor: '#CCC'
-            },
+    barBackgroundColor: '#F1F5F9',
+    barBorderColor: '#CBD5E1',
+    buttonArrowColor: '#64748B',
+    buttonBackgroundColor: '#F8FAFC',
+    buttonBorderColor: '#CBD5E1',
+    trackBackgroundColor: '#FFFFFF',
+    trackBorderColor: '#E2E8F0'
+},
             rangeSelector: {
-                buttons: [{
+    buttonTheme: {
+        fill: '#F8FAFC',
+        stroke: '#CBD5E1',
+        'stroke-width': 1,
+        r: 4,
+        style: { color: '#334155', fontWeight: '500' },
+        states: {
+            hover: { fill: '#E2E8F0', style: { color: '#0F172A' } },
+            select: { fill: '#0F172A', style: { color: '#FFFFFF' } }
+        }
+    },
+    inputBoxBorderColor: '#CBD5E1',
+    inputStyle: { color: '#334155' },
+    labelStyle: { color: '#64748B', fontWeight: '500' },
+    buttons: [{
                         type: 'day',
                         count: 1,
                         text: '1d'
@@ -184,13 +280,9 @@ function comparechart(selected, fogdata, temperaturedata, humiditydata, winddata
             },
             title: {
                 text: 'Visibility (km)',
-                align: 'left',
-                style: {
-                    fontSize: "18px",
-                    color: "red"
-                }
+                style: { fontSize: "16px", color: "#0F172A", fontWeight: "500", fontFamily: "'Inter', 'Roboto', sans-serif" }
             },
-            xAxis: {
+            xAxis: { lineColor: '#CBD5E1', lineWidth: 1, gridLineWidth: 0, labels: { style: { color: '#64748B', fontSize: '11px' } },
                 plotLines: [{
                     color: '#FF0000', // Red
                     width: 2
@@ -209,7 +301,7 @@ function comparechart(selected, fogdata, temperaturedata, humiditydata, winddata
                 crosshair: true
             },
             yAxis: [{
-                gridLineWidth:0,
+                gridLineColor: '#F1F5F9', gridLineWidth: 1, lineColor: '#CBD5E1', lineWidth: 1,
                 labels: {
                     align: 'right',
                     x: -5
@@ -223,41 +315,26 @@ function comparechart(selected, fogdata, temperaturedata, humiditydata, winddata
                     enabled: true
                 },
                 
-                plotBands:[
-                {
-                    from:1,
-                    to:0,
-                    color:'rgb(255, 248, 238)'
-                },
-                
-            ],
-            plotLines: [{
-                value: 1,
-                width: 1,
-                color: 'red',
-                label: {
-                    text: '<div data-toggle="modal" class="line_allowable btn_toggle" href="#modal-form1"><span>Fog</span></div>',
-                    useHTML: true,
-                    style: {
-                        color: 'red',
-                    },
-                    align: 'left',
-                    x: -25,
-                    y: 12,
-                    events: {
-                        redraw: function() {
-                            alert('The chart is being redrawn');
-                        }
-                    }
-                },
-            }]
+                plotBands: [{
+    from: 0,
+    to: 1,
+    color: 'rgba(254, 243, 199, 0.4)', // Soft transparent amber
+    label: {
+        text: '1 km — Fog Threshold',
+        align: 'right',
+        x: -10,
+        style: {
+            color: '#64748B',
+            fontSize: '11px',
+            fontWeight: '500'
+        }
+    }
+}]
 
             }],
             legend: {
                 enabled: true,
-                itemStyle:{
-                    fontSize:"14px"
-                },
+                itemStyle: { color: '#334155', fontSize: '13px', fontWeight: 'normal' },
                 symbolHeight:100 
 
             },
@@ -265,6 +342,8 @@ function comparechart(selected, fogdata, temperaturedata, humiditydata, winddata
             exporting: {
                 buttons: {
                     contextButton: {
+                        symbolStroke: '#334155',
+                        theme: { fill: 'transparent' },
                         menuItems: ["viewFullscreen",  "downloadPDF", "downloadCSV"]
                     }
                 }
@@ -281,7 +360,9 @@ function comparechart(selected, fogdata, temperaturedata, humiditydata, winddata
     charts.push(
         Highcharts.stockChart('TempComp', {
             chart: {
-                height: 300,
+    backgroundColor: '#FFFFFF',
+    style: { fontFamily: "'Inter', 'Roboto', sans-serif" },
+    height: 300,
                 events: {
                     redraw: function () {
                         $(".highcharts-legend-item path").attr('stroke-width', 4);
@@ -308,23 +389,33 @@ function comparechart(selected, fogdata, temperaturedata, humiditydata, winddata
             },
 
             scrollbar: {
-                barBackgroundColor: 'gray',
-                barBorderRadius: 7,
-                barBorderWidth: 0,
-                buttonBackgroundColor: 'gray',
-                buttonBorderWidth: 0,
-                buttonBorderRadius: 7,
-                trackBackgroundColor: 'none',
-                trackBorderWidth: 1,
-                trackBorderRadius: 8,
-                trackBorderColor: '#CCC',
-                enabled: false
-            },
+    barBackgroundColor: '#F1F5F9',
+    barBorderColor: '#CBD5E1',
+    buttonArrowColor: '#64748B',
+    buttonBackgroundColor: '#F8FAFC',
+    buttonBorderColor: '#CBD5E1',
+    trackBackgroundColor: '#FFFFFF',
+    trackBorderColor: '#E2E8F0'
+},
             navigator: {
                 enabled: false
             },
             rangeSelector: {
-                buttons: [{
+    buttonTheme: {
+        fill: '#F8FAFC',
+        stroke: '#CBD5E1',
+        'stroke-width': 1,
+        r: 4,
+        style: { color: '#334155', fontWeight: '500' },
+        states: {
+            hover: { fill: '#E2E8F0', style: { color: '#0F172A' } },
+            select: { fill: '#0F172A', style: { color: '#FFFFFF' } }
+        }
+    },
+    inputBoxBorderColor: '#CBD5E1',
+    inputStyle: { color: '#334155' },
+    labelStyle: { color: '#64748B', fontWeight: '500' },
+    buttons: [{
                         type: 'day',
                         count: 1,
                         text: '1d'
@@ -351,19 +442,13 @@ function comparechart(selected, fogdata, temperaturedata, humiditydata, winddata
             },
             title: {
                 text: 'Temperature (°C)',
-                align: 'left',
-                style: {
-                    fontSize: "18px",
-                    color: "red"
-                }
+                style: { fontSize: "16px", color: "#0F172A", fontWeight: "500", fontFamily: "'Inter', 'Roboto', sans-serif" }
             },
             legend: {
                 enabled: true,
-                itemStyle:{
-                    fontSize:"14px"
-                }
+                itemStyle: { color: '#334155', fontSize: '13px', fontWeight: 'normal' }
             },
-            xAxis: {
+            xAxis: { lineColor: '#CBD5E1', lineWidth: 1, gridLineWidth: 0, labels: { style: { color: '#64748B', fontSize: '11px' } },
                 // events: {
                 //     afterSetExtremes: function(e) {
                 //         charts.forEach(function(chart, i) {
@@ -375,11 +460,7 @@ function comparechart(selected, fogdata, temperaturedata, humiditydata, winddata
 
                 // }
             },
-            yAxis: [{
-                    labels: {
-                        align: 'right',
-                        x: -5
-                    },
+            yAxis: [{ labels: { align: 'right', x: -5, style: { color: '#64748B', fontSize: '11px' } },
                     top: '0%',
                     height: '100%',
                     offset: 10,
@@ -395,6 +476,8 @@ function comparechart(selected, fogdata, temperaturedata, humiditydata, winddata
             exporting: {
                 buttons: {
                     contextButton: {
+                        symbolStroke: '#334155',
+                        theme: { fill: 'transparent' },
                         menuItems: ["viewFullscreen",  "downloadPDF", "downloadCSV"]
                     }
                 }
@@ -404,7 +487,9 @@ function comparechart(selected, fogdata, temperaturedata, humiditydata, winddata
     charts.push(
         Highcharts.stockChart('HumidityComp', {
             chart: {
-                height: 300,
+    backgroundColor: '#FFFFFF',
+    style: { fontFamily: "'Inter', 'Roboto', sans-serif" },
+    height: 300,
                 events: {
                     redraw: function () {
                         $(".highcharts-legend-item path").attr('stroke-width', 4);
@@ -433,20 +518,30 @@ function comparechart(selected, fogdata, temperaturedata, humiditydata, winddata
                 enabled: false
             },
             scrollbar: {
-                barBackgroundColor: 'gray',
-                barBorderRadius: 7,
-                barBorderWidth: 0,
-                buttonBackgroundColor: 'gray',
-                buttonBorderWidth: 0,
-                buttonBorderRadius: 7,
-                trackBackgroundColor: 'none',
-                trackBorderWidth: 1,
-                trackBorderRadius: 8,
-                trackBorderColor: '#CCC',
-                enabled: false
-            },
+    barBackgroundColor: '#F1F5F9',
+    barBorderColor: '#CBD5E1',
+    buttonArrowColor: '#64748B',
+    buttonBackgroundColor: '#F8FAFC',
+    buttonBorderColor: '#CBD5E1',
+    trackBackgroundColor: '#FFFFFF',
+    trackBorderColor: '#E2E8F0'
+},
             rangeSelector: {
-                buttons: [{
+    buttonTheme: {
+        fill: '#F8FAFC',
+        stroke: '#CBD5E1',
+        'stroke-width': 1,
+        r: 4,
+        style: { color: '#334155', fontWeight: '500' },
+        states: {
+            hover: { fill: '#E2E8F0', style: { color: '#0F172A' } },
+            select: { fill: '#0F172A', style: { color: '#FFFFFF' } }
+        }
+    },
+    inputBoxBorderColor: '#CBD5E1',
+    inputStyle: { color: '#334155' },
+    labelStyle: { color: '#64748B', fontWeight: '500' },
+    buttons: [{
                         type: 'day',
                         count: 1,
                         text: '1d'
@@ -474,20 +569,14 @@ function comparechart(selected, fogdata, temperaturedata, humiditydata, winddata
             
             title: {
                 text: 'Humidity (%)',
-                align: 'left',
-                style: {
-                    fontSize: "18px",
-                    color: "red"
-                }
+                style: { fontSize: "16px", color: "#0F172A", fontWeight: "500", fontFamily: "'Inter', 'Roboto', sans-serif" }
             },
             legend: {
                 enabled: true,
-                itemStyle:{
-                    fontSize:"14px"
-                },
+                itemStyle: { color: '#334155', fontSize: '13px', fontWeight: 'normal' },
                 symbolHeight:100
             },
-            xAxis: {
+            xAxis: { lineColor: '#CBD5E1', lineWidth: 1, gridLineWidth: 0, labels: { style: { color: '#64748B', fontSize: '11px' } },
 
                 // events: {
                 //     afterSetExtremes: function(e) {
@@ -500,11 +589,7 @@ function comparechart(selected, fogdata, temperaturedata, humiditydata, winddata
 
                 // }
             },
-            yAxis: [{
-                labels: {
-                    align: 'right',
-                    x: -5
-                },
+            yAxis: [{ labels: { align: 'right', x: -5, style: { color: '#64748B', fontSize: '11px' } },
                 top: '0%',
                 height: '100%',
                 offset: 10,
@@ -518,6 +603,8 @@ function comparechart(selected, fogdata, temperaturedata, humiditydata, winddata
             exporting: {
                 buttons: {
                     contextButton: {
+                        symbolStroke: '#334155',
+                        theme: { fill: 'transparent' },
                         menuItems: ["viewFullscreen",  "downloadPDF", "downloadCSV"]
                     }
                 }
@@ -527,7 +614,9 @@ function comparechart(selected, fogdata, temperaturedata, humiditydata, winddata
     charts.push(
         Highcharts.stockChart('WindComp', {
             chart: {
-                height: 300,
+    backgroundColor: '#FFFFFF',
+    style: { fontFamily: "'Inter', 'Roboto', sans-serif" },
+    height: 300,
                 events: {
                     redraw: function () {
                         $(".highcharts-legend-item path").attr('stroke-width', 4);
@@ -556,20 +645,30 @@ function comparechart(selected, fogdata, temperaturedata, humiditydata, winddata
                 enabled: false
             },
             scrollbar: {
-                barBackgroundColor: 'gray',
-                barBorderRadius: 7,
-                barBorderWidth: 0,
-                buttonBackgroundColor: 'gray',
-                buttonBorderWidth: 0,
-                buttonBorderRadius: 7,
-                trackBackgroundColor: 'none',
-                trackBorderWidth: 1,
-                trackBorderRadius: 8,
-                trackBorderColor: '#CCC',
-                enabled: false
-            },
+    barBackgroundColor: '#F1F5F9',
+    barBorderColor: '#CBD5E1',
+    buttonArrowColor: '#64748B',
+    buttonBackgroundColor: '#F8FAFC',
+    buttonBorderColor: '#CBD5E1',
+    trackBackgroundColor: '#FFFFFF',
+    trackBorderColor: '#E2E8F0'
+},
             rangeSelector: {
-                buttons: [{
+    buttonTheme: {
+        fill: '#F8FAFC',
+        stroke: '#CBD5E1',
+        'stroke-width': 1,
+        r: 4,
+        style: { color: '#334155', fontWeight: '500' },
+        states: {
+            hover: { fill: '#E2E8F0', style: { color: '#0F172A' } },
+            select: { fill: '#0F172A', style: { color: '#FFFFFF' } }
+        }
+    },
+    inputBoxBorderColor: '#CBD5E1',
+    inputStyle: { color: '#334155' },
+    labelStyle: { color: '#64748B', fontWeight: '500' },
+    buttons: [{
                         type: 'day',
                         count: 1,
                         text: '1d'
@@ -597,20 +696,14 @@ function comparechart(selected, fogdata, temperaturedata, humiditydata, winddata
             },
             title: {
                 text: 'Wind (km/h)',
-                align: 'left',
-                style: {
-                    fontSize: "18px",
-                    color: "red"
-                }
+                style: { fontSize: "16px", color: "#0F172A", fontWeight: "500", fontFamily: "'Inter', 'Roboto', sans-serif" }
             },
             legend: {
                 enabled: true,
-                itemStyle:{
-                    fontSize:"14px"
-                }
+                itemStyle: { color: '#334155', fontSize: '13px', fontWeight: 'normal' }
             },
 
-            xAxis: {
+            xAxis: { lineColor: '#CBD5E1', lineWidth: 1, gridLineWidth: 0, labels: { style: { color: '#64748B', fontSize: '11px' } },
                 // events: {
                 //     afterSetExtremes: function(e) {
                 //         charts.forEach(function(chart, i) {
@@ -622,11 +715,7 @@ function comparechart(selected, fogdata, temperaturedata, humiditydata, winddata
 
                 // }
             },
-            yAxis: [{
-                labels: {
-                    align: 'right',
-                    x: -5
-                },
+            yAxis: [{ labels: { align: 'right', x: -5, style: { color: '#64748B', fontSize: '11px' } },
                 top: '0%',
                 height: '100%',
                 offset: 10,
@@ -637,6 +726,8 @@ function comparechart(selected, fogdata, temperaturedata, humiditydata, winddata
             exporting: {
                 buttons: {
                     contextButton: {
+                        symbolStroke: '#334155',
+                        theme: { fill: 'transparent' },
                         menuItems: ["viewFullscreen",  "downloadPDF", "downloadCSV"]
                     }
                 }
