@@ -63,18 +63,19 @@ session_start();
                 // header("Content-Length: " . filesize($file));
                 if(filesize($file)){
                     //value="'.strtotime($date).'"
-                echo '<div class="carousel-item '.(($this->active==3)?"active":"").'">
-                            <div class="carousel-caption" style="font-size:2vw;" > 
-                                '.(string)$date.'
-                            </div> 
-                            <div class="carousel-counter w-25" style="font-size:1vw;" >
-                                '.(string)($this->outl - $done).'/'.$this->outl.'
-                            </div> 
-                            <div>
-                            <img class="theimage img-fluid w-100" src="data:image/png;base64,'.$base64Image.'"  alt="Image" >
-                            </div>
-                            
-                </div>';
+                $classificationState = strpos($this->dir, "MisClassified") !== false ? "Misclassified" : "Correctly Classified";
+                $camName = strpos($this->dir, "Cam1") !== false ? "Cam 1" : "Cam 2";
+                $altText = "Visibility classification, " . $camName . ", " . $classificationState . ", " . $date . " IST";
+                
+                echo '<figure class="obs-figure">
+                        <div class="obs-img-wrap">
+                            <img class="obs-img" loading="lazy" src="data:image/jpeg;base64,'.$base64Image.'" alt="'.$altText.'">
+                            <div class="obs-index">'.($this->outl - $done).' / '.$this->outl.'</div>
+                        </div>
+                        <figcaption class="obs-meta">
+                            <div class="obs-meta-date">'.$date.' IST</div>
+                        </figcaption>
+                      </figure>';
                 if($this->active<=3){
                     $this->active+=1;
                 }
