@@ -302,55 +302,19 @@ define('FOG_HEAD_DONE', true);
   </div>
   <div class="fog-shell">
     
-    <!-- 1. HERO / CURRENT ATMOSPHERE -->
-    <section class="premium-hero" aria-labelledby="read-h">
+    <!-- 1. DASHBOARD HERO -->
+    <section class="dashboard-section" aria-labelledby="read-h">
+      <div class="dashboard-grid">
+        <div class="dashboard-left">
       <?php if ($isStale): ?>
       <div class="hero-stale-banner">
         Last observation <?php echo $obsAge !== null ? fog_e(fog_age_human($obsAge)) : 'unknown'; ?>. Not current.
       </div>
       <?php endif; ?>
       
-      <details class="station-picker fog-reveal" id="station-picker" style="position: relative; z-index: 50;">
-        <summary class="hero-super" style="cursor: pointer; list-style: none; outline: none;">
-          <?php echo $isStale ? 'Last report' : 'Current visibility'; ?> &middot; <?php echo fog_e($sname); ?> (<?php echo fog_e((string) $sid); ?>)
-          <svg style="width:12px;height:12px;margin-left:6px;display:inline-block;" viewBox="0 0 16 16" fill="none" stroke="currentColor"><path d="M4 6l4 4 4-4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <?php if ($station !== null): ?>
-            <div class="map-legend">
-              <div class="map-legend-item"><div class="map-legend-dot map-legend-dot--validated"></div>Validated station</div>
-              <div class="map-legend-item"><div class="map-legend-dot map-legend-dot--selected"></div>Selected</div>
-            </div>
-            <?php endif; ?>
-
-        </summary>
-        <div class="picker-panel" style="position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--paper-2); border: 1px solid var(--rule-2); border-radius: 8px; width: min(360px, 92vw); max-height: 320px; display: flex; flex-direction: column; overflow: hidden; margin-top: 8px; box-shadow: var(--shadow);">
-          <div style="padding: 12px; border-bottom: 1px solid var(--rule-2); background: var(--paper-2); z-index: 3; position: sticky; top: 0;">
-            <input type="text" class="station-search" placeholder="Search stations..." style="width: 100%; padding: 8px; background: var(--paper-3); border: 1px solid var(--rule); color: var(--ink); border-radius: 4px; font-family: var(--ff-sans); font-size: 14px;">
-          </div>
-          <div class="station-list" style="overflow-y: auto; flex: 1;">
-            <?php
-            $primary = []; $others = [];
-            foreach ($stations as $s) {
-                if ($s['validated']) { $primary[] = $s; } else { $others[] = $s; }
-            }
-            ?>
-            <div class="station-group" style="padding: 8px 12px; font-size: 11px; font-weight: 600; color: var(--ink-3); text-transform: uppercase; position: sticky; top: 0; background: var(--paper-2); z-index: 2; border-bottom: 1px solid var(--rule-2);">Primary Network</div>
-            <?php foreach ($primary as $s): ?>
-              <a href="index.php?station=<?php echo fog_e(rawurlencode($s['id'])); ?>" <?php echo ($sid === $s['id']) ? 'aria-current="page"' : ''; ?> class="station-list-item" style="display: flex; justify-content: space-between; align-items: center; padding: 0 16px; color: var(--ink); text-decoration: none; font-size: 14px; border-bottom: 1px solid var(--rule); transition: background 0.15s ease; min-height: 44px;">
-                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70%;"><?php echo fog_e($s['name']); ?></span>
-                <span style="color:var(--ink-3); font-family:var(--ff-mono); font-size:12px;"><?php echo fog_e($s['id']); ?></span>
-              </a>
-            <?php endforeach; ?>
-            <div class="station-group" style="padding: 8px 12px; font-size: 11px; font-weight: 600; color: var(--ink-3); text-transform: uppercase; margin-top: 0; position: sticky; top: 0; background: var(--paper-2); z-index: 2; border-bottom: 1px solid var(--rule-2); border-top: 1px solid var(--rule-2);">Other Stations</div>
-            <?php foreach ($others as $s): ?>
-              <a href="index.php?station=<?php echo fog_e(rawurlencode($s['id'])); ?>" <?php echo ($sid === $s['id']) ? 'aria-current="page"' : ''; ?> class="station-list-item" style="display: flex; justify-content: space-between; align-items: center; padding: 0 16px; color: var(--ink-2); text-decoration: none; font-size: 14px; border-bottom: 1px solid var(--rule); transition: background 0.15s ease; min-height: 44px;">
-                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70%;"><?php echo fog_e($s['name']); ?></span>
-                <span style="color:var(--ink-3); font-family:var(--ff-mono); font-size:12px;"><?php echo fog_e($s['id']); ?></span>
-              </a>
-            <?php endforeach; ?>
-            <div class="station-empty" style="display:none; padding: 16px; text-align: center; color: var(--ink-3); font-size: 14px; min-height: 44px; display: flex; align-items: center; justify-content: center;">No stations match</div>
-          </div>
-        </div>
-      </details>
+      <div class="hero-super fog-reveal" style="margin-bottom: 8px;">
+        <?php echo $isStale ? 'Last report' : 'Current visibility'; ?> &middot; <?php echo fog_e($sname); ?> (<?php echo fog_e((string) $sid); ?>)
+      </div>
       
       <div class="hero-main fog-reveal hero-reading" data-fog-value="<?php echo fog_e((string) $visNum); ?>">
         <?php $visParts = explode('.', (string) $visNum, 2); ?>
@@ -392,14 +356,62 @@ define('FOG_HEAD_DONE', true);
           <?php endif; ?>
           <div class="scale-threshold" style="left: <?php echo fog_pct(FOG_RAIL_GATE_PCT); ?>"></div>
         </div>
-        <div class="scale-labels">
-          <span>0m</span>
-          <span>50m</span>
-          <span>200m</span>
-          <span style="color: var(--state-fog);">1km</span>
-          <span>5km</span>
-          <span>10km+</span>
+          <div class="scale-labels">
+            <span>0m</span>
+            <span>50m</span>
+            <span>200m</span>
+            <span style="color: var(--state-fog);">1km</span>
+            <span>5km</span>
+            <span>10km+</span>
+          </div>
         </div>
+        </div> <!-- end dashboard-left -->
+        
+        <div class="dashboard-right fog-reveal">
+          <div class="map-container" style="width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <?php
+            $primary = []; $others = [];
+            foreach ($stations as $s) {
+                if ($s['validated']) { $primary[] = $s; } else { $others[] = $s; }
+            }
+            $otherDots = '';
+            foreach ($others as $s) {
+                if ($sid !== null && $s['id'] === $sid) { continue; }
+                [$x, $y] = fog_map_project($s['lat'], $s['lon']);
+                $otherDots .= sprintf('M%.1f %.1fm-2.4 0a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0', $x, $y);
+            }
+            ?>
+            <svg class="fog-map" viewBox="<?php echo FOG_MAP_VIEWBOX; ?>" role="img" aria-label="Map of India showing observing locations." style="width: 100%; height: auto; max-height: 500px; display: block;">
+              <path class="land" d="<?php echo fog_map_outline(); ?>"/>
+              <path class="states" d="<?php echo fog_map_states(); ?>"/>
+              <?php if ($otherDots !== ''): ?>
+                <path class="dot" d="<?php echo $otherDots; ?>"/>
+              <?php endif; ?>
+              <?php foreach ($primary as $s):
+                if ($sid !== null && $s['id'] === $sid) { continue; }
+                [$x, $y] = fog_map_project($s['lat'], $s['lon']); ?>
+                <a href="index.php?station=<?php echo fog_e(rawurlencode($s['id'])); ?>" aria-label="<?php echo fog_e($s['name']); ?>">
+                  <title><?php echo fog_e($s['name'] . ' (' . $s['id'] . ')'); ?></title>
+                  <circle class="hit" cx="<?php echo round($x, 1); ?>" cy="<?php echo round($y, 1); ?>" r="22"/>
+                  <circle class="dot-validated" cx="<?php echo round($x, 1); ?>" cy="<?php echo round($y, 1); ?>" r="4"/>
+                  <circle class="ring" cx="<?php echo round($x, 1); ?>" cy="<?php echo round($y, 1); ?>" r="9"/>
+                </a>
+              <?php endforeach; ?>
+              <?php if ($station !== null):
+                [$x, $y] = fog_map_project($station['lat'], $station['lon']); ?>
+                <circle class="sel" cx="<?php echo round($x, 1); ?>" cy="<?php echo round($y, 1); ?>" r="5"/>
+                <circle class="sel-ring" cx="<?php echo round($x, 1); ?>" cy="<?php echo round($y, 1); ?>" r="11"/>
+                <text class="sel-label" x="<?php echo round($x + 17, 1); ?>" y="<?php echo round($y + 5, 1); ?>"><?php echo fog_e($station['name']); ?></text>
+              <?php endif; ?>
+            </svg>
+            <?php if ($station !== null): ?>
+            <div class="map-legend">
+              <div class="map-legend-item"><div class="map-legend-dot map-legend-dot--validated"></div>Validated station</div>
+              <div class="map-legend-item"><div class="map-legend-dot map-legend-dot--selected"></div>Selected</div>
+            </div>
+            <?php endif; ?>
+          </div>
+        </div> <!-- end dashboard-right -->
       </div>
     </section>
 
@@ -421,7 +433,7 @@ define('FOG_HEAD_DONE', true);
           [$label, $value, $dp, $unit] = $m;
           $isDep = ($label === 'Depression');
       ?>
-      <div class="cond-cell <?php echo $isDep ? 'cond-cell--depression' : ''; ?> fog-reveal">
+      <div class="cond-cell fog-reveal">
         <div class="cond-label"><?php echo $label; ?></div>
         <div class="cond-val">
           <?php echo $value !== null ? fog_e(fog_dp($value, $dp)) : '--'; ?>
@@ -430,8 +442,9 @@ define('FOG_HEAD_DONE', true);
         <?php if ($isDep && $value !== null): 
             $depPct = max(0, min(100, ($value / 10) * 100));
         ?>
-        <div class="cond-spread-bar" style="margin-top:8px; height:4px; background:var(--rule); border-radius:2px; overflow:hidden;">
-            <div class="cond-spread-fill" style="width:<?php echo fog_pct(100 - $depPct); ?>; height:100%; background:var(--state-dense);"></div>
+        <div class="depression-meter">
+            <div class="depression-gradient"></div>
+            <div class="depression-marker" style="left: <?php echo fog_e((string)$depPct); ?>%;"></div>
         </div>
         <?php endif; ?>
       </div>
@@ -439,65 +452,77 @@ define('FOG_HEAD_DONE', true);
     </section>
 
     <!-- 3. FORECAST SECTION -->
+    <!-- 3. FORECAST SECTION -->
     <section class="forecast-section" id="forecast">
-      <div class="section-header">
-        <div>
-          <div class="section-title">NEXT 6 HOURS &middot; VISIBILITY FORECAST</div>
-          <form class="fog-controls" method="get" action="index.php" style="margin-bottom: 24px; display: flex; gap: 16px; align-items: flex-end;">
-            <input type="hidden" name="station" value="<?php echo fog_e((string) $sid); ?>">
-            <div style="display: flex; flex-direction: column; gap: 4px;">
-              <label for="from" style="font-size: 11px; color: var(--ink-3); font-family: var(--ff-mono);">From</label>
-              <input type="date" id="from" name="from" value="<?php echo $winFrom->format('Y-m-d'); ?>" style="background: rgba(255,255,255,0.05); border: 1px solid var(--rule); color: var(--ink); padding: 4px 8px; border-radius: 4px; font-family: var(--ff-mono); font-size: 13px;"
-                <?php if ($period !== null && $period['first'] !== null): ?>
-                  min="<?php echo fog_fmt($period['first'], 'Y-m-d'); ?>"
-                  max="<?php echo fog_fmt($period['last'], 'Y-m-d'); ?>"
-                <?php endif; ?>>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 4px;">
-              <label for="to" style="font-size: 11px; color: var(--ink-3); font-family: var(--ff-mono);">To</label>
-              <input type="date" id="to" name="to" value="<?php echo $winTo->format('Y-m-d'); ?>" style="background: rgba(255,255,255,0.05); border: 1px solid var(--rule); color: var(--ink); padding: 4px 8px; border-radius: 4px; font-family: var(--ff-mono); font-size: 13px;"
-                <?php if ($period !== null && $period['first'] !== null): ?>
-                  min="<?php echo fog_fmt($period['first'], 'Y-m-d'); ?>"
-                  max="<?php echo fog_fmt($period['last']->modify('+1 day'), 'Y-m-d'); ?>"
-                <?php endif; ?>>
-            </div>
-            <button type="submit" style="background: var(--ink); color: var(--paper); border: none; padding: 6px 12px; border-radius: 4px; font-weight: 500; cursor: pointer; transition: opacity 0.2s;">Apply</button>
-          </form>
-          <div class="forecast-presets" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;">
-            <?php foreach ($presets as $label => $p): 
-               $isActive = fog_preset_active($p[0], $p[1], $winFrom, $winTo);
-            ?>
-              <a href="index.php?station=<?php echo fog_e(rawurlencode((string) $sid)); ?>&amp;from=<?php echo fog_fmt($p[0], 'Y-m-d'); ?>&amp;to=<?php echo fog_fmt($p[1], 'Y-m-d'); ?>" class="preset-btn <?php echo $isActive ? 'is-active' : ''; ?>" <?php echo $isActive ? 'aria-current="true"' : ''; ?> style="font-size: 11px; padding: 4px 8px; border-radius: 4px; border: 1px solid var(--rule); color: var(--ink-2); text-decoration: none; font-weight: 500; <?php echo $isActive ? 'background: var(--measured-tint); color: var(--accent); border-color: var(--accent);' : 'background: var(--surface);'; ?> transition: background 0.15s ease, color 0.15s ease;">
-                <?php echo fog_e($label); ?>
-              </a>
-            <?php endforeach; ?>
-          </div>
-          <?php
-            $fcMin = null; $fcMinStep = null; $fcFirstFog = null;
-            if (is_array($ladder) && !empty($ladder['steps'])) {
-              foreach ($ladder['steps'] as $st) {
-                  if ($st['vis_km'] === null) { continue; }
-                  if ($fcMin === null || $st['vis_km'] < $fcMin) { $fcMin = $st['vis_km']; $fcMinStep = $st; }
-                  if ($fcFirstFog === null && $st['vis_km'] < FOG_THRESHOLD_KM) { $fcFirstFog = $st; }
-              }
-            }
-            
-            $leadWord = static function (?array $st): string {
-                if ($st === null) { return ''; }
-                return $st['lead_min'] < 60
-                    ? '+' . $st['lead_min'] . ' min'
-                    : '+' . rtrim(rtrim(number_format($st['lead_min'] / 60, 1, '.', ''), '0'), '.') . ' h';
-            };
-          ?>
+      <div class="fc-science-layout">
+        <header class="fc-science-header">
+          <div class="fc-science-eyebrow">NEXT 6 HOURS &middot; VISIBILITY FORECAST</div>
+        </header>
+
+        <form class="fc-science-controls" method="get" action="index.php">
+          <input type="hidden" name="station" value="<?php echo fog_e((string) $sid); ?>">
           
+          <div class="fc-science-field">
+            <label for="from">FROM</label>
+            <input type="date" id="from" name="from" value="<?php echo $winFrom->format('Y-m-d'); ?>"
+              <?php if ($period !== null && $period['first'] !== null): ?>
+                min="<?php echo fog_fmt($period['first'], 'Y-m-d'); ?>"
+                max="<?php echo fog_fmt($period['last'], 'Y-m-d'); ?>"
+              <?php endif; ?>>
+          </div>
+          
+          <div class="fc-science-field">
+            <label for="to">TO</label>
+            <input type="date" id="to" name="to" value="<?php echo $winTo->format('Y-m-d'); ?>"
+              <?php if ($period !== null && $period['first'] !== null): ?>
+                min="<?php echo fog_fmt($period['first'], 'Y-m-d'); ?>"
+                max="<?php echo fog_fmt($period['last']->modify('+1 day'), 'Y-m-d'); ?>"
+              <?php endif; ?>>
+          </div>
+          
+          <button type="submit" class="fc-science-btn">Apply</button>
+        </form>
+
+        <div class="fc-science-range">
+          <?php foreach ($presets as $label => $p): 
+             $isActive = fog_preset_active($p[0], $p[1], $winFrom, $winTo);
+          ?>
+            <a href="index.php?station=<?php echo fog_e(rawurlencode((string) $sid)); ?>&amp;from=<?php echo fog_fmt($p[0], 'Y-m-d'); ?>&amp;to=<?php echo fog_fmt($p[1], 'Y-m-d'); ?>" 
+               class="fc-science-range-item <?php echo $isActive ? 'is-active' : ''; ?>" 
+               <?php echo $isActive ? 'aria-current="true"' : ''; ?>>
+              <?php echo fog_e($label); ?>
+            </a>
+          <?php endforeach; ?>
+        </div>
+
+        <?php
+          $fcMin = null; $fcMinStep = null; $fcFirstFog = null;
+          if (is_array($ladder) && !empty($ladder['steps'])) {
+            foreach ($ladder['steps'] as $st) {
+                if ($st['vis_km'] === null) { continue; }
+                if ($fcMin === null || $st['vis_km'] < $fcMin) { $fcMin = $st['vis_km']; $fcMinStep = $st; }
+                if ($fcFirstFog === null && $st['vis_km'] < FOG_THRESHOLD_KM) { $fcFirstFog = $st; }
+            }
+          }
+          
+          $leadWord = static function (?array $st): string {
+              if ($st === null) { return ''; }
+              return $st['lead_min'] < 60
+                  ? '+' . $st['lead_min'] . ' min'
+                  : '+' . rtrim(rtrim(number_format($st['lead_min'] / 60, 1, '.', ''), '0'), '.') . ' h';
+          };
+        ?>
+
+        <div class="fc-science-result">
           <?php if ($ladder === null || empty($ladder['steps'])): ?>
-            <div class="forecast-summary">Forecast unavailable</div>
+            <div class="fc-science-result-title fc-unavailable"><span class="fc-sci-marker"></span>FORECAST UNAVAILABLE</div>
+            <p class="fc-science-result-desc">No prediction data available for this timeframe.</p>
           <?php elseif ($fcFirstFog !== null): ?>
-            <div class="forecast-summary" style="color: var(--state-fog);">FOG PREDICTED FROM <?php echo fog_e(strtoupper($leadWord($fcFirstFog))); ?></div>
-            <div class="forecast-context">Lowest predicted visibility <?php echo fog_dp($fcMin, 2); ?> km at <?php echo fog_e($leadWord($fcMinStep)); ?>.</div>
+            <div class="fc-science-result-title fc-fog"><span class="fc-sci-marker"></span>FOG PREDICTED FROM <?php echo fog_e(strtoupper($leadWord($fcFirstFog))); ?></div>
+            <p class="fc-science-result-desc">Lowest predicted visibility <?php echo fog_dp($fcMin, 2); ?> km at <?php echo fog_e($leadWord($fcMinStep)); ?>.</p>
           <?php else: ?>
-            <div class="forecast-summary" style="color: var(--state-clear);">NO FOG EXPECTED</div>
-            <div class="forecast-context">Forecast visibility remains above the operational 1 km fog threshold throughout the current horizon. Lowest predicted is <?php echo fog_dp($fcMin, 2); ?> km.</div>
+            <div class="fc-science-result-title fc-clear"><span class="fc-sci-marker"></span>NO FOG EXPECTED</div>
+            <p class="fc-science-result-desc">Forecast visibility remains above the operational 1 km fog threshold throughout the current horizon. Lowest predicted is <?php echo fog_dp($fcMin, 2); ?> km.</p>
           <?php endif; ?>
         </div>
       </div>
@@ -572,65 +597,6 @@ define('FOG_HEAD_DONE', true);
       </div>
     </section>
 
-    <section class="network-section fog-reveal" id="network">
-      <div class="section-header" style="margin-bottom: 24px;">
-        <div class="section-title">IITK OBSERVATION NETWORK</div>
-      </div>
-      <div class="map-layout" style="display: flex; gap: 2rem; align-items: flex-start;">
-        <div class="map-sidebar desktop-only" style="width: 280px; flex-shrink: 0; display: flex; flex-direction: column; background: var(--paper-2); border: 1px solid var(--rule-2); border-radius: 12px; overflow: hidden; max-height: 500px;">
-          <div class="map-sidebar-title" style="padding: 12px 16px; font-weight: 600; font-size: 13px; border-bottom: 1px solid var(--rule-2); background: var(--paper-3);">Stations</div>
-          <ul class="map-station-list" style="list-style: none; margin: 0; padding: 0; overflow-y: auto;">
-            <?php foreach ($stations as $s): ?>
-              <li><a href="index.php?station=<?php echo fog_e(rawurlencode($s['id'])); ?>" class="<?php echo ($sid === $s['id']) ? 'is-sel' : ''; ?>" style="display: block; padding: 10px 16px; font-size: 14px; color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--rule); transition: background 0.15s ease, color 0.15s ease;"><?php echo fog_e($s['name']); ?></a></li>
-            <?php endforeach; ?>
-          </ul>
-        </div>
-        <div class="map-container" style="flex: 1; min-width: 0;">
-          <?php
-          $primary = []; $others = [];
-          foreach ($stations as $s) {
-              if ($s['validated']) { $primary[] = $s; } else { $others[] = $s; }
-          }
-          $otherDots = '';
-          foreach ($others as $s) {
-              if ($sid !== null && $s['id'] === $sid) { continue; }
-              [$x, $y] = fog_map_project($s['lat'], $s['lon']);
-              $otherDots .= sprintf('M%.1f %.1fm-2.4 0a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0', $x, $y);
-          }
-          ?>
-          <svg class="fog-map" viewBox="<?php echo FOG_MAP_VIEWBOX; ?>" role="img" aria-label="Map of India showing observing locations.">
-            <path class="land" d="<?php echo fog_map_outline(); ?>"/>
-            <path class="states" d="<?php echo fog_map_states(); ?>"/>
-            <?php if ($otherDots !== ''): ?>
-              <path class="dot" d="<?php echo $otherDots; ?>"/>
-            <?php endif; ?>
-            <?php foreach ($primary as $s):
-              if ($sid !== null && $s['id'] === $sid) { continue; }
-              [$x, $y] = fog_map_project($s['lat'], $s['lon']); ?>
-              <a href="index.php?station=<?php echo fog_e(rawurlencode($s['id'])); ?>" aria-label="<?php echo fog_e($s['name']); ?>">
-                <title><?php echo fog_e($s['name'] . ' (' . $s['id'] . ')'); ?></title>
-                <circle class="hit" cx="<?php echo round($x, 1); ?>" cy="<?php echo round($y, 1); ?>" r="22"/>
-                <circle class="dot-validated" cx="<?php echo round($x, 1); ?>" cy="<?php echo round($y, 1); ?>" r="4"/>
-                <circle class="ring" cx="<?php echo round($x, 1); ?>" cy="<?php echo round($y, 1); ?>" r="9"/>
-              </a>
-            <?php endforeach; ?>
-            <?php if ($station !== null):
-              [$x, $y] = fog_map_project($station['lat'], $station['lon']); ?>
-              <circle class="sel" cx="<?php echo round($x, 1); ?>" cy="<?php echo round($y, 1); ?>" r="5"/>
-              <circle class="sel-ring" cx="<?php echo round($x, 1); ?>" cy="<?php echo round($y, 1); ?>" r="11"/>
-              <text class="sel-label" x="<?php echo round($x + 17, 1); ?>" y="<?php echo round($y + 5, 1); ?>"><?php echo fog_e($station['name']); ?></text>
-            <?php endif; ?>
-          </svg>
-            <?php if ($station !== null): ?>
-            <div class="map-legend">
-              <div class="map-legend-item"><div class="map-legend-dot map-legend-dot--validated"></div>Validated station</div>
-              <div class="map-legend-item"><div class="map-legend-dot map-legend-dot--selected"></div>Selected</div>
-            </div>
-            <?php endif; ?>
-
-        </div>
-      </div>
-    </section>
 
   </div>
 </main>

@@ -37,8 +37,8 @@
 :root {
   /* ── type ─────────────────────────────────────────────────────────────── */
   --ff-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
-  --ff-sans: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --ff-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --ff-sans: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ff-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
   /* Display sizes are for the readout. Everything measured is set in mono. */
   --fs-readout: 88px;
   --fs-display: 46px;
@@ -46,9 +46,9 @@
   --fs-h2: 21px;
   --fs-h3: 17px;
   --fs-body: 16px;
-  --fs-ui: 14.5px;
-  --fs-small: 13px;
-  --fs-micro: 11.5px;
+  --fs-ui: 15px;
+  --fs-small: 14px;
+  --fs-micro: 13px;
   --lh-tight: 1.04;
   --lh-head: 1.18;
   --lh-ui: 1.45;
@@ -683,13 +683,14 @@
 .fognav-note-now i {
   font-style: normal;
   font-family: var(--ff-mono);
-  font-size: 10.5px;
+  font-size: 13px;
+  font-weight: 500;
   letter-spacing: 0.02em;
   color: var(--measured);
   background: var(--measured-tint);
-  padding: 1px 5px;
-  border-radius: 3px;
-  margin-left: 4px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
 }
 
 .fognav-group-label {
@@ -741,7 +742,8 @@
 .fognav-opt i {
   font-style: normal;
   font-family: var(--ff-mono);
-  font-size: 11px;
+  font-size: 13px;
+  font-weight: 500;
   letter-spacing: 0.02em;
   color: var(--ink-3);
 }
@@ -1795,62 +1797,6 @@ details[open] > .fognav-sheet {
   border: 1px solid var(--rule);
 }
 
-.fog-map {
-  width: 100%;
-  height: 100%;
-}
-
-.fog-map .land {
-  fill: #0f1115;
-}
-
-.fog-map .states {
-  fill: none;
-  stroke: var(--rule-2);
-  stroke-width: 0.5;
-}
-
-.fog-map .dot {
-  fill: var(--ink-3);
-}
-
-.fog-map .hit {
-  fill: transparent;
-  cursor: pointer;
-}
-
-.fog-map .dot-validated {
-  fill: var(--ink-2);
-}
-
-.fog-map .ring {
-  fill: transparent;
-  stroke: var(--ink-2);
-  stroke-width: 1;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
-.fog-map a:hover .ring {
-  opacity: 1;
-}
-
-.fog-map .sel {
-  fill: var(--accent);
-}
-
-.fog-map .sel-ring {
-  fill: transparent;
-  stroke: var(--accent);
-  stroke-width: 1.5;
-}
-
-.fog-map .sel-label {
-  fill: var(--ink);
-  font-family: var(--ff-sans);
-  font-size: 12px;
-  font-weight: 500;
-}
 
 /* ── DATA STATUS ──────────────────────────────────────────────────────── */
 .data-status {

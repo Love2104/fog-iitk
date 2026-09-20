@@ -351,7 +351,7 @@ function fog_chart_render(
           . ' transform="rotate(-90 16 ' . $r($midY) . ')">Visibility (km)</text>';
     /* Every instant on this page is IST. Say it once, under the dates, rather
        than suffixing every tick. */
-    $svg .= '<text class="ax-tz" x="' . $r($plotL) . '" y="' . $r($plotB + 42) . '">IST (UTC+05:30)</text>';
+    $svg .= '<text class="ax-tz" x="' . $r($plotR) . '" y="' . $r($plotB + 42) . '" text-anchor="end">IST (UTC+05:30)</text>';
 
     /* Threshold captions last: nothing may overprint the only text that says
        what the bands mean. */

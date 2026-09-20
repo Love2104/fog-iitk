@@ -317,4 +317,109 @@
       }
     });
   }
+
+  /* ---- map pan & zoom ---------------------------------------------------- */
+  var mapSvg = document.querySelector('.fog-map');
+  if (mapSvg) {
+    mapSvg.style.cursor = 'grab';
+    var isPanning = false;
+    var startX = 0, startY = 0;
+    var vb = mapSvg.getAttribute('viewBox').split(' ').map(parseFloat);
+    var origVB = vb.slice();
+
+    mapSvg.addEventListener('pointerdown', function(e) {
+      isPanning = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      mapSvg.style.cursor = 'grabbing';
+      e.preventDefault();
+    });
+
+    window.addEventListener('pointermove', function(e) {
+      if (!isPanning) return;
+      var dx = e.clientX - startX;
+      var dy = e.clientY - startY;
+      
+      var rect = mapSvg.getBoundingClientRect();
+      var scaleX = vb[2] / rect.width;
+      var scaleY = vb[3] / rect.height;
+      
+      vb[0] -= dx * scaleX;
+      vb[1] -= dy * scaleY;
+      
+      mapSvg.setAttribute('viewBox', vb.join(' '));
+      startX = e.clientX;
+      startY = e.clientY;
+      
+      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+        mapSvg.classList.add('is-dragged');
+      }
+    });
+
+    window.addEventListener('pointerup', function(e) {
+      isPanning = false;
+      mapSvg.style.cursor = 'grab';
+      setTimeout(function() { mapSvg.classList.remove('is-dragged'); }, 10);
+    });
+
+    mapSvg.addEventListener('wheel', function(e) {
+      e.preventDefault();
+      var rect = mapSvg.getBoundingClientRect();
+      var mx = e.clientX - rect.left;
+      var my = e.clientY - rect.top;
+      
+      var px = vb[0] + (mx / rect.width) * vb[2];
+      var py = vb[1] + (my / rect.height) * vb[3];
+      
+      var zoom = Math.exp(e.deltaY * 0.001);
+      
+      var newW = vb[2] * zoom;
+      var newH = vb[3] * zoom;
+      
+      if (newW > origVB[2] * 3 || newW < origVB[2] * 0.05) return;
+      
+      vb[0] = px - (mx / rect.width) * newW;
+      vb[1] = py - (my / rect.height) * newH;
+      vb[2] = newW;
+      vb[3] = newH;
+      
+      mapSvg.setAttribute('viewBox', vb.join(' '));
+    }, { passive: false });
+
+    mapSvg.addEventListener('click', function(e) {
+      if (mapSvg.classList.contains('is-dragged')) {
+        e.preventDefault();
+      }
+    });
+
+    var controls = document.createElement('div');
+    controls.className = 'map-zoom-controls';
+    controls.innerHTML = '<button type="button" class="zoom-in" aria-label="Zoom in">+</button><button type="button" class="zoom-out" aria-label="Zoom out">-</button><button type="button" class="zoom-reset" aria-label="Reset zoom">↺</button>';
+    mapSvg.parentNode.style.position = 'relative';
+    mapSvg.parentNode.appendChild(controls);
+
+    controls.querySelector('.zoom-in').addEventListener('click', function() {
+      zoomCenter(0.6);
+    });
+    controls.querySelector('.zoom-out').addEventListener('click', function() {
+      zoomCenter(1.6);
+    });
+    controls.querySelector('.zoom-reset').addEventListener('click', function() {
+      vb = origVB.slice();
+      mapSvg.setAttribute('viewBox', vb.join(' '));
+      mapSvg.style.transition = 'viewBox 0.3s ease';
+      setTimeout(function() { mapSvg.style.transition = ''; }, 300);
+    });
+
+    function zoomCenter(zoom) {
+      var newW = vb[2] * zoom;
+      var newH = vb[3] * zoom;
+      if (newW > origVB[2] * 3 || newW < origVB[2] * 0.05) return;
+      vb[0] = vb[0] + (vb[2] - newW) / 2;
+      vb[1] = vb[1] + (vb[3] - newH) / 2;
+      vb[2] = newW;
+      vb[3] = newH;
+      mapSvg.setAttribute('viewBox', vb.join(' '));
+    }
+  }
 })();

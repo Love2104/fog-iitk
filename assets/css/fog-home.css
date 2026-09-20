@@ -127,8 +127,8 @@
    outside .fog-home and keeps its own :root tokens untouched. */
 
 .fog-home {
-  --ff-sans: "Instrument Sans", system-ui, -apple-system, sans-serif;
-  --ff-mono: "JetBrains Mono", ui-monospace, monospace;
+  --ff-sans: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ff-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 
   /* Spacing / shape */
   --home-shell: 1200px;
@@ -250,18 +250,50 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
   to   { transform: translate3d(-2%, -1%, 0); }
 }
 
-/* ── HERO ──────────────────────────────────────────────────────────────── */
-.premium-hero {
+/* ── DASHBOARD ─────────────────────────────────────────────────────────── */
+.dashboard-section {
   position: relative;
   z-index: 1;
-  min-height: calc(100svh - var(--header-h, 150px));
+  min-height: auto;
   padding: clamp(16px, 4vh, 40px) 0 clamp(40px, 6vh, 80px);
+  border-bottom: 1px solid var(--rule);
+}
+
+.dashboard-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.dashboard-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.dashboard-right {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  border-bottom: 1px solid var(--rule);
+}
+
+@media (min-width: 900px) {
+  .dashboard-grid {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .dashboard-left {
+    flex: 0 0 45%;
+    max-width: 45%;
+  }
+  .dashboard-right {
+    flex: 0 0 55%;
+    max-width: 55%;
+  }
 }
 
 /* Atmosphere */
@@ -354,8 +386,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
 .station-picker-panel {
   position: absolute;
   top: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
   width: 320px;
   max-width: 90vw;
   background: var(--paper);
@@ -457,7 +488,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
 .hero-reading {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 8px;
 }
 
@@ -545,7 +576,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
 .hero-meta {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 12px;
   font-family: var(--ff-sans);
@@ -593,7 +624,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
 .fog-scale {
   width: 100%;
   max-width: 620px;
-  margin: clamp(24px, 4vh, 48px) auto 0;
+  margin: clamp(24px, 4vh, 48px) 0 0 0;
   position: relative;
 }
 
@@ -648,7 +679,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
   left: 60%;
   transform: translateX(-50%);
   font-family: var(--ff-mono);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -661,7 +692,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
   justify-content: space-between;
   margin-top: 10px;
   font-family: var(--ff-mono);
-  font-size: 10px;
+  font-size: 12px;
   color: var(--ink-3);
 }
 
@@ -680,7 +711,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
   flex: 1;
   text-align: center;
   font-family: var(--ff-mono);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.03em;
   color: var(--ink-3);
   opacity: 0.6;
@@ -694,22 +725,27 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
   border-bottom: 1px solid var(--rule);
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 1px;
-  background: var(--rule);
+  gap: 16px;
+  background: transparent;
 }
 
 /* Each cell */
 .cond-cell {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: clamp(16px, 2vw, 24px);
-  background: var(--paper);
+  justify-content: space-between;
+  gap: 8px;
+  padding: 20px;
+  background: var(--paper-2);
+  border: 1px solid var(--rule-2);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Depression gets double width to show the temp→dew bar */
-.cond-cell--depression {
-  grid-column: span 2;
+.cond-cell:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
 .cond-icon {
@@ -730,43 +766,60 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
 }
 
 .cond-label {
-  font-family: var(--ff-mono);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
+  font-family: var(--ff-sans);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--ink-3);
 }
 
 .cond-val {
-  font-family: var(--ff-mono);
-  font-size: clamp(18px, 2.5vw, 24px);
-  font-variant-numeric: tabular-nums;
+  font-family: var(--ff-sans);
+  font-size: clamp(22px, 2.5vw, 28px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
   color: var(--ink);
   line-height: 1.1;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
 }
 
-.cond-unit {
-  font-size: 0.6em;
+.cond-val .unit {
+  font-size: 14px;
   font-weight: 400;
-  color: var(--ink-2);
-  margin-left: 2px;
+  color: var(--ink-3);
 }
 
-/* Depression bar: shows how close temp is to dew point */
-.cond-spread-bar {
-  height: 4px;
-  background: var(--paper-3);
-  border-radius: 2px;
-  margin-top: 8px;
+/* Depression gradient meter */
+.depression-meter {
   position: relative;
-  overflow: hidden;
+  height: 16px;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
 }
 
-.cond-spread-fill {
-  height: 100%;
+.depression-gradient {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(to right, var(--state-dense) 0%, var(--state-moderate) 15%, var(--state-light) 30%, var(--state-clear) 100%);
+  opacity: 0.9;
+}
+
+.depression-marker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 4px;
+  height: 14px;
+  background: var(--paper);
+  border: 1px solid var(--ink);
   border-radius: 2px;
-  transition: width 600ms var(--ease-out);
+  box-shadow: 0 2px 4px var(--shadow);
+  transition: left 600ms var(--ease-out);
 }
 
 /* Wind direction */
@@ -782,9 +835,6 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
   .conditions-grid {
     grid-template-columns: repeat(3, 1fr);
   }
-  .cond-cell--depression {
-    grid-column: span 1;
-  }
 }
 
 @media (max-width: 600px) {
@@ -793,184 +843,215 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
   }
 }
 
-/* ── FORECAST SECTION ──────────────────────────────────────────────────── */
+/* ── FORECAST SECTION (DASHBOARD REDESIGN) ─────────────────────────────── */
 .forecast-section {
   position: relative;
   z-index: 1;
-  padding: clamp(40px, 6vh, 80px) 0;
+  padding: clamp(40px, 6vh, 64px) 0;
   border-bottom: 1px solid var(--rule);
 }
 
-.forecast-header {
-  margin-bottom: clamp(24px, 4vh, 48px);
+.fc-science-layout {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px; /* Keep it constrained, do not stretch */
 }
 
-.section-eyebrow {
+/* 1. Header */
+.fc-science-header {
+  margin-bottom: 32px;
+}
+.fc-science-eyebrow {
+  font-family: var(--ff-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  display: flex;
+  align-items: center;
+}
+
+/* 2. Date Controls */
+.fc-science-controls {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.fc-science-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fc-science-field label {
   font-family: var(--ff-mono);
   font-size: 10px;
   font-weight: 500;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--ink-3);
-  margin-bottom: 8px;
 }
 
-.forecast-headline {
-  font-family: var(--ff-sans);
-  font-size: clamp(22px, 3vw, 32px);
-  font-weight: 500;
-  letter-spacing: -0.015em;
+.fc-science-field input[type="date"] {
+  background: var(--paper-2); /* Soft warm/off-white */
+  border: 1px solid var(--rule); /* Thin refined border */
   color: var(--ink);
-  line-height: 1.2;
-}
-
-.forecast-subline {
-  font-family: var(--ff-sans);
-  font-size: clamp(13px, 1.5vw, 15px);
-  color: var(--ink-2);
-  max-width: 480px;
-  line-height: var(--lh-prose);
-  margin-top: 8px;
-}
-
-/* Preset segmented control */
-.forecast-presets {
-  display: flex;
-  gap: 0;
-  border: 1px solid var(--rule);
-  border-radius: var(--home-radius-sm);
-  overflow: hidden;
-  margin-bottom: 16px;
-  width: fit-content;
-}
-
-.preset-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 7px 16px;
+  padding: 8px 12px; /* Stronger internal spacing */
+  border-radius: 8px;
   font-family: var(--ff-mono);
+  font-size: 13px;
+  height: 40px; /* Consistent height */
+  transition: all 0.2s ease;
+  cursor: pointer;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.02); /* Slightly inset appearance */
+}
+
+.fc-science-field input[type="date"]:focus {
+  outline: none;
+  border-color: var(--ink-3);
+  background: var(--paper);
+}
+
+/* 3. Apply Button */
+.fc-science-btn {
+  background: var(--ink); /* Dark charcoal */
+  color: var(--paper); /* White text */
+  border: none;
+  border-radius: 8px;
+  height: 40px; /* Same height as date inputs */
+  padding: 0 24px; /* Slightly wider padding */
+  font-family: var(--ff-sans);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: none; /* No excessive shadow */
+}
+
+.fc-science-btn:hover {
+  background: var(--ink-2); /* Very subtle lift/brightness change */
+}
+
+.fc-science-btn:active {
+  transform: translateY(1px);
+}
+
+/* 4. Range Selector */
+.fc-science-range {
+  display: inline-flex;
+  background: var(--paper-2); /* Soft background */
+  border: 1px solid var(--rule); /* Subtle neutral outer border */
+  border-radius: 6px; /* Minimal radius */
+  padding: 3px;
+  gap: 2px;
+  margin-bottom: 48px; /* Deliberate vertical rhythm */
+}
+
+.fc-science-range-item {
+  font-family: var(--ff-sans);
   font-size: 12px;
   font-weight: 500;
   color: var(--ink-2);
   text-decoration: none;
-  background: transparent;
-  border: none;
-  border-right: 1px solid var(--rule);
-  transition: color 150ms var(--ease-out), background 150ms var(--ease-out);
-  cursor: pointer;
+  padding: 6px 14px; /* Tight but comfortable */
+  border-radius: 4px;
+  transition: all 0.2s ease;
   white-space: nowrap;
 }
 
-.preset-btn:last-child {
-  border-right: none;
-}
-
-.preset-btn:hover {
+.fc-science-range-item:hover {
   color: var(--ink);
-  background: var(--paper-2);
 }
 
-.preset-btn[aria-pressed="true"],
-.preset-btn.is-active {
+.fc-science-range-item.is-active {
+  background: var(--paper);
   color: var(--ink);
-  background: var(--paper-3);
-  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06); /* Slightly elevated/inset feeling */
+  pointer-events: none;
 }
 
-/* Custom range disclosure */
-.forecast-custom {
-  margin-bottom: 24px;
-}
-
-.forecast-custom summary {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--ff-mono);
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--ink-3);
-  cursor: pointer;
-  letter-spacing: 0.02em;
-  padding: 4px 0;
-  list-style: none;
-}
-
-.forecast-custom summary::-webkit-details-marker { display: none; }
-.forecast-custom summary::marker { content: ""; }
-
-.forecast-custom summary .caret {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-right: 1.3px solid currentColor;
-  border-bottom: 1.3px solid currentColor;
-  transform: rotate(45deg) translateY(-1px);
-  transition: transform 150ms var(--ease-out);
-}
-
-.forecast-custom[open] summary .caret {
-  transform: rotate(-135deg) translateY(-1px);
-}
-
-.forecast-custom-body {
-  display: flex;
-  gap: 12px;
-  align-items: flex-end;
-  padding: 12px 0 0;
-  flex-wrap: wrap;
-}
-
-.fog-field {
+/* 5 & 6. Forecast Result */
+.fc-science-result {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 12px;
 }
 
-.fog-field label {
-  font-family: var(--ff-mono);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+.fc-science-result-title {
+  font-family: var(--ff-sans);
+  font-size: 26px; /* Slightly larger, not huge */
+  font-weight: 600; /* Medium/semibold */
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Spacing for the marker */
+}
+
+/* One subtle signature: tiny scientific-style status marker */
+.fc-sci-marker {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: currentColor;
+  position: relative;
+}
+.fc-sci-marker::after {
+  content: '';
+  position: absolute;
+  top: -3px; left: -3px; right: -3px; bottom: -3px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.2;
+}
+
+.fc-science-result-title.fc-clear {
+  color: var(--state-clear); /* Sophisticated green */
+}
+
+.fc-science-result-title.fc-fog {
+  color: var(--state-fog);
+}
+
+.fc-science-result-title.fc-unavailable {
   color: var(--ink-3);
 }
 
-.fog-field input[type="date"] {
-  background: var(--paper-3);
-  border: 1px solid var(--rule);
-  color: var(--ink);
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-family: var(--ff-mono);
-  font-size: var(--text-sm);
-  transition: border-color 150ms var(--ease-out);
+.fc-science-result-desc {
+  font-family: var(--ff-sans);
+  font-size: 15px;
+  color: var(--ink-2); /* Muted text color */
+  line-height: 1.6; /* Improve line height */
+  max-width: 540px; /* Constrained reading width */
+  margin: 0;
 }
 
-.fog-field input[type="date"]:focus {
-  outline: none;
-  border-color: var(--accent);
-}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .fc-science-controls {
+    flex-wrap: wrap;
+  }
+  
+  .fc-science-field {
+    width: 100%;
+  }
 
-.fog-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 7px 16px;
-  background: var(--ink);
-  color: var(--paper);
-  border: none;
-  border-radius: 6px;
-  font-family: var(--ff-mono);
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 200ms var(--ease-out);
-}
+  .fc-science-field input[type="date"] {
+    width: 100%;
+  }
 
-.fog-btn:hover {
-  opacity: 0.85;
+  .fc-science-btn {
+    width: 100%;
+  }
+
+  .fc-science-range {
+    overflow-x: auto;
+    width: 100%;
+    justify-content: flex-start;
+  }
 }
 
 /* Chart card */
@@ -1028,6 +1109,7 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   padding: 0;
+  margin-top: 32px;
   border: 1px solid var(--rule);
   border-radius: var(--home-radius-sm);
 }
@@ -1035,11 +1117,12 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
 .forecast-timeline::-webkit-scrollbar { display: none; }
 
 .tl-step {
-  flex: 0 0 auto;
+  flex: 1 1 0;
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 4px;
   padding: 12px 16px;
   min-width: 80px;
@@ -1788,14 +1871,21 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
   font-weight: 400;
 }
 .hero-state {
-  font-size: clamp(20px, 3vw, 24px);
+  font-size: clamp(22px, 3vw, 24px);
   font-weight: 600;
 }
 .hero-super {
-  font-size: var(--text-base);
+  font-size: 14px;
 }
 .hero-obs-time {
-  font-size: var(--text-base);
+  font-size: 15px;
+}
+.data-status {
+  font-size: 13px;
+  font-family: var(--ff-mono);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 .cond-val {
   font-size: var(--text-2xl);
@@ -1822,4 +1912,43 @@ html.js .fog-home .fog-reveal.is-visible:nth-child(6) { transition-delay: 400ms;
 }
 .station-picker-btn {
   min-height: 44px;
+}
+
+/* ── MAP ZOOM CONTROLS ─────────────────────────────────────────────────── */
+.map-zoom-controls {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 4px;
+  box-shadow: 0 4px 12px var(--shadow);
+  z-index: 10;
+}
+
+.map-zoom-controls button {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+
+.map-zoom-controls button:hover {
+  background: var(--paper-3);
+}
+
+.fog-map {
+  touch-action: none;
 }
