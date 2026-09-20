@@ -53,7 +53,7 @@ if ($conn) {
     font-size: 36px;
     font-weight: 600;
     letter-spacing: -0.02em;
-    color: #1E293B;
+    color: #0F172A;
     margin: 0 0 8px 0;
     line-height: 1.1;
     animation: fadeSlideUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
@@ -62,25 +62,24 @@ if ($conn) {
 }
 .ed-page-eyebrow {
     font-family: var(--ff-sans);
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: #64748b;
-    margin: 0;
+    color: #64748B;
+    margin: 0 0 24px 0;
     animation: fadeSlideUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.05s forwards;
     opacity: 0;
     transform: translateY(4px);
 }
 
 .data-status-banner {
-    display: flex;
-    justify-content: flex-start;
-    gap: 48px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, max-content));
+    gap: 4rem;
     align-items: center;
     padding: 0 0 12px 0;
-    border-bottom: 1px solid var(--rule);
-    margin-top: 24px;
+    border-bottom: 1px solid #E2E8F0;
     margin-bottom: 32px;
     animation: fadeSlideUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s forwards;
     opacity: 0;
@@ -127,32 +126,44 @@ if ($conn) {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    border-left: 1px solid var(--rule);
-    padding: 0 40px 0 20px;
+    padding: 0 24px;
+    flex: 1;
+    position: relative;
+}
+.editorial-metric:not(:first-child)::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20%;
+    height: 60%;
+    width: 1px;
+    background-color: #F1F5F9;
 }
 .editorial-metric:first-child {
-    border-left: none;
     padding-left: 0;
+}
+.editorial-metric:last-child {
+    padding-right: 0;
 }
 .ed-label {
     font-family: var(--ff-sans);
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink-2);
-    letter-spacing: 0.08em;
+    font-size: 11px;
+    font-weight: 600;
+    color: #64748B;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
 }
 .ed-val {
     font-family: var(--ff-sans);
-    font-size: 34px;
-    font-weight: 400;
+    font-size: 36px;
+    font-weight: 500;
     color: #1E293B;
     line-height: 1;
     transition: opacity 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .editorial-metric.primary .ed-val {
-    font-weight: 500;
-    color: #059669; /* Observatory green accent */
+    font-weight: 600;
+    color: #059669;
 }
 .ed-val.loading-state {
     opacity: 0.4;
@@ -165,8 +176,8 @@ if ($conn) {
 }
 .ed-sub {
     font-family: var(--ff-sans);
-    font-size: 13px;
-    color: var(--ink-3);
+    font-size: 12px;
+    color: #94A3B8;
 }
 
 .ed-obs-window {
@@ -181,15 +192,15 @@ if ($conn) {
 .ed-obs-group {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
 }
 .ed-obs-label {
     font-family: var(--ff-sans);
     font-size: 11px;
     font-weight: 600;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: #64748b;
+    color: #64748B;
 }
 .ed-date-inputs {
     display: flex;
@@ -199,9 +210,9 @@ if ($conn) {
 .ed-date-input {
     font-family: var(--ff-sans);
     font-size: 14px;
-    color: #1E293B;
-    background: #FAFAFA;
-    border: 1px solid var(--rule);
+    color: #0F172A;
+    background: #F8FAFC;
+    border: 1px solid #CBD5E1;
     border-radius: 6px;
     padding: 8px 12px;
     height: 38px;
@@ -210,15 +221,15 @@ if ($conn) {
 }
 .ed-date-input:focus {
     outline: none;
-    border-color: #64748b;
+    border-color: #64748B;
     background: #FFFFFF;
 }
 .ed-apply-btn {
     font-family: var(--ff-sans);
     font-size: 14px;
     font-weight: 500;
-    color: var(--paper);
-    background: #1E293B;
+    color: #FFFFFF;
+    background: #334155;
     border: none;
     border-radius: 6px;
     height: 38px;
@@ -227,36 +238,44 @@ if ($conn) {
     transition: all 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .ed-apply-btn:hover {
-    background: #334155;
+    background: #475569;
+    opacity: 0.9;
 }
 .ed-quick-ranges {
-    display: flex;
-    background: #FAFAFA;
-    border: 1px solid var(--rule);
+    display: inline-flex;
+    background: #F8FAFC;
+    border: 1px solid #CBD5E1;
     border-radius: 6px;
-    padding: 3px;
+    padding: 0;
     height: 38px;
+    align-items: center;
+    overflow: hidden;
     box-sizing: border-box;
 }
 .ed-quick-range-opt {
     font-family: var(--ff-sans);
     font-size: 13px;
     font-weight: 500;
-    color: #64748b;
+    color: #64748B;
     background: transparent;
     border: none;
-    border-radius: 4px;
-    padding: 0 12px;
+    border-right: 1px solid #CBD5E1;
+    padding: 0 16px;
+    height: 100%;
     cursor: pointer;
+    border-radius: 0;
     transition: all 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+.ed-quick-range-opt:last-child {
+    border-right: none;
+}
 .ed-quick-range-opt:hover {
-    color: #1E293B;
+    color: #0F172A;
 }
 .ed-quick-range-opt.active {
-    background: #FFFFFF;
-    color: #1E293B;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    background: #E2E8F0;
+    color: #0F172A;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
 }
 
 @keyframes fadeSlideUp {
@@ -276,6 +295,61 @@ if ($conn) {
     padding-top: 20px;
     border-top: 1px solid var(--rule);
 }
+.chart-wrapper {
+    position: relative;
+}
+.chart-empty-state {
+    position: absolute;
+    top: 16px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(250, 250, 250, 0.95);
+    z-index: 10;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid var(--rule);
+    border-radius: var(--home-radius);
+    padding: 24px;
+}
+.chart-empty-state.active {
+    display: flex;
+}
+.empty-state-title {
+    font-family: var(--ff-sans);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #0F172A;
+    margin-bottom: 8px;
+}
+.empty-state-desc {
+    font-family: var(--ff-sans);
+    font-size: 13px;
+    color: #64748B;
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+.empty-state-btn {
+    font-family: var(--ff-sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: #0F172A;
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.empty-state-btn:hover {
+    background: #F8FAFC;
+    border-color: #94A3B8;
+}
+
 .chart-container {
     height: 400px;
     margin-top: 16px;
@@ -387,11 +461,11 @@ if ($conn) {
             <div class="fc-science-eyebrow">VISIBILITY &middot; TEMPERATURE &middot; HUMIDITY &middot; PARTICULATE MATTER</div>
         </header>
 
-        <div id="chart-vis" class="chart-container"></div>
-        <div id="chart-temp-layer" class="chart-container"></div>
-        <div id="chart-hum-layer" class="chart-container"></div>
-        <div id="chart-pm" class="chart-container"></div>
-        <div id="chart-nc" class="chart-container"></div>
+        <div class="chart-wrapper"><div id="chart-vis" class="chart-container"></div><div class="chart-empty-state" id="empty-chart-vis"><div class="empty-state-title">NO OBSERVATIONS FOR THIS PERIOD</div><div class="empty-state-desc">Selected: <span class="empty-sel-start"></span> &rarr; <span class="empty-sel-end"></span><br>Latest available: <span class="empty-latest-date"></span></div><button class="empty-state-btn" onclick="snapToLatest()">VIEW LATEST AVAILABLE DATA</button></div></div>
+        <div class="chart-wrapper"><div id="chart-temp-layer" class="chart-container"></div><div class="chart-empty-state" id="empty-chart-temp-layer"><div class="empty-state-title">NO OBSERVATIONS FOR THIS PERIOD</div><div class="empty-state-desc">Selected: <span class="empty-sel-start"></span> &rarr; <span class="empty-sel-end"></span><br>Latest available: <span class="empty-latest-date"></span></div><button class="empty-state-btn" onclick="snapToLatest()">VIEW LATEST AVAILABLE DATA</button></div></div>
+        <div class="chart-wrapper"><div id="chart-hum-layer" class="chart-container"></div><div class="chart-empty-state" id="empty-chart-hum-layer"><div class="empty-state-title">NO OBSERVATIONS FOR THIS PERIOD</div><div class="empty-state-desc">Selected: <span class="empty-sel-start"></span> &rarr; <span class="empty-sel-end"></span><br>Latest available: <span class="empty-latest-date"></span></div><button class="empty-state-btn" onclick="snapToLatest()">VIEW LATEST AVAILABLE DATA</button></div></div>
+        <div class="chart-wrapper"><div id="chart-pm" class="chart-container"></div><div class="chart-empty-state" id="empty-chart-pm"><div class="empty-state-title">NO OBSERVATIONS FOR THIS PERIOD</div><div class="empty-state-desc">Selected: <span class="empty-sel-start"></span> &rarr; <span class="empty-sel-end"></span><br>Latest available: <span class="empty-latest-date"></span></div><button class="empty-state-btn" onclick="snapToLatest()">VIEW LATEST AVAILABLE DATA</button></div></div>
+        <div class="chart-wrapper"><div id="chart-nc" class="chart-container"></div><div class="chart-empty-state" id="empty-chart-nc"><div class="empty-state-title">NO OBSERVATIONS FOR THIS PERIOD</div><div class="empty-state-desc">Selected: <span class="empty-sel-start"></span> &rarr; <span class="empty-sel-end"></span><br>Latest available: <span class="empty-latest-date"></span></div><button class="empty-state-btn" onclick="snapToLatest()">VIEW LATEST AVAILABLE DATA</button></div></div>
     </section>
 
     <!-- Section 2: Below Ground -->
@@ -401,10 +475,10 @@ if ($conn) {
             <div class="fc-science-eyebrow">SOIL MOISTURE &middot; TEMPERATURE &middot; BEC &middot; RDP/IDP</div>
         </header>
 
-        <div id="chart-soil-moisture" class="chart-container"></div>
-        <div id="chart-soil-temp" class="chart-container"></div>
-        <div id="chart-soil-bec" class="chart-container"></div>
-        <div id="chart-soil-dielectric" class="chart-container"></div>
+        <div class="chart-wrapper"><div id="chart-soil-moisture" class="chart-container"></div><div class="chart-empty-state" id="empty-chart-soil-moisture"><div class="empty-state-title">NO OBSERVATIONS FOR THIS PERIOD</div><div class="empty-state-desc">Selected: <span class="empty-sel-start"></span> &rarr; <span class="empty-sel-end"></span><br>Latest available: <span class="empty-latest-date"></span></div><button class="empty-state-btn" onclick="snapToLatest()">VIEW LATEST AVAILABLE DATA</button></div></div>
+        <div class="chart-wrapper"><div id="chart-soil-temp" class="chart-container"></div><div class="chart-empty-state" id="empty-chart-soil-temp"><div class="empty-state-title">NO OBSERVATIONS FOR THIS PERIOD</div><div class="empty-state-desc">Selected: <span class="empty-sel-start"></span> &rarr; <span class="empty-sel-end"></span><br>Latest available: <span class="empty-latest-date"></span></div><button class="empty-state-btn" onclick="snapToLatest()">VIEW LATEST AVAILABLE DATA</button></div></div>
+        <div class="chart-wrapper"><div id="chart-soil-bec" class="chart-container"></div><div class="chart-empty-state" id="empty-chart-soil-bec"><div class="empty-state-title">NO OBSERVATIONS FOR THIS PERIOD</div><div class="empty-state-desc">Selected: <span class="empty-sel-start"></span> &rarr; <span class="empty-sel-end"></span><br>Latest available: <span class="empty-latest-date"></span></div><button class="empty-state-btn" onclick="snapToLatest()">VIEW LATEST AVAILABLE DATA</button></div></div>
+        <div class="chart-wrapper"><div id="chart-soil-dielectric" class="chart-container"></div><div class="chart-empty-state" id="empty-chart-soil-dielectric"><div class="empty-state-title">NO OBSERVATIONS FOR THIS PERIOD</div><div class="empty-state-desc">Selected: <span class="empty-sel-start"></span> &rarr; <span class="empty-sel-end"></span><br>Latest available: <span class="empty-latest-date"></span></div><button class="empty-state-btn" onclick="snapToLatest()">VIEW LATEST AVAILABLE DATA</button></div></div>
     </section>
 
     <!-- Section 3: AWS -->
@@ -414,12 +488,12 @@ if ($conn) {
             <div class="fc-science-eyebrow">TEMP &middot; HUMIDITY &middot; WIND &middot; RAIN &middot; SUNSHINE &middot; PRESSURE</div>
         </header>
 
-        <div id="chart-aws-temp" class="chart-container"></div>
-        <div id="chart-aws-hum" class="chart-container"></div>
-        <div id="chart-aws-wind" class="chart-container"></div>
-        <div id="chart-aws-rain" class="chart-container"></div>
-        <div id="chart-aws-sun" class="chart-container"></div>
-        <div id="chart-aws-pres" class="chart-container"></div>
+        <div class="chart-wrapper"><div id="chart-aws-temp" class="chart-container"></div><div class="chart-empty-state" id="empty-chart-aws-temp"><div class="empty-state-title">NO OBSERVATIONS FOR THIS PERIOD</div><div class="empty-state-desc">Selected: <span class="empty-sel-start"></span> &rarr; <span class="empty-sel-end"></span><br>Latest available: <span class="empty-latest-date"></span></div><button class="empty-state-btn" onclick="snapToLatest()">VIEW LATEST AVAILABLE DATA</button></div></div>
+        <div class="chart-wrapper"><div id="chart-aws-hum" class="chart-container"></div><div class="chart-empty-state" id="empty-chart-aws-hum"><div class="empty-state-title">NO OBSERVATIONS FOR THIS PERIOD</div><div class="empty-state-desc">Selected: <span class="empty-sel-start"></span> &rarr; <span class="empty-sel-end"></span><br>Latest available: <span class="empty-latest-date"></span></div><button class="empty-state-btn" onclick="snapToLatest()">VIEW LATEST AVAILABLE DATA</button></div></div>
+        <div class="chart-wrapper"><div id="chart-aws-wind" class="chart-container"></div><div class="chart-empty-state" id="empty-chart-aws-wind"><div class="empty-state-title">NO OBSERVATIONS FOR THIS PERIOD</div><div class="empty-state-desc">Selected: <span class="empty-sel-start"></span> &rarr; <span class="empty-sel-end"></span><br>Latest available: <span class="empty-latest-date"></span></div><button class="empty-state-btn" onclick="snapToLatest()">VIEW LATEST AVAILABLE DATA</button></div></div>
+        <div class="chart-wrapper"><div id="chart-aws-rain" class="chart-container"></div><div class="chart-empty-state" id="empty-chart-aws-rain"><div class="empty-state-title">NO OBSERVATIONS FOR THIS PERIOD</div><div class="empty-state-desc">Selected: <span class="empty-sel-start"></span> &rarr; <span class="empty-sel-end"></span><br>Latest available: <span class="empty-latest-date"></span></div><button class="empty-state-btn" onclick="snapToLatest()">VIEW LATEST AVAILABLE DATA</button></div></div>
+        <div class="chart-wrapper"><div id="chart-aws-sun" class="chart-container"></div><div class="chart-empty-state" id="empty-chart-aws-sun"><div class="empty-state-title">NO OBSERVATIONS FOR THIS PERIOD</div><div class="empty-state-desc">Selected: <span class="empty-sel-start"></span> &rarr; <span class="empty-sel-end"></span><br>Latest available: <span class="empty-latest-date"></span></div><button class="empty-state-btn" onclick="snapToLatest()">VIEW LATEST AVAILABLE DATA</button></div></div>
+        <div class="chart-wrapper"><div id="chart-aws-pres" class="chart-container"></div><div class="chart-empty-state" id="empty-chart-aws-pres"><div class="empty-state-title">NO OBSERVATIONS FOR THIS PERIOD</div><div class="empty-state-desc">Selected: <span class="empty-sel-start"></span> &rarr; <span class="empty-sel-end"></span><br>Latest available: <span class="empty-latest-date"></span></div><button class="empty-state-btn" onclick="snapToLatest()">VIEW LATEST AVAILABLE DATA</button></div></div>
     </section>
 
 </main>

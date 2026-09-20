@@ -138,6 +138,13 @@ $(document).ready(function() {
                     if(row[2] !== null) morAvg.push([ts, row[2]]);
                     if(row[3] !== null) morInst.push([ts, row[3]]);
                 });
+                
+                if (data.length === 0) {
+                    showChartEmptyState('chart-vis', startStr, endStr);
+                } else {
+                    hideChartEmptyState('chart-vis');
+                }
+
                 charts.vis.series[0].setData(morAvg, false);
                 charts.vis.series[1].setData(morInst, false);
                 charts.vis.redraw();
@@ -165,6 +172,19 @@ $(document).ready(function() {
                     if(row[13] !== null) nc1.push([ts, row[13]]);
                     if(row[14] !== null) nc25.push([ts, row[14]]);
                 });
+                
+                if (data.length === 0) {
+                    showChartEmptyState('chart-hum-layer', startStr, endStr);
+                    showChartEmptyState('chart-temp-layer', startStr, endStr);
+                    showChartEmptyState('chart-pm', startStr, endStr);
+                    showChartEmptyState('chart-nc', startStr, endStr);
+                } else {
+                    hideChartEmptyState('chart-hum-layer');
+                    hideChartEmptyState('chart-temp-layer');
+                    hideChartEmptyState('chart-pm');
+                    hideChartEmptyState('chart-nc');
+                }
+
                 charts.humLayer.series[0].setData(l1h, false);
                 charts.humLayer.series[1].setData(l2h, false);
                 charts.humLayer.series[2].setData(l3h, false);
@@ -205,6 +225,19 @@ $(document).ready(function() {
                     if(row[9] !== null) idp1.push([ts, row[9]]);
                     if(row[10] !== null) idp2.push([ts, row[10]]);
                 });
+                
+                if (data.length === 0) {
+                    showChartEmptyState('chart-soil-moisture', startStr, endStr);
+                    showChartEmptyState('chart-soil-temp', startStr, endStr);
+                    showChartEmptyState('chart-soil-bec', startStr, endStr);
+                    showChartEmptyState('chart-soil-dielectric', startStr, endStr);
+                } else {
+                    hideChartEmptyState('chart-soil-moisture');
+                    hideChartEmptyState('chart-soil-temp');
+                    hideChartEmptyState('chart-soil-bec');
+                    hideChartEmptyState('chart-soil-dielectric');
+                }
+
                 charts.soilMoisture.series[0].setData(sm, true);
                 
                 charts.soilTemp.series[0].setData(tc, false);
@@ -239,6 +272,23 @@ $(document).ready(function() {
                     if(row.sunshine !== null) sun.push([ts, parseFloat(row.sunshine)]);
                     if(row.atmospheric_pressure !== null) pres.push([ts, parseFloat(row.atmospheric_pressure)]);
                 });
+                
+                if (data.length === 0) {
+                    showChartEmptyState('chart-aws-temp', startStr, endStr);
+                    showChartEmptyState('chart-aws-hum', startStr, endStr);
+                    showChartEmptyState('chart-aws-wind', startStr, endStr);
+                    showChartEmptyState('chart-aws-rain', startStr, endStr);
+                    showChartEmptyState('chart-aws-sun', startStr, endStr);
+                    showChartEmptyState('chart-aws-pres', startStr, endStr);
+                } else {
+                    hideChartEmptyState('chart-aws-temp');
+                    hideChartEmptyState('chart-aws-hum');
+                    hideChartEmptyState('chart-aws-wind');
+                    hideChartEmptyState('chart-aws-rain');
+                    hideChartEmptyState('chart-aws-sun');
+                    hideChartEmptyState('chart-aws-pres');
+                }
+
                 charts.awsTemp.series[0].setData(maxt, false);
                 charts.awsTemp.series[1].setData(mint, false);
                 charts.awsTemp.redraw();
@@ -255,25 +305,47 @@ $(document).ready(function() {
         });
     }
 
+    window.latestGlobalTimestamp = null;
+
+    window.snapToLatest = function() {
+        if (!window.latestGlobalTimestamp) return;
+        let eDate = new Date(window.latestGlobalTimestamp);
+        let sDate = new Date(window.latestGlobalTimestamp);
+        sDate.setDate(eDate.getDate() - 7);
+        $('#win-start').val(formatDT(sDate));
+        $('#win-end').val(formatDT(eDate));
+        $('.ed-quick-range-opt').removeClass('active');
+        $('[data-range="7"]').addClass('active');
+        loadData(formatDT(sDate), formatDT(eDate));
+    };
+
+    function showChartEmptyState(chartId, startStr, endStr) {
+        $(`#empty-${chartId}`).addClass('active');
+        $(`#empty-${chartId} .empty-sel-start`).text(startStr);
+        $(`#empty-${chartId} .empty-sel-end`).text(endStr);
+        $(`#empty-${chartId} .empty-latest-date`).text(window.latestGlobalTimestamp || '--');
+    }
+
+    function hideChartEmptyState(chartId) {
+        $(`#empty-${chartId}`).removeClass('active');
+    }
+
     function initPage() {
         initCharts();
-
-        let end = new Date();
-        let start = new Date();
-        start.setDate(end.getDate() - 7);
-        
-        $('#win-start').val(formatDT(start));
-        $('#win-end').val(formatDT(end));
-
-        loadData(formatDT(start), formatDT(end));
 
         $('.ed-val').addClass('loading-state');
         $('#val-data-status').text('SYNCING').css('color', 'var(--ink-2)');
         $('#sync-status').text('SYNCING...');
 
-        // Latest Data
+        // Fetch latest data FIRST to determine real default date range
         $.get('apis/sensordata_latest.php', function(data) {
-            if(data) {
+            let eDate = new Date(); // fallback
+            if(data && data.timestamp) {
+                // Remove the extra milliseconds or parsing issues, just parse directly
+                // data.timestamp format is "2026-08-27 10:42:52"
+                eDate = new Date(data.timestamp.replace(/-/g, '/'));
+                window.latestGlobalTimestamp = data.timestamp;
+                
                 $('.ed-val').removeClass('loading-state');
                 $('#val-last-obs').text(data.timestamp || '--');
                 $('#val-vis').html((data.visibility !== null ? data.visibility : '--') + ' <span class="ed-unit">km</span>');
@@ -286,7 +358,17 @@ $(document).ready(function() {
                 $('#val-data-status').text('ONLINE').css('color', '#10b981');
                 $('#sync-status').text('SYNCED');
             }
+            
+            let sDate = new Date(eDate.getTime());
+            sDate.setDate(eDate.getDate() - 7);
+            
+            $('#win-start').val(formatDT(sDate));
+            $('#win-end').val(formatDT(eDate));
+
+            loadData(formatDT(sDate), formatDT(eDate));
         });
+
+
 
         $('#btn-apply-dates').click(function() {
             $('.ed-quick-range-opt').removeClass('active');
@@ -299,8 +381,10 @@ $(document).ready(function() {
             $('.ed-quick-range-opt').removeClass('active');
             $(this).addClass('active');
             let days = parseInt($(this).data('range'));
-            let eDate = new Date();
-            let sDate = new Date();
+            
+            // Base the quick range on the latest actual observation if possible
+            let eDate = window.latestGlobalTimestamp ? new Date(window.latestGlobalTimestamp.replace(/-/g, '/')) : new Date();
+            let sDate = new Date(eDate.getTime());
             sDate.setDate(eDate.getDate() - days);
             
             $('#win-start').val(formatDT(sDate));

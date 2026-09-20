@@ -24,12 +24,12 @@ if($select==1){
     FROM ";
 
     
-    if($_GET['interval']){
+    if(isset($_GET['interval']) && $_GET['interval']){
         
         $sql.="public.aws_table where date_time>(Select ((date_time) - INTERVAL '".$_GET['interval']."') from public.aws_table order by date_time desc limit 1) and max_temp>-100
         GROUP BY 1,2 order by 1,2";
     }
-    elseif($_GET['start_date'] && $_GET['end_date']){
+    elseif(isset($_GET['start_date']) && isset($_GET['end_date']) && $_GET['start_date'] && $_GET['end_date']){
         
         $sql.="public.aws_table where Date(date_time) >= '".$_GET['start_date']."' and Date(date_time) <= '".$_GET['end_date']."' and max_temp>-100
         GROUP BY 1,2 order by 1,2";
