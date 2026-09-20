@@ -267,9 +267,14 @@ $(document).ready(function() {
 
         loadData(formatDT(start), formatDT(end));
 
+        $('.ed-val').addClass('loading-state');
+        $('#val-data-status').text('SYNCING').css('color', 'var(--ink-2)');
+        $('#sync-status').text('SYNCING...');
+
         // Latest Data
         $.get('apis/sensordata_latest.php', function(data) {
             if(data) {
+                $('.ed-val').removeClass('loading-state');
                 $('#val-last-obs').text(data.timestamp || '--');
                 $('#val-vis').html((data.visibility !== null ? data.visibility : '--') + ' <span class="ed-unit">km</span>');
                 $('#val-temp').html((data.temperature !== null ? parseFloat(data.temperature).toFixed(1) : '--') + ' <span class="ed-unit">°C</span>');
