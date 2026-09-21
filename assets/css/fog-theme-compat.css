@@ -1,0 +1,928 @@
+/* ==========================================================================
+   Fog IITK — Global Theme Compatibility Layer
+   ============================================================================
+   This file is the ONE PLACE that makes the light/dark theme work across
+   every page on the site. It is loaded by navbar.php on all 12 primary pages.
+
+   Strategy:
+   ─────────
+   1. Force body/html colours to follow the --paper / --ink tokens.
+   2. Override Bootstrap/Argon utility classes (.bg-white, .text-dark, etc.).
+   3. Override the Argon gradient footer.
+   4. Override form controls, inputs, selects, date pickers.
+   5. Override Highcharts SVG elements.
+   6. Override amCharts elements.
+   7. Override page-specific hardcoded colours from inline <style> blocks.
+
+   Ordering:
+   ─────────
+   This file is loaded AFTER fog-redesign.css (which defines the tokens) and
+   AFTER argon-design-system.css (which defines Bootstrap utilities). The
+   !important declarations here are intentional — they must beat both inline
+   styles and Bootstrap's own !important utilities.
+
+   DO NOT duplicate token definitions here. Tokens live in fog-redesign.css
+   only. This file consumes them.
+   ========================================================================== */
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   1. BODY / HTML — the absolute foundation
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html[data-theme="dark"] body,
+html[data-theme="dark"] body.index-page,
+html[data-theme="dark"] body.fog-body,
+html[data-theme="dark"] body.fog-app {
+  background-color: var(--paper) !important;
+  color: var(--ink) !important;
+}
+
+html[data-theme="light"] body,
+html[data-theme="light"] body.index-page,
+html[data-theme="light"] body.fog-body,
+html[data-theme="light"] body.fog-app {
+  background-color: var(--paper) !important;
+  color: var(--ink) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   2. HEADINGS — the #1 bug in the current dark mode
+   Every heading that uses hardcoded dark navy (#0F172A, #1E293B, #334155,
+   #2c3e50) must switch to --ink in dark mode.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4,
+html[data-theme="dark"] h5,
+html[data-theme="dark"] h6 {
+  color: var(--ink) !important;
+}
+
+/* Specific page headings that are set via inline style */
+html[data-theme="dark"] .ed-page-title,
+html[data-theme="dark"] .fc-science-result-title,
+html[data-theme="dark"] .empty-state-title {
+  color: var(--ink) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   3. BOOTSTRAP / ARGON UTILITY OVERRIDES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html[data-theme="dark"] .bg-white,
+html[data-theme="dark"] .bg-secondary,
+html[data-theme="dark"] .bg-light {
+  background-color: var(--surface) !important;
+}
+
+html[data-theme="dark"] .bg-default {
+  background-color: var(--paper-2) !important;
+}
+
+html[data-theme="dark"] .card,
+html[data-theme="dark"] .card-header,
+html[data-theme="dark"] .card-body,
+html[data-theme="dark"] .card-footer {
+  background-color: var(--surface) !important;
+  color: var(--ink) !important;
+  border-color: var(--rule) !important;
+}
+
+html[data-theme="dark"] .text-dark,
+html[data-theme="dark"] .text-default {
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .text-muted {
+  color: var(--ink-3) !important;
+}
+
+html[data-theme="dark"] .text-white {
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .border,
+html[data-theme="dark"] .border-top,
+html[data-theme="dark"] .border-bottom,
+html[data-theme="dark"] .border-left,
+html[data-theme="dark"] .border-right {
+  border-color: var(--rule) !important;
+}
+
+/* Argon gradient footer — the dark navy bar at page bottom */
+html[data-theme="dark"] .bg-gradient-primary,
+html[data-theme="dark"] .card-body.bg-gradient-primary {
+  background: var(--paper-3) !important;
+}
+
+html[data-theme="dark"] .bg-gradient-primary a,
+html[data-theme="dark"] .bg-gradient-primary p {
+  color: var(--ink-2) !important;
+}
+
+/* Badge and label overrides */
+html[data-theme="dark"] .badge-primary,
+html[data-theme="dark"] .badge-default {
+  background-color: var(--measured-tint) !important;
+  color: var(--measured) !important;
+}
+
+html[data-theme="dark"] .badge-success {
+  background-color: var(--tint-clear) !important;
+  color: var(--state-clear) !important;
+}
+
+html[data-theme="dark"] .badge-warning {
+  background-color: var(--tint-fog) !important;
+  color: var(--state-fog) !important;
+}
+
+html[data-theme="dark"] .badge-danger {
+  background-color: var(--tint-dense) !important;
+  color: var(--state-dense) !important;
+}
+
+/* Argon nav pills / tabs */
+html[data-theme="dark"] .nav-pills .nav-link {
+  color: var(--ink-2) !important;
+}
+
+html[data-theme="dark"] .nav-pills .nav-link.active {
+  background-color: var(--measured-tint) !important;
+  color: var(--accent) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   4. FORMS, INPUTS, SELECTS, DATE PICKERS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html[data-theme="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] .form-control,
+html[data-theme="dark"] .custom-select {
+  background-color: var(--paper-3) !important;
+  color: var(--ink) !important;
+  border-color: var(--rule-2) !important;
+}
+
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+  color: var(--ink-3) !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] input:focus,
+html[data-theme="dark"] select:focus,
+html[data-theme="dark"] textarea:focus,
+html[data-theme="dark"] .form-control:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 1px var(--accent) !important;
+  background-color: var(--paper-2) !important;
+}
+
+/* jQuery UI autocomplete */
+html[data-theme="dark"] .ui-autocomplete,
+html[data-theme="dark"] .ui-menu {
+  background-color: var(--surface) !important;
+  border-color: var(--rule) !important;
+}
+
+html[data-theme="dark"] .ui-menu-item-wrapper {
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .ui-state-active,
+html[data-theme="dark"] .ui-state-focus {
+  background-color: var(--paper-2) !important;
+  color: var(--ink) !important;
+  border-color: var(--rule) !important;
+}
+
+/* jQuery UI datepicker */
+html[data-theme="dark"] .ui-datepicker {
+  background-color: var(--surface) !important;
+  border-color: var(--rule) !important;
+}
+
+html[data-theme="dark"] .ui-datepicker-header {
+  background-color: var(--paper-2) !important;
+  color: var(--ink) !important;
+  border-color: var(--rule) !important;
+}
+
+html[data-theme="dark"] .ui-datepicker td a,
+html[data-theme="dark"] .ui-datepicker td span {
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .ui-datepicker td a:hover {
+  background-color: var(--paper-3) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   5. BUTTONS — primary, secondary, outline, apply, go
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html[data-theme="dark"] .btn-primary,
+html[data-theme="dark"] .btn-default {
+  background-color: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: var(--paper) !important;
+}
+
+html[data-theme="dark"] .btn-primary:hover,
+html[data-theme="dark"] .btn-default:hover {
+  background-color: var(--accent-hover) !important;
+  border-color: var(--accent-hover) !important;
+}
+
+html[data-theme="dark"] .btn-secondary,
+html[data-theme="dark"] .btn-outline-secondary {
+  background-color: var(--paper-3) !important;
+  border-color: var(--rule-2) !important;
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .btn-outline-primary {
+  background-color: transparent !important;
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+}
+
+html[data-theme="dark"] .btn-link {
+  color: var(--accent) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   6. SENSORDATA.PHP — page-specific overrides for inline <style>
+   These target the exact classes defined in sensordata.php's <style> block.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html[data-theme="dark"] .ed-page-title {
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .ed-page-eyebrow {
+  color: var(--ink-3) !important;
+}
+
+html[data-theme="dark"] .data-status-banner {
+  border-bottom-color: var(--rule) !important;
+}
+
+html[data-theme="dark"] .ed-val {
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .editorial-metric.primary .ed-val {
+  color: var(--state-clear) !important;
+}
+
+html[data-theme="dark"] .ed-label {
+  color: var(--ink-3) !important;
+}
+
+html[data-theme="dark"] .ed-sub {
+  color: var(--ink-3) !important;
+}
+
+html[data-theme="dark"] .ed-obs-label {
+  color: var(--ink-3) !important;
+}
+
+html[data-theme="dark"] .ed-date-input {
+  color: var(--ink) !important;
+  background: var(--paper-3) !important;
+  border-color: var(--rule-2) !important;
+}
+
+html[data-theme="dark"] .ed-date-input:focus {
+  background: var(--paper-2) !important;
+  border-color: var(--accent) !important;
+}
+
+html[data-theme="dark"] .ed-apply-btn {
+  color: var(--paper) !important;
+  background: var(--accent) !important;
+}
+
+html[data-theme="dark"] .ed-apply-btn:hover {
+  background: var(--accent-hover) !important;
+}
+
+html[data-theme="dark"] .ed-quick-ranges {
+  background: var(--paper-3) !important;
+  border-color: var(--rule-2) !important;
+}
+
+html[data-theme="dark"] .ed-quick-range-opt {
+  color: var(--ink-3) !important;
+  border-right-color: var(--rule) !important;
+}
+
+html[data-theme="dark"] .ed-quick-range-opt:hover {
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .ed-quick-range-opt.active {
+  background: var(--paper-2) !important;
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .editorial-metric:not(:first-child)::before {
+  background-color: var(--rule) !important;
+}
+
+html[data-theme="dark"] .chart-empty-state {
+  background: rgba(19, 20, 23, 0.95) !important;
+  border-color: var(--rule) !important;
+}
+
+html[data-theme="dark"] .empty-state-title {
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .empty-state-desc {
+  color: var(--ink-3) !important;
+}
+
+html[data-theme="dark"] .empty-state-btn {
+  color: var(--ink) !important;
+  background: var(--paper-3) !important;
+  border-color: var(--rule-2) !important;
+}
+
+html[data-theme="dark"] .empty-state-btn:hover {
+  background: var(--paper-2) !important;
+}
+
+html[data-theme="dark"] .fc-science-result-title {
+  color: var(--ink) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   7. ABOUT / PUBLICATION / CONTACT — hardcoded body & heading styles
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* These pages use inline style="background-color: #F8FAFC; color: #334155"
+   on <body>, and style="color: #0F172A" on headings. The body override
+   in section 1 catches the background. These catch the remaining text. */
+
+html[data-theme="dark"] .accordion .card,
+html[data-theme="dark"] .accordion .card-header {
+  background-color: var(--paper-2) !important;
+  border-color: var(--rule) !important;
+}
+
+html[data-theme="dark"] .accordion .card-header button,
+html[data-theme="dark"] .accordion .card-header a {
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .accordion .card-body {
+  background-color: var(--surface) !important;
+  color: var(--ink-2) !important;
+}
+
+/* Publication keyword/author/abstract labels */
+html[data-theme="dark"] [style*="color: #2c3e50"] {
+  color: var(--ink) !important;
+}
+
+/* Dark slate footer band — about/pub/contact use inline bg #0F172A */
+html[data-theme="dark"] [style*="background-color: #0F172A"] {
+  background-color: var(--paper-3) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   8. COMPAREDATA / SHORT_TERM / LONG_PRED — Bootstrap-heavy legacy pages
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html[data-theme="dark"] .container,
+html[data-theme="dark"] .container-fluid {
+  color: var(--ink) !important;
+}
+
+/* Argon section + card wrappers */
+html[data-theme="dark"] .section,
+html[data-theme="dark"] .section-lg {
+  background-color: var(--paper) !important;
+}
+
+/* Override comparedata.php's hardcoded #F8FAFC !important */
+html[data-theme="dark"] .main-content {
+  background-color: var(--paper) !important;
+}
+
+/* Table overrides */
+html[data-theme="dark"] table,
+html[data-theme="dark"] .table {
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .table thead th {
+  background-color: var(--paper-3) !important;
+  color: var(--ink) !important;
+  border-color: var(--rule) !important;
+}
+
+html[data-theme="dark"] .table td,
+html[data-theme="dark"] .table th {
+  border-color: var(--rule) !important;
+}
+
+html[data-theme="dark"] .table-striped tbody tr:nth-of-type(odd) {
+  background-color: var(--paper-2) !important;
+}
+
+html[data-theme="dark"] .table-hover tbody tr:hover {
+  background-color: var(--paper-3) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   9. SPATIAL_FOG / FOGCAST — map pages
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Map controls, legends, and label panels */
+html[data-theme="dark"] .ol-control,
+html[data-theme="dark"] .ol-control button {
+  background-color: var(--paper-3) !important;
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .layer-switcher,
+html[data-theme="dark"] .layer-switcher ul {
+  background-color: var(--surface) !important;
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .layer-switcher label {
+  color: var(--ink) !important;
+}
+
+/* Mapbox controls */
+html[data-theme="dark"] .mapboxgl-ctrl,
+html[data-theme="dark"] .mapboxgl-ctrl-group button {
+  background-color: var(--paper-3) !important;
+  color: var(--ink) !important;
+  border-color: var(--rule) !important;
+}
+
+/* Leaflet controls */
+html[data-theme="dark"] .leaflet-control,
+html[data-theme="dark"] .leaflet-bar a {
+  background-color: var(--paper-3) !important;
+  color: var(--ink) !important;
+  border-color: var(--rule) !important;
+}
+
+/* Panel content surrounding maps */
+html[data-theme="dark"] .map-info-panel,
+html[data-theme="dark"] .map-legend,
+html[data-theme="dark"] .map-controls {
+  background-color: var(--surface) !important;
+  color: var(--ink) !important;
+  border-color: var(--rule) !important;
+}
+
+/* Spatial fog "OR" divider */
+html[data-theme="dark"] [style*="background: #f8f9fa"] {
+  background: var(--paper-3) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   10. CAMERA PAGE — only UI, never the imagery
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html[data-theme="dark"] .camera-controls,
+html[data-theme="dark"] .camera-gallery-frame {
+  background-color: var(--surface) !important;
+  border-color: var(--rule) !important;
+}
+
+html[data-theme="dark"] .carousel-control-prev,
+html[data-theme="dark"] .carousel-control-next {
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .carousel-indicators li {
+  background-color: var(--ink-3) !important;
+}
+
+html[data-theme="dark"] .carousel-indicators .active {
+  background-color: var(--ink) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   11. LINKS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html[data-theme="dark"] a:not(.fognav-mark):not(.fognav-link):not(.fognav-opt):not(.fognav-toggle):not(.fognav-sheet-link):not(.btn):not([class*="nav-"]) {
+  color: var(--accent) !important;
+}
+
+html[data-theme="dark"] a:not(.btn):not([class*="nav-"]):hover {
+  color: var(--accent-hover) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   12. FOOTER — the copyright bar at the bottom of every page
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html[data-theme="dark"] footer,
+html[data-theme="dark"] .fog-foot {
+  background-color: var(--paper-2) !important;
+  color: var(--ink-3) !important;
+  border-color: var(--rule) !important;
+}
+
+html[data-theme="dark"] footer a,
+html[data-theme="dark"] .fog-foot a {
+  color: var(--ink-2) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   13. HIGHCHARTS — comprehensive SVG override
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html[data-theme="dark"] .highcharts-background {
+  fill: var(--paper) !important;
+}
+
+html[data-theme="dark"] .highcharts-plot-background {
+  fill: var(--paper) !important;
+}
+
+html[data-theme="dark"] .highcharts-title,
+html[data-theme="dark"] .highcharts-subtitle {
+  fill: var(--ink) !important;
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .highcharts-axis-title {
+  fill: var(--ink-2) !important;
+  color: var(--ink-2) !important;
+}
+
+html[data-theme="dark"] .highcharts-axis-labels text {
+  fill: var(--ink-3) !important;
+  color: var(--ink-3) !important;
+}
+
+html[data-theme="dark"] .highcharts-data-label text {
+  fill: var(--ink-2) !important;
+  color: var(--ink-2) !important;
+}
+
+html[data-theme="dark"] .highcharts-legend-item text {
+  fill: var(--ink) !important;
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .highcharts-legend-item-hidden text {
+  fill: var(--ink-3) !important;
+  color: var(--ink-3) !important;
+}
+
+html[data-theme="dark"] .highcharts-grid-line {
+  stroke: var(--rule) !important;
+}
+
+html[data-theme="dark"] .highcharts-minor-grid-line {
+  stroke: var(--rule) !important;
+}
+
+html[data-theme="dark"] .highcharts-axis-line {
+  stroke: var(--rule-2) !important;
+}
+
+html[data-theme="dark"] .highcharts-tick {
+  stroke: var(--rule-2) !important;
+}
+
+html[data-theme="dark"] .highcharts-crosshair {
+  stroke: var(--ink-3) !important;
+}
+
+/* Tooltip */
+html[data-theme="dark"] .highcharts-tooltip-box {
+  fill: var(--surface) !important;
+  stroke: var(--rule-2) !important;
+}
+
+html[data-theme="dark"] .highcharts-tooltip text,
+html[data-theme="dark"] .highcharts-tooltip span {
+  fill: var(--ink) !important;
+  color: var(--ink) !important;
+}
+
+/* Range selector (Highstock) */
+html[data-theme="dark"] .highcharts-range-selector-buttons text {
+  fill: var(--ink-2) !important;
+}
+
+html[data-theme="dark"] .highcharts-range-selector-group rect {
+  fill: var(--paper-3) !important;
+  stroke: var(--rule) !important;
+}
+
+html[data-theme="dark"] .highcharts-range-input rect {
+  fill: var(--paper-3) !important;
+  stroke: var(--rule) !important;
+}
+
+html[data-theme="dark"] .highcharts-range-input text {
+  fill: var(--ink) !important;
+}
+
+/* Navigator */
+html[data-theme="dark"] .highcharts-navigator-mask-inside {
+  fill: var(--measured-tint) !important;
+}
+
+html[data-theme="dark"] .highcharts-navigator-outline {
+  stroke: var(--rule) !important;
+}
+
+html[data-theme="dark"] .highcharts-navigator-xaxis text {
+  fill: var(--ink-3) !important;
+}
+
+/* Scrollbar */
+html[data-theme="dark"] .highcharts-scrollbar-track-background {
+  fill: var(--paper-3) !important;
+}
+
+html[data-theme="dark"] .highcharts-scrollbar-thumb {
+  fill: var(--rule-2) !important;
+  stroke: var(--rule-2) !important;
+}
+
+html[data-theme="dark"] .highcharts-scrollbar-rifles {
+  stroke: var(--ink-3) !important;
+}
+
+/* Exporting / context menu */
+html[data-theme="dark"] .highcharts-button-box {
+  fill: var(--paper-3) !important;
+}
+
+html[data-theme="dark"] .highcharts-button text {
+  fill: var(--ink) !important;
+}
+
+html[data-theme="dark"] .highcharts-contextmenu {
+  background-color: var(--surface) !important;
+  border-color: var(--rule) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+}
+
+html[data-theme="dark"] .highcharts-contextmenu div {
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .highcharts-contextmenu div:hover {
+  background-color: var(--paper-2) !important;
+}
+
+/* Plot bands/lines (zone washes) stay as-is since they use themed tokens */
+
+/* Threshold/plot lines */
+html[data-theme="dark"] .highcharts-plot-line {
+  stroke: var(--ink-3) !important;
+}
+
+html[data-theme="dark"] .highcharts-plot-line-label {
+  fill: var(--ink-3) !important;
+}
+
+/* Loading overlay */
+html[data-theme="dark"] .highcharts-loading {
+  background-color: var(--paper) !important;
+}
+
+html[data-theme="dark"] .highcharts-loading-inner {
+  color: var(--ink-2) !important;
+}
+
+/* No-data module */
+html[data-theme="dark"] .highcharts-no-data text {
+  fill: var(--ink-3) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   14. AMCHARTS — SVG + container
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html[data-theme="dark"] .amcharts-bg,
+html[data-theme="dark"] [id^="chartdiv"] {
+  fill: var(--paper) !important;
+  background-color: var(--paper) !important;
+}
+
+html[data-theme="dark"] .amcharts-main-div {
+  background-color: var(--paper) !important;
+}
+
+html[data-theme="dark"] .amcharts-axis-label,
+html[data-theme="dark"] .amcharts-axis-title {
+  fill: var(--ink-3) !important;
+}
+
+html[data-theme="dark"] .amcharts-grid-line {
+  stroke: var(--rule) !important;
+}
+
+html[data-theme="dark"] .amcharts-tooltip-container text {
+  fill: var(--ink) !important;
+}
+
+html[data-theme="dark"] .amcharts-legend-item text {
+  fill: var(--ink) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   15. SCROLL / SELECTION / MISC
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html[data-theme="dark"] ::selection {
+  background: var(--measured-tint);
+  color: var(--ink);
+}
+
+/* Scrollbar theming for WebKit */
+html[data-theme="dark"] ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+html[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: var(--paper-2);
+}
+
+html[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: var(--rule-2);
+  border-radius: 4px;
+}
+
+html[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-3);
+}
+
+/* Modal / popover */
+html[data-theme="dark"] .modal-content {
+  background-color: var(--surface) !important;
+  color: var(--ink) !important;
+  border-color: var(--rule) !important;
+}
+
+html[data-theme="dark"] .modal-header {
+  border-color: var(--rule) !important;
+}
+
+html[data-theme="dark"] .modal-footer {
+  border-color: var(--rule) !important;
+}
+
+html[data-theme="dark"] .popover {
+  background-color: var(--surface) !important;
+  border-color: var(--rule) !important;
+}
+
+/* Dropdown (Bootstrap) */
+html[data-theme="dark"] .dropdown-menu {
+  background-color: var(--surface) !important;
+  border-color: var(--rule) !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5) !important;
+}
+
+html[data-theme="dark"] .dropdown-item {
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .dropdown-item:hover,
+html[data-theme="dark"] .dropdown-item:focus {
+  background-color: var(--paper-2) !important;
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .dropdown-divider {
+  border-color: var(--rule) !important;
+}
+
+/* Tooltip (Bootstrap) */
+html[data-theme="dark"] .tooltip-inner {
+  background-color: var(--surface) !important;
+  color: var(--ink) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   16. LONG-TERM / FOGCAST — tile grids and controls
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html[data-theme="dark"] .card-stats {
+  background-color: var(--surface) !important;
+  border-color: var(--rule) !important;
+}
+
+html[data-theme="dark"] .card-stats .card-body {
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .card-title {
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .card-category {
+  color: var(--ink-3) !important;
+}
+
+/* Owl carousel (fogcast) */
+html[data-theme="dark"] .owl-dots .owl-dot span {
+  background: var(--rule-2) !important;
+}
+
+html[data-theme="dark"] .owl-dots .owl-dot.active span {
+  background: var(--accent) !important;
+}
+
+html[data-theme="dark"] .owl-nav button {
+  color: var(--ink) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   17. ARGON NAVBAR OVERRIDES
+   The redesigned .fognav is already theme-aware, but some legacy Argon
+   navbar markup may still exist on pages. Override it too.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html[data-theme="dark"] .navbar-transparent {
+  background-color: transparent !important;
+}
+
+html[data-theme="dark"] .navbar-light .navbar-nav .nav-link {
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .navbar-light .navbar-brand {
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .navbar-collapse {
+  background-color: var(--surface) !important;
+}
+
+/* Headroom.js styles */
+html[data-theme="dark"] .headroom--not-top {
+  background-color: var(--surface) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   18. FOCUS RING — universal visible focus
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html[data-theme="dark"] :focus-visible {
+  outline: 2px solid var(--focus) !important;
+  outline-offset: 2px !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   19. HR / DIVIDERS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html[data-theme="dark"] hr {
+  border-color: var(--rule) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   20. PRE / CODE blocks
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html[data-theme="dark"] pre,
+html[data-theme="dark"] code {
+  background-color: var(--paper-3) !important;
+  color: var(--ink) !important;
+}

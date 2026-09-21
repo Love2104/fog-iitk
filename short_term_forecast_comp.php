@@ -110,7 +110,13 @@
 (function () {
   try {
     var t = localStorage.getItem('fog-theme');
-    if (t === 'dark' || t === 'light') { document.documentElement.setAttribute('data-theme', t); }
+    if (t === 'dark' || t === 'light') {
+      document.documentElement.setAttribute('data-theme', t);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
   } catch (e) {}
 })();
 </script>

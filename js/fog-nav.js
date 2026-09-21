@@ -244,6 +244,15 @@
 
   var toggle = nav.querySelector('[data-fognav-theme]');
   if (toggle) {
+    /* Set initial aria state based on current theme */
+    function syncToggle() {
+      var current = document.documentElement.getAttribute('data-theme') || 'light';
+      var isDark = current === 'dark';
+      toggle.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
+      toggle.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+    }
+    syncToggle();
+
     toggle.addEventListener('click', function () {
       var root = document.documentElement;
       var current = root.getAttribute('data-theme');
@@ -253,7 +262,18 @@
       var next = current === 'dark' ? 'light' : 'dark';
       root.setAttribute('data-theme', next);
       try { localStorage.setItem('fog-theme', next); } catch (err) { /* private mode */ }
+      syncToggle();
       window.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme: next } }));
+
+      /* Force Highcharts to redraw so CSS fills/strokes take effect */
+      if (typeof Highcharts !== 'undefined' && Highcharts.charts) {
+        Highcharts.charts.forEach(function (c) {
+          if (c) {
+            try { c.reflow(); } catch (e) { /* chart may be destroyed */ }
+          }
+        });
+      }
     });
   }
 })();
+

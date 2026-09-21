@@ -165,11 +165,18 @@ function fognav_option(array $s, ?array $current): void
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Source+Sans+3:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap">
 <link rel="stylesheet" href="assets/css/fog-redesign.css">
+<link rel="stylesheet" href="assets/css/fog-theme-compat.css">
 <script>
 (function () {
   try {
     var t = localStorage.getItem('fog-theme');
-    if (t === 'dark' || t === 'light') { document.documentElement.setAttribute('data-theme', t); }
+    if (t === 'dark' || t === 'light') {
+      document.documentElement.setAttribute('data-theme', t);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
   } catch (e) {}
 })();
 </script>

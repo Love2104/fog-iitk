@@ -279,11 +279,18 @@ define('FOG_HEAD_DONE', true);
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="assets/css/fog-home.css">
 <link rel="stylesheet" href="assets/css/fog-redesign.css?v=1789772589">
+<link rel="stylesheet" href="assets/css/fog-theme-compat.css">
 <script>
 (function () {
   try {
     var t = localStorage.getItem('fog-theme');
-    if (t === 'dark' || t === 'light') { document.documentElement.setAttribute('data-theme', t); }
+    if (t === 'dark' || t === 'light') {
+      document.documentElement.setAttribute('data-theme', t);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
   } catch (e) {}
 })();
 </script>
