@@ -1,4 +1,10 @@
 $(document).ready(function() {
+    const pageStyle = getComputedStyle(document.querySelector('.site-page'));
+    const chartInk = pageStyle.getPropertyValue('--ink').trim();
+    const chartMuted = pageStyle.getPropertyValue('--muted').trim();
+    const chartBorder = pageStyle.getPropertyValue('--border').trim();
+    const chartSurface = pageStyle.getPropertyValue('--surface').trim();
+    const chartPalette = [chartInk, '#0F766E', '#B45309', '#B91C1C', '#6B6B66'];
     Highcharts.setOptions({
         global: { useUTC: false },
         chart: {
@@ -8,31 +14,31 @@ $(document).ready(function() {
         title: { text: null },
         credits: { enabled: false },
         exporting: { enabled: false },
-        legend: { itemStyle: { color: 'var(--ink-2)' } },
+        legend: { itemStyle: { color: chartMuted } },
         xAxis: {
             type: 'datetime',
-            gridLineColor: 'var(--rule)',
-            lineColor: 'var(--rule)',
-            tickColor: 'var(--rule)',
-            labels: { style: { color: 'var(--ink-2)' } }
+            gridLineColor: chartBorder,
+            lineColor: chartBorder,
+            tickColor: chartBorder,
+            labels: { style: { color: chartMuted, fontFamily: 'JetBrains Mono, monospace', fontSize: '12px' } }
         },
         yAxis: {
-            gridLineColor: 'var(--rule)',
-            lineColor: 'var(--rule)',
-            labels: { style: { color: 'var(--ink-2)' } },
-            title: { style: { color: 'var(--ink)' } }
+            gridLineColor: chartBorder,
+            lineColor: chartBorder,
+            labels: { style: { color: chartMuted, fontFamily: 'JetBrains Mono, monospace', fontSize: '12px' } },
+            title: { style: { color: chartInk } }
         },
         plotOptions: {
             series: {
                 lineWidth: 2,
                 marker: { enabled: false, radius: 2 },
-                states: { hover: { lineWidth: 3 } }
+                states: { hover: { lineWidth: 2 } }
             }
         },
         tooltip: {
-            backgroundColor: 'var(--paper)',
-            borderColor: 'var(--rule)',
-            style: { color: 'var(--ink)' },
+            backgroundColor: chartSurface,
+            borderColor: chartBorder,
+            style: { color: chartInk },
             xDateFormat: '%Y-%m-%d %H:%M'
         }
     });
@@ -42,84 +48,90 @@ $(document).ready(function() {
     function initCharts() {
         // ABOVE GROUND
         charts.vis = Highcharts.chart('chart-vis', {
-            colors: ['#10b981', '#f59e0b'],
+            colors: [chartPalette[0], chartPalette[1]],
             yAxis: { title: { text: 'Visibility (km)' }, min: 0 },
             series: [{ name: 'MOR Avg', data: [] }, { name: 'MOR Inst', data: [] }]
         });
         charts.tempLayer = Highcharts.chart('chart-temp-layer', {
-            colors: ['#ef4444', '#f97316', '#fcd34d'],
+            colors: [chartPalette[0], chartPalette[1], chartPalette[2]],
             yAxis: { title: { text: 'Temperature (°C)' } },
             series: [{ name: 'L1 Temp', data: [] }, { name: 'L2 Temp', data: [] }, { name: 'L3 Temp', data: [] }]
         });
         charts.humLayer = Highcharts.chart('chart-hum-layer', {
-            colors: ['#3b82f6', '#0ea5e9', '#38bdf8'],
+            colors: [chartPalette[0], chartPalette[1], chartPalette[2]],
             yAxis: { title: { text: 'Humidity (%)' }, min: 0, max: 100 },
             series: [{ name: 'L1 Hum', data: [] }, { name: 'L2 Hum', data: [] }, { name: 'L3 Hum', data: [] }]
         });
         charts.pm = Highcharts.chart('chart-pm', {
-            colors: ['#8b5cf6', '#a855f7', '#d946ef', '#ec4899'],
+            colors: [chartPalette[0], chartPalette[1], chartPalette[2], chartPalette[3]],
             yAxis: { title: { text: 'PM (µg/m³)' }, min: 0 },
             series: [{ name: 'PM 1.0', data: [] }, { name: 'PM 2.5', data: [] }, { name: 'PM 4.0', data: [] }, { name: 'PM 10', data: [] }]
         });
         charts.nc = Highcharts.chart('chart-nc', {
-            colors: ['#64748b', '#475569', '#334155'],
+            colors: [chartPalette[0], chartPalette[1], chartPalette[2]],
             yAxis: { title: { text: 'NC (particles)' }, min: 0 },
             series: [{ name: 'NC 0.5', data: [] }, { name: 'NC 1.0', data: [] }, { name: 'NC 2.5', data: [] }]
         });
 
         // BELOW GROUND
         charts.soilMoisture = Highcharts.chart('chart-soil-moisture', {
-            colors: ['#059669'],
+            colors: [chartPalette[0]],
             yAxis: { title: { text: 'Soil Moisture' }, min: 0 },
             series: [{ name: 'Soil Moisture', data: [] }]
         });
         charts.soilTemp = Highcharts.chart('chart-soil-temp', {
-            colors: ['#dc2626', '#ea580c'],
+            colors: [chartPalette[0], chartPalette[1]],
             yAxis: { title: { text: 'Temperature (°C / °F)' } },
             series: [{ name: 'Temp (°C)', data: [] }, { name: 'Temp (°F)', data: [] }]
         });
         charts.soilBec = Highcharts.chart('chart-soil-bec', {
-            colors: ['#d97706', '#b45309'],
+            colors: [chartPalette[0], chartPalette[1]],
             yAxis: { title: { text: 'BEC' } },
             series: [{ name: 'BEC', data: [] }, { name: 'BEC w/ TC', data: [] }]
         });
         charts.soilDp = Highcharts.chart('chart-soil-dielectric', {
-            colors: ['#2563eb', '#1d4ed8', '#4338ca', '#3730a3'],
+            colors: [chartPalette[0], chartPalette[1], chartPalette[2], chartPalette[3]],
             yAxis: { title: { text: 'Permittivity' } },
             series: [{ name: 'RDP 1', data: [] }, { name: 'RDP 2', data: [] }, { name: 'IDP 1', data: [] }, { name: 'IDP 2', data: [] }]
         });
 
         // AWS
         charts.awsTemp = Highcharts.chart('chart-aws-temp', {
-            colors: ['#ef4444', '#3b82f6'],
+            colors: [chartPalette[0], chartPalette[1]],
             yAxis: { title: { text: 'Temperature (°C)' } },
             series: [{ name: 'Max Temp', data: [] }, { name: 'Min Temp', data: [] }]
         });
         charts.awsHum = Highcharts.chart('chart-aws-hum', {
-            colors: ['#3b82f6', '#93c5fd'],
+            colors: [chartPalette[0], chartPalette[1]],
             yAxis: { title: { text: 'Humidity (%)' }, min: 0, max: 100 },
             series: [{ name: 'Max Humidity', data: [] }, { name: 'Min Humidity', data: [] }]
         });
         charts.awsWind = Highcharts.chart('chart-aws-wind', {
-            colors: ['#10b981'],
+            colors: [chartPalette[0]],
             yAxis: { title: { text: 'Wind Speed (m/s)' }, min: 0 },
             series: [{ name: 'Wind Speed', data: [] }]
         });
         charts.awsRain = Highcharts.chart('chart-aws-rain', {
             chart: { type: 'column' },
-            colors: ['#3b82f6'],
+            colors: [chartPalette[0]],
             yAxis: { title: { text: 'Rain (mm)' }, min: 0 },
             series: [{ name: 'Rain', data: [] }]
         });
         charts.awsSun = Highcharts.chart('chart-aws-sun', {
-            colors: ['#eab308'],
+            colors: [chartPalette[0]],
             yAxis: { title: { text: 'Sunshine' }, min: 0 },
             series: [{ name: 'Sunshine', data: [] }]
         });
         charts.awsPres = Highcharts.chart('chart-aws-pres', {
-            colors: ['#64748b'],
+            colors: [chartPalette[0]],
             yAxis: { title: { text: 'Pressure (hPa)' } },
             series: [{ name: 'Pressure', data: [] }]
+        });
+        Object.values(charts).forEach(function(chart) {
+            chart.series.forEach(function(series, index) {
+                series.update({ dashStyle: ['Solid', 'ShortDash', 'Dot', 'Dash', 'LongDash'][index % 5] }, false);
+            });
+            chart.redraw();
         });
     }
 
@@ -334,7 +346,7 @@ $(document).ready(function() {
         initCharts();
 
         $('.ed-val').addClass('loading-state');
-        $('#val-data-status').text('SYNCING').css('color', 'var(--ink-2)');
+        $('#val-data-status').text('SYNCING').css('color', chartMuted);
         $('#sync-status').text('SYNCING...');
 
         // Fetch latest data FIRST to determine real default date range
@@ -355,7 +367,7 @@ $(document).ready(function() {
                 $('#val-pres').html((data.pressure !== null ? parseFloat(data.pressure).toFixed(1) : '--') + ' <span class="ed-unit">hPa</span>');
                 $('#val-pm25').html((data.pm25 !== null ? parseFloat(data.pm25).toFixed(1) : '--') + ' <span class="ed-unit">µg/m³</span>');
                 
-                $('#val-data-status').text('ONLINE').css('color', '#10b981');
+                $('#val-data-status').text('ONLINE').css('color', 'var(--ok)');
                 $('#sync-status').text('SYNCED');
             }
             
@@ -394,4 +406,24 @@ $(document).ready(function() {
     }
 
     initPage();
+    new MutationObserver(function() {
+        const current = getComputedStyle(document.querySelector('.site-page'));
+        const ink = current.getPropertyValue('--ink').trim();
+        const muted = current.getPropertyValue('--muted').trim();
+        const border = current.getPropertyValue('--border').trim();
+        const surface = current.getPropertyValue('--surface').trim();
+        Object.values(charts).forEach(function(chart) {
+            chart.update({
+                xAxis: { gridLineColor: border, lineColor: border, tickColor: border,
+                    labels: { style: { color: muted, fontFamily: 'JetBrains Mono, monospace', fontSize: '12px' } } },
+                yAxis: { gridLineColor: border, lineColor: border,
+                    labels: { style: { color: muted, fontFamily: 'JetBrains Mono, monospace', fontSize: '12px' } },
+                    title: { style: { color: ink } } },
+                legend: { itemStyle: { color: muted } },
+                tooltip: { backgroundColor: surface, borderColor: border, style: { color: ink } }
+            }, false);
+            if (chart.series[0]) chart.series[0].update({ color: ink }, false);
+            chart.redraw();
+        });
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 });

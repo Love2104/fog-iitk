@@ -29,345 +29,7 @@ if ($conn) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sensor Observations &middot; Fog IITK</title>
 <link rel="icon" type="image/png" href="./assets/img/iitk.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Using standard fonts from design system -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
-<!-- Keep existing stylesheets for nav/base -->
-<link href="./assets/css/nucleo-icons.css" rel="stylesheet">
-<link id="pagestyle" href="./assets/css/argon-design-system.css?v=1.0.2" rel="stylesheet">
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="assets/css/fog-redesign.css?v=1">
-<link rel="stylesheet" href="assets/css/fog-theme-compat.css">
-<link rel="stylesheet" href="assets/css/fog-home.css?v=1">
-
-<style>
-/* Scoped styles for sensor data page */
-.sensor-page {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 24px;
-}
-
-.ed-page-title {
-    font-family: var(--ff-sans);
-    font-size: 36px;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    color: #0F172A;
-    margin: 0 0 8px 0;
-    line-height: 1.1;
-    animation: fadeSlideUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-    opacity: 0;
-    transform: translateY(4px);
-}
-.ed-page-eyebrow {
-    font-family: var(--ff-sans);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: #64748B;
-    margin: 0 0 24px 0;
-    animation: fadeSlideUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.05s forwards;
-    opacity: 0;
-    transform: translateY(4px);
-}
-
-.data-status-banner {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, max-content));
-    gap: 4rem;
-    align-items: center;
-    padding: 0 0 12px 0;
-    border-bottom: 1px solid #E2E8F0;
-    margin-bottom: 32px;
-    animation: fadeSlideUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s forwards;
-    opacity: 0;
-    transform: translateY(4px);
-}
-.ds-group {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-.ds-label {
-    font-family: var(--ff-sans);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-}
-.ds-val {
-    font-family: var(--ff-mono);
-    font-size: 13px;
-    color: var(--ink);
-}
-.status-dot {
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: #10b981;
-    margin-right: 6px;
-    vertical-align: middle;
-    animation: pulseActive 3s infinite ease-in-out;
-}
-
-.editorial-metric-row {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 40px;
-    animation: fadeSlideUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s forwards;
-    opacity: 0;
-    transform: translateY(4px);
-}
-.editorial-metric {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 0 24px;
-    flex: 1;
-    position: relative;
-}
-.editorial-metric:not(:first-child)::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 20%;
-    height: 60%;
-    width: 1px;
-    background-color: #F1F5F9;
-}
-.editorial-metric:first-child {
-    padding-left: 0;
-}
-.editorial-metric:last-child {
-    padding-right: 0;
-}
-.ed-label {
-    font-family: var(--ff-sans);
-    font-size: 11px;
-    font-weight: 600;
-    color: #64748B;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-}
-.ed-val {
-    font-family: var(--ff-sans);
-    font-size: 36px;
-    font-weight: 500;
-    color: #1E293B;
-    line-height: 1;
-    transition: opacity 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.editorial-metric.primary .ed-val {
-    font-weight: 600;
-    color: #059669;
-}
-.ed-val.loading-state {
-    opacity: 0.4;
-    filter: blur(2px);
-}
-.ed-unit {
-    font-size: 14px;
-    color: var(--ink-3);
-    margin-left: 4px;
-}
-.ed-sub {
-    font-family: var(--ff-sans);
-    font-size: 12px;
-    color: #94A3B8;
-}
-
-.ed-obs-window {
-    display: flex;
-    align-items: flex-end;
-    gap: 16px;
-    margin-bottom: 60px;
-    animation: fadeSlideUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s forwards;
-    opacity: 0;
-    transform: translateY(4px);
-}
-.ed-obs-group {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-.ed-obs-label {
-    font-family: var(--ff-sans);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: #64748B;
-}
-.ed-date-inputs {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-.ed-date-input {
-    font-family: var(--ff-sans);
-    font-size: 14px;
-    color: #0F172A;
-    background: #F8FAFC;
-    border: 1px solid #CBD5E1;
-    border-radius: 6px;
-    padding: 8px 12px;
-    height: 38px;
-    box-sizing: border-box;
-    transition: all 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.ed-date-input:focus {
-    outline: none;
-    border-color: #64748B;
-    background: #FFFFFF;
-}
-.ed-apply-btn {
-    font-family: var(--ff-sans);
-    font-size: 14px;
-    font-weight: 500;
-    color: #FFFFFF;
-    background: #334155;
-    border: none;
-    border-radius: 6px;
-    height: 38px;
-    padding: 0 16px;
-    cursor: pointer;
-    transition: all 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.ed-apply-btn:hover {
-    background: #475569;
-    opacity: 0.9;
-}
-.ed-quick-ranges {
-    display: inline-flex;
-    background: #F8FAFC;
-    border: 1px solid #CBD5E1;
-    border-radius: 6px;
-    padding: 0;
-    height: 38px;
-    align-items: center;
-    overflow: hidden;
-    box-sizing: border-box;
-}
-.ed-quick-range-opt {
-    font-family: var(--ff-sans);
-    font-size: 13px;
-    font-weight: 500;
-    color: #64748B;
-    background: transparent;
-    border: none;
-    border-right: 1px solid #CBD5E1;
-    padding: 0 16px;
-    height: 100%;
-    cursor: pointer;
-    border-radius: 0;
-    transition: all 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.ed-quick-range-opt:last-child {
-    border-right: none;
-}
-.ed-quick-range-opt:hover {
-    color: #0F172A;
-}
-.ed-quick-range-opt.active {
-    background: #E2E8F0;
-    color: #0F172A;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
-}
-
-@keyframes fadeSlideUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-@keyframes pulseActive {
-    0% { opacity: 0.7; }
-    50% { opacity: 1; }
-    100% { opacity: 0.7; }
-}
-
-.chart-section {
-    margin-bottom: 60px;
-    padding-top: 20px;
-    border-top: 1px solid var(--rule);
-}
-.chart-wrapper {
-    position: relative;
-}
-.chart-empty-state {
-    position: absolute;
-    top: 16px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(250, 250, 250, 0.95);
-    z-index: 10;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    border: 1px solid var(--rule);
-    border-radius: var(--home-radius);
-    padding: 24px;
-}
-.chart-empty-state.active {
-    display: flex;
-}
-.empty-state-title {
-    font-family: var(--ff-sans);
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    color: #0F172A;
-    margin-bottom: 8px;
-}
-.empty-state-desc {
-    font-family: var(--ff-sans);
-    font-size: 13px;
-    color: #64748B;
-    margin-bottom: 16px;
-    line-height: 1.5;
-}
-.empty-state-btn {
-    font-family: var(--ff-sans);
-    font-size: 13px;
-    font-weight: 500;
-    color: #0F172A;
-    background: #FFFFFF;
-    border: 1px solid #CBD5E1;
-    border-radius: 6px;
-    padding: 6px 12px;
-    cursor: pointer;
-    transition: all 0.15s;
-}
-.empty-state-btn:hover {
-    background: #F8FAFC;
-    border-color: #94A3B8;
-}
-
-.chart-container {
-    height: 400px;
-    margin-top: 16px;
-    border: 1px solid var(--rule);
-    border-radius: var(--home-radius);
-    background: var(--paper);
-    overflow: hidden;
-}
-
-@media(max-width: 768px) {
-    .data-status-banner {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-    }
-}
-</style>
+<link rel="stylesheet" href="assets/css/theme.css">
 <script>
 (function () {
   try {
@@ -383,13 +45,13 @@ if ($conn) {
 })();
 </script>
 </head>
-<body class="fog-body fog-app">
+<body class="index-page site-page">
 
-<?php include __DIR__ . '/navbar.php'; ?>
+<?php if (!defined('FOG_HEAD_DONE')) define('FOG_HEAD_DONE', true); include __DIR__ . '/navbar.php'; ?>
 
-<main class="sensor-page">
+<main class="page sensor-page">
     
-    <header style="margin-bottom: 16px;">
+    <header class="page-header">
         <h1 class="ed-page-title">WEATHER STATION OBSERVATIONS</h1>
         <div class="ed-page-eyebrow">IIT KANPUR OBSERVATORY &middot; <span id="sync-status">SYNCING...</span></div>
     </header>
@@ -449,7 +111,7 @@ if ($conn) {
             <div class="ed-obs-label">OBSERVATION WINDOW</div>
             <div class="ed-date-inputs">
                 <input type="date" class="ed-date-input" id="win-start">
-                <span style="color: var(--ink-3); margin: 0 4px;">&rarr;</span>
+                <span>&rarr;</span>
                 <input type="date" class="ed-date-input" id="win-end">
                 <button class="ed-apply-btn" id="btn-apply-dates">Apply</button>
             </div>
@@ -464,7 +126,7 @@ if ($conn) {
     <!-- Section 1: Above Ground -->
     <section class="chart-section" id="sec-above">
         <header class="fc-science-header">
-            <h2 class="fc-science-result-title" style="font-size: 20px;">01 &mdash; ABOVE-GROUND OBSERVATIONS</h2>
+            <h2 class="fc-science-result-title">01 &mdash; ABOVE-GROUND OBSERVATIONS</h2>
             <div class="fc-science-eyebrow">VISIBILITY &middot; TEMPERATURE &middot; HUMIDITY &middot; PARTICULATE MATTER</div>
         </header>
 
@@ -478,7 +140,7 @@ if ($conn) {
     <!-- Section 2: Below Ground -->
     <section class="chart-section" id="sec-below">
         <header class="fc-science-header">
-            <h2 class="fc-science-result-title" style="font-size: 20px;">02 &mdash; BELOW-GROUND OBSERVATIONS</h2>
+            <h2 class="fc-science-result-title">02 &mdash; BELOW-GROUND OBSERVATIONS</h2>
             <div class="fc-science-eyebrow">SOIL MOISTURE &middot; TEMPERATURE &middot; BEC &middot; RDP/IDP</div>
         </header>
 
@@ -491,7 +153,7 @@ if ($conn) {
     <!-- Section 3: AWS -->
     <section class="chart-section" id="sec-aws">
         <header class="fc-science-header">
-            <h2 class="fc-science-result-title" style="font-size: 20px;">03 &mdash; AUTOMATED WEATHER STATION</h2>
+            <h2 class="fc-science-result-title">03 &mdash; AUTOMATED WEATHER STATION</h2>
             <div class="fc-science-eyebrow">TEMP &middot; HUMIDITY &middot; WIND &middot; RAIN &middot; SUNSHINE &middot; PRESSURE</div>
         </header>
 
@@ -504,6 +166,7 @@ if ($conn) {
     </section>
 
 </main>
+<?php include __DIR__ . "/footer.php"; ?>
 
 <script src="./assets/js/core/jquery.min.js"></script>
 <script src="https://code.highcharts.com/stock/highstock.js"></script>

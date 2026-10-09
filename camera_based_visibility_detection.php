@@ -4,20 +4,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="./assets/img/iitk.png">
     <title>Camera-Based Visibility Detection</title>
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="css/main.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-    <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
-    <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
-    <link href="./assets/css/argon-design-system.css?v=1.2.0" rel="stylesheet" />
-    <link rel="stylesheet" href="./assets/css/fog-home.css">
-
-    <style>
-        body { font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; background-color: #FAFAFA; color: #0F172A; }
-    </style>
+    <link rel="icon" type="image/png" href="./assets/img/iitk.png">
+    <link rel="stylesheet" href="assets/css/theme.css">
 <script>
 (function () {
   try {
@@ -34,10 +23,10 @@
 </script>
 </head>
 
-<body id="page" class="fog-home">
-    <?php $_GET['page'] = "camera"; include "navbar.php" ?>
+<body id="page" class="index-page site-page">
+    <?php if (!defined("FOG_HEAD_DONE")) define("FOG_HEAD_DONE", true); $_GET['page'] = "camera"; include "navbar.php"; ?>
 
-    <main class="container" style="max-width: 1200px; padding: 40px 16px;">
+    <main class="page page-camera">
         
         <header class="cam-page-header">
             <h1 class="cam-title">Camera-Based Visibility Detection</h1>
@@ -61,18 +50,18 @@
                     <span class="cam-meta-val" id="latest-data-time">--</span>
                 </div>
             </div>
-            <div class="cam-metadata-strip" style="margin-top:-32px; border-top: none;">
-                <div class="cam-meta-block" style="flex-direction:row; align-items:center; gap: 16px;">
-                    <span class="cam-meta-label" style="margin-bottom:0;">Observation Day</span>
-                    <input id="myInputSecond" class="form-control" type="datetime-local" style="width:auto; height:32px; font-size:13px; font-family:var(--ff-mono);" required>
-                    <button class="cam-btn" onclick="newdata()" style="margin:0;">Apply</button>
-                    <button class="cam-btn" onclick="latest(); newdata();" style="margin:0; background:transparent; border-color:transparent;">Latest</button>
+            <div class="cam-metadata-strip">
+                <div class="cam-meta-block">
+                    <span class="cam-meta-label">Observation Day</span>
+                    <input id="myInputSecond" class="form-control" type="datetime-local" required>
+                    <button class="cam-btn" onclick="newdata()">Apply</button>
+                    <button class="cam-btn" onclick="latest(); newdata();">Latest</button>
                 </div>
             </div>
         </header>
 
         <!-- CAMERA 1 CORRECT -->
-        <section class="cam-section">
+        <section class="cam-section card">
             <div class="cam-controls">
                 <h2 class="cam-section-title correct">Cam 1 — Correctly Classified</h2>
                 <div>
@@ -87,7 +76,7 @@
 
         <!-- CAMERA 1 INCORRECT -->
         <?php if($admin): ?>
-        <section class="cam-section">
+        <section class="cam-section card">
             <div class="cam-controls">
                 <h2 class="cam-section-title incorrect">Cam 1 — Misclassified</h2>
                 <div>
@@ -102,7 +91,7 @@
         <?php endif; ?>
 
         <!-- CAMERA 2 CORRECT -->
-        <section class="cam-section">
+        <section class="cam-section card">
             <div class="cam-controls">
                 <h2 class="cam-section-title correct">Cam 2 — Correctly Classified</h2>
                 <div>
@@ -117,7 +106,7 @@
 
         <!-- CAMERA 2 INCORRECT -->
         <?php if($admin): ?>
-        <section class="cam-section">
+        <section class="cam-section card">
             <div class="cam-controls">
                 <h2 class="cam-section-title incorrect">Cam 2 — Misclassified</h2>
                 <div>
@@ -131,25 +120,14 @@
         </section>
         <?php endif; ?>
 
-        <section class="cam-section" style="border-top: 1px solid #E2E8F0; padding-top: 32px;">
-            <h2 class="cam-section-title" style="color: #64748B; font-size: 14px;">Performance Metrics</h2>
-            <p style="font-family: var(--ff-mono); font-size: 13px; color: #94A3B8;">Not available from the current image archive.</p>
-            <p style="font-family: var(--ff-sans); font-size: 13px; color: #94A3B8; margin-top: 8px;">Camera classification is interpreted against the 1 km visibility threshold used by the project.</p>
+        <section class="cam-section card">
+            <h2 class="cam-section-title">Performance Metrics</h2>
+            <p>Not available from the current image archive.</p>
+            <p>Camera classification is interpreted against the 1 km visibility threshold used by the project.</p>
         </section>
 
     </main>
-
-    <section id="footr" class="section pb-0" style="padding-top:1rem;margin-bottom:1rem;">
-        <div class="container-fuild">
-            <div class="card shadow">
-                <div class="card-body bg-gradient-primary rounded ">
-                    <div class="row justify-content-center" style="color:white;">
-                        <a href="./about.html" target="_blank" style="color: #ffffff;"><p>© Fog Prediction, IIT Kanpur. All rights reserved.</p></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <?php $footerCopyrightHtml = "&copy; Fog Prediction, IIT Kanpur. All rights reserved."; include __DIR__ . "/footer.php"; ?>
 
     <!-- Scripts -->
     <script src="./assets/js/core/jquery.min.js"></script>

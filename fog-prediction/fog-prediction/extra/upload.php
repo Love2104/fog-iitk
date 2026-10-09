@@ -41,10 +41,17 @@
 
  <html>
  <head>
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <base href="/">
  <title>Multiple File Upload</title>
- </head>
+     <link rel="stylesheet" href="/assets/css/theme.css">
+<script>(function(){try{var t=localStorage.getItem('fog-theme');document.documentElement.setAttribute('data-theme',t==='light'||t==='dark'?t:(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));}catch(e){}})();</script>
+</head>
 
- <body>
+ <body class="site-page archive-page">
+<?php if (!defined('FOG_HEAD_DONE')) define('FOG_HEAD_DONE', true); include dirname(__DIR__, 3) . '/navbar.php'; ?>
+<main class="page page-archive page-archive-upload"><div class="page-header"><h1>Multiple File Upload</h1></div>
+
 
  <h3><?php echo $msg; ?></h3>
  <p>
@@ -72,6 +79,8 @@
  <input type="submit" value="Upload" />
  </form>
 
+ </main>
+ <?php include dirname(__DIR__, 3) . '/footer.php'; ?>
  </body>
  </html>
 

@@ -46,6 +46,11 @@ $fognav_by_file = [
 
     'about.php' => 'about', 'publication.php' => 'about',
     'contact_us.php' => 'about', 'new_messages.php' => 'about',
+    'approach.php' => 'about', 'upload.php' => 'about',
+    'iitkstation.php' => 'weather', 'download.php' => 'weather',
+    'comparedata2.php' => 'compare', 'curvspred.php' => 'compare',
+    'long_pred_comp2.php' => 'compare', 'moremodel.php' => 'longterm',
+    'fog_index.php' => 'longterm',
 ];
 /* The legacy bar's ?page= values, kept working unchanged. */
 $fognav_by_legacy = [
@@ -133,6 +138,11 @@ if (!empty($GLOBALS['admin'])) {
 $fognav_stations = fog_stations();
 $fognav_current  = fog_resolve_station($_GET['station'] ?? null);
 
+/* The shared status strip uses the same live feed summary on every page. */
+if (!isset($GLOBALS['fog_status_feeds'])) {
+    $GLOBALS['fog_status_feeds'] = fog_feed_status($fognav_current['id'] ?? 'VIKN');
+}
+
 $fognav_primary = [];
 $fognav_other   = [];
 if ($fognav_stations !== null) {
@@ -161,11 +171,6 @@ function fognav_option(array $s, ?array $current): void
 }
 ?>
 <?php if (!defined('FOG_HEAD_DONE')): ?>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Source+Sans+3:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap">
-<link rel="stylesheet" href="assets/css/fog-redesign.css">
-<link rel="stylesheet" href="assets/css/fog-theme-compat.css">
 <link rel="stylesheet" href="assets/css/theme.css">
 <script>
 (function () {

@@ -1,14 +1,4 @@
-<section class="section pb-0" style="padding-top:1rem;margin-bottom:1rem">
-    <div class="container-fluid">
-        <div class="card shadow">
-            <div class="card-body bg-gradient-primary rounded ">
-                <div class="row justify-content-center" style="color:white;">
-                    <p>© Fog Prediction , IIT Kanpur. All rights reserved.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<?php $footerCopyrightHtml = '&copy; Fog Prediction , IIT Kanpur. All rights reserved.'; include dirname(__DIR__, 4) . '/footer.php'; ?>
 
 <script src="./assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <script src="./assets/js/core/jquery.min.js" type="text/javascript"></script>

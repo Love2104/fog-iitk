@@ -1,11 +1,25 @@
 <!DOCTYPE html>
    <html>
    <head>
-       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+       <link rel="stylesheet" href="assets/css/theme.css">
+<script>
+(function () {
+  try {
+    var t = localStorage.getItem('fog-theme');
+    if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+    else document.documentElement.setAttribute('data-theme', window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  } catch (e) {}
+})();
+</script>
    </head>
-   <body>
-       <div id="map" class="w-100"></div>
-       <button id="toggleLayer">Toggle Layer</button>
+   <body class="site-page">
+       <?php if (!defined('FOG_HEAD_DONE')) define('FOG_HEAD_DONE', true); include __DIR__ . '/navbar.php'; ?>
+       <main class="page page-map-image">
+           <div class="map-card"><div id="map" class="w-100"></div></div>
+           <button id="toggleLayer" class="btn">Toggle Layer</button>
+       </main>
+       <?php include __DIR__ . '/footer.php'; ?>
    </body>
    
    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>

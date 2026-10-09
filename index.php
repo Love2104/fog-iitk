@@ -302,7 +302,7 @@ define('FOG_HEAD_DONE', true);
       <?php if ($isStale): ?>
       <div class="hero-stale-banner">
         <div class="data-status" data-stale="true">
-          <div class="data-status-dot" style="color: var(--state-fog);"></div>
+          <div class="data-status-dot dot-fog"></div>
           Historical observation
         </div>
         <span>Last observation <?php echo $obsAge !== null ? fog_e(fog_age_human($obsAge)) : 'unknown'; ?>. Not current.</span>
@@ -319,14 +319,14 @@ define('FOG_HEAD_DONE', true);
         <span class="unit hero-unit"><?php echo fog_e($visUnit); ?> visibility</span>
       </div>
 
-      <div class="hero-state" style="color: var(--state-<?php echo $isStale ? 'nodata' : ($state === 'nodata' || $state === 'clear' ? 'clear' : fog_e($state)); ?>);">
+      <div class="hero-state state-<?php echo $isStale ? 'nodata' : ($state === 'nodata' || $state === 'clear' ? 'clear' : fog_e($state)); ?>">
         <?php echo $isStale ? 'LAST REPORT: ' : ''; ?><?php echo fog_e(strtoupper(fog_state_word($state))); ?>
       </div>
 
       <div class="hero-obs-time">
         <?php if (!$isStale): ?>
         <div class="data-status" data-stale="false">
-          <div class="data-status-dot" style="color: var(--state-clear);"></div>
+          <div class="data-status-dot dot-clear"></div>
           Live observation
         </div>
         <?php endif; ?>
@@ -336,7 +336,7 @@ define('FOG_HEAD_DONE', true);
       </div>
 
       <?php if ($readNote !== null): ?>
-        <div class="fog-caption" style="margin-top: 16px; color: var(--state-fog);">
+        <div class="fog-caption caption-fog">
           <?php if ($readNote === 'service'): ?>The observation service could not be reached.
           <?php elseif ($readNote === 'no-record'): ?>This station has no METAR record.
           <?php elseif ($readNote === 'no-visibility'): ?>The latest report omits visibility.
@@ -359,7 +359,7 @@ define('FOG_HEAD_DONE', true);
             <span>0m</span>
             <span>50m</span>
             <span>200m</span>
-            <span style="color: var(--state-fog);">1km</span>
+            <span class="scale-fog-label">1km</span>
             <span>5km</span>
             <span>10km+</span>
           </div>
@@ -584,11 +584,11 @@ define('FOG_HEAD_DONE', true);
             <?php
               $metarSafe = fog_e($latest['metar']);
               // Highlight wind: e.g. 27005KT or VRB02KT
-              $metarSafe = preg_replace('/\b(\d{3}|VRB)(\d{2,3})(G\d{2,3})?(KT|MPS)\b/', '<span style="color:var(--state-clear);">$0</span>', $metarSafe);
+              $metarSafe = preg_replace('/\b(\d{3}|VRB)(\d{2,3})(G\d{2,3})?(KT|MPS)\b/', '<span class="metar-clear">$0</span>', $metarSafe);
               // Highlight visibility: e.g. 0800, 9999
-              $metarSafe = preg_replace('/\b(\d{4})\b/', '<span style="color:var(--state-fog);">$0</span>', $metarSafe);
+              $metarSafe = preg_replace('/\b(\d{4})\b/', '<span class="metar-fog">$0</span>', $metarSafe);
               // Highlight temperatures: e.g. 15/10, M02/M03
-              $metarSafe = preg_replace('/\b(M?\d{2})\/(M?\d{2})\b/', '<span style="color:var(--state-dense);">$0</span>', $metarSafe);
+              $metarSafe = preg_replace('/\b(M?\d{2})\/(M?\d{2})\b/', '<span class="metar-dense">$0</span>', $metarSafe);
               echo $metarSafe;
             ?>
           </div>
@@ -601,48 +601,7 @@ define('FOG_HEAD_DONE', true);
 </main>
 
 
-<footer class="fog-foot">
-    <div class="fog-foot-inner">
-      <div class="foot-col">
-        <h2>About</h2>
-        <ul>
-          <li><a href="index.php?station=VIAR">Amritsar</a></li>
-          <li><a href="index.php?station=VIDP">Delhi</a></li>
-          <li><a href="index.php?station=VEGY">Gaya</a></li>
-          <li><a href="index.php?station=VIKN">Kanpur</a></li>
-          <li><a href="index.php?station=VIJP">Jaipur</a></li>
-        </ul>
-      </div>
-      <div class="foot-col">
-        <h2>The Model</h2>
-        <ul>
-          <li><a href="about.php#fogcast">FogCast</a></li>
-          <li><a href="about.php#spatial">Spatial Fog</a></li>
-          <li><a href="about.php#compare">Compare Results</a></li>
-        </ul>
-      </div>
-      <div class="foot-col">
-        <h2>Network</h2>
-        <ul>
-          <li><a href="about.php#sensors">IITK sensors</a></li>
-          <li><a href="about.php#insat">INSAT-3D/3S</a></li>
-          <li><a href="about.php#cameras">Airstrip cameras</a></li>
-          <li><a href="about.php#metar">Airport METAR</a></li>
-        </ul>
-      </div>
-      <div class="foot-col">
-        <h2>Project</h2>
-        <ul>
-          <li><a href="about.php#team">The group</a></li>
-          <li><a href="about.php#publications">Publications</a></li>
-          <li><a href="about.php#contact">Contact</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="foot-colophon">
-      &copy; <?php echo date('Y'); ?> IIT Kanpur. All rights reserved.
-    </div>
-  </footer>
+<?php include __DIR__ . '/footer.php'; ?>
 
 <?php if (is_array($chart)): ?>
 <script type="application/json" id="fog-series"><?php

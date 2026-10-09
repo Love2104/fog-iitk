@@ -9,90 +9,44 @@
   <title>
     Megh Varta
   </title>
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-  <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
-  <link href="./assets/css/font-awesome.css" rel="stylesheet" />
-  <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
-  <link href="./assets/css/argon-design-system.css?v=1.2.0" rel="stylesheet" />
+
+
+
+
+
+
+
+    <link rel="stylesheet" href="/assets/css/theme.css">
+    <script>(function(){try{var t=localStorage.getItem('fog-theme');document.documentElement.setAttribute('data-theme',t==='light'||t==='dark'?t:(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));}catch(e){}})();</script>
 </head>
-<body class="index-page">
-  <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom" >
-    <div class="container">
-      <a class="navbar-brand mr-lg-6" href="index.html">                    
-        <img src="./assets/img/brand/white.png" style="height: 60px;">
-        <a href="./approach.html" class="btn btn-neutral btn-icon" style="margin-left: 1rem;">
-          <span class="nav-link-inner--text" >Approach</span>
-        </a>
-        <a href="./about.html" class="btn btn-neutral btn-icon" style="margin-left: 1rem;">
-          <span class="nav-link-inner--text" >About</span>
-        </a>        
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="navbar-collapse collapse" id="navbar_global">
-        <div class="navbar-collapse-header">
-          <div class="row">
-            <div class="col-6 collapse-brand">
-              <a href="index.html">
-                <img src="./assets/img/brand/blue.png">
-              </a>
-            </div>
-            <div class="col-6 collapse-close">
-              <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
-          <li class="nav-item dropdown">
-            <a href="" class="nav-link" data-toggle="dropdown" href="#">
-              <span class="nav-link-inner--text"><b></b></span>
-            </a>
-          </li>
-        </ul>
-        <ul class="navbar-nav align-items-lg-center ml-lg-auto">
-          <img src="./assets/img/brand/sih.png" style="height: 60px;">
-          <a href="" class="btn btn-neutral btn-icon" style="margin-left: 1rem;">
-            <span class="nav-link-inner--text">SOFTWARE EDITION</span>
-          </a>
-        </ul>
-      </div>
-    </div>
-  </nav>
+<body class="index-page site-page archive-page">
+  <?php if (!defined('FOG_HEAD_DONE')) define('FOG_HEAD_DONE', true); include dirname(__DIR__, 1) . '/navbar.php'; ?>
+<main class="page page-archive page-archive-approach"><div class="page-header"><h1>Megh Varta</h1></div>
 
 
-  <div class="wrapper">
-    <section class="section section-shaped" style="padding-bottom:2rem;">
-      <div class="shape shape-primary" style="height: 100px;">
-      </div>
-    </section>
-  </div>
 
-  <section class="section" id="section-services" style="padding-top:1rem;">    
+
+
+  <section class="section" id="section-services">
     <section class="section">
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-8">
-            <img src="./img/approach.png" class="img-responsive rounded shadow-lg shadow-lg--hover" style="height:auto;max-height: 650px;max-width:100%">
+            <img src="./img/approach.png" class="img-responsive rounded shadow-lg shadow-lg--hover">
           </div>
           <div class="col-4">
-            <img src="./img/app2.jpeg" class="img-responsive rounded shadow-lg shadow-lg--hover" style="height:auto;max-height: 650px;max-width:100%">
+            <img src="./img/app2.jpeg" class="img-responsive rounded shadow-lg shadow-lg--hover">
           </div>
-          
+
           <!-- <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTiuU45DPGKxymvXuU1FQvA-idwh1gC2cRqblknPRp5kVYbzs78KXyMdD52-rJcFw/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="749" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe> -->
         </div>
         <b>References : </b> INSAT 3D Technical Basis Document
       </div>
     </section>
-    <section class="section  pb-0" style="padding-top:1rem;margin-bottom:1rem">
+    <section class="section  pb-0">
       <div class="container">
-        <div class="card shadow">
-          <div class="card-body bg-gradient-primary rounded " style="padding:1rem 2rem 1rem 2rem;">
+        <div class="card">
+          <div class="card-body rounded ">
           </div>
         </div>
       </div>
@@ -110,7 +64,9 @@
     <script src="./assets/chart-library/core.js"></script>
     <script src="./assets/chart-library/charts.js"></script>
     <script src="./assets/chart-library/themes/material.js"></script>
-    <script src="./assets/chart-library/themes/animated.js"></script>
+    </main>
+<?php include dirname(__DIR__, 1) . '/footer.php'; ?>
+<script src="./assets/chart-library/themes/animated.js"></script>
   </script>
 </body>
 

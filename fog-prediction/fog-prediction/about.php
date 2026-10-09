@@ -1,68 +1,68 @@
 <?php include 'apis/start_admin.php'; ?>
-<?php 
-    
+<?php
+
     // $page='about';
     // if($_SESSION['last_page_visited'] != $page ) {
     //   $flag=0;
-    //     $conn = pg_connect("host=localhost port=5432 dbname=fogprediction user=chaman password=chaman123");  
-    //     if (!$conn) { 
-    //         //echo "An error occurred.\n"; 
-    //         $flag=1;  
-    //     }  
-    //     $sql = 'UPDATE visits 
+    //     $conn = pg_connect("host=localhost port=5432 dbname=fogprediction user=chaman password=chaman123");
+    //     if (!$conn) {
+    //         //echo "An error occurred.\n";
+    //         $flag=1;
+    //     }
+    //     $sql = 'UPDATE visits
     //     SET "about" = "about" + 1
     //     WHERE "id" = 1';
     //     $result = pg_query($conn, $sql);
-    //     if (!$result) {  
+    //     if (!$result) {
     //      //echo "An error occurred.\n";
-    //      $flag=1;  
-    //     }  
+    //      $flag=1;
+    //     }
     //     if($flag==0){
-    //       $_SESSION['last_page_visited'] = $page;  }  
+    //       $_SESSION['last_page_visited'] = $page;  }
     //       pg_close($conn);    }
     $page='about';
-    $conn = pg_connect("host=localhost port=5432 dbname=fogprediction user=chaman password=chaman123");  
+    $conn = pg_connect("host=localhost port=5432 dbname=fogprediction user=chaman password=chaman123");
     // echo $_SESSION['last_page_visited'];
     if($_SESSION['last_page_visited'] != $page ) {
-        
-          
+
+
         $sql = 'Select * from visits where "date"='."'".date("Y-m-d")."'";
         $result = pg_query($conn, $sql);
-        
-        if (!$result) { 
-        //echo "An error occurred.\n"; 
-            $flag=1;  
-        } 
+
+        if (!$result) {
+        //echo "An error occurred.\n";
+            $flag=1;
+        }
         else{
             $is_user=pg_fetch_row($result);
         }
         // echo $is_user.'in';
         if(!$is_user){
-            
+
             $sql='INSERT INTO public.visits(
                 index, past_prediction, compare_results, iit_kanpur, about, "date")
                 VALUES (0,0,0,0,0,'."'".date("Y-m-d")."'".');';
             $result = pg_query($conn, $sql);
-            if (!$result) {  
+            if (!$result) {
             //echo "An error occurred.\n";
                 $flag=1;
-            }  
+            }
             if($flag==0){
                 $_SESSION['last_page_visited'] = $page;}
         }
         else{
-            $sql = 'UPDATE visits 
+            $sql = 'UPDATE visits
             SET "about" = "about" + 1
             WHERE "date" = '."'".date("Y-m-d")."'";
             $result = pg_query($conn, $sql);
-            if (!$result) {  
+            if (!$result) {
             //echo "An error occurred.\n";
                 $flag=1;
-            }  
+            }
             if($flag==0){
                 $_SESSION['last_page_visited'] = $page;}
         }
-        
+
     }
     pg_close($conn);
 
@@ -76,97 +76,40 @@
     <!-- <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png"> -->
     <link rel="icon" type="image/png" href="./assets/img/iitk.png">
     <title>About</title>
-    <link rel="stylesheet" href="css/main.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
-    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-    <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
-    <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
-    <link href="./assets/css/font-awesome.css" rel="stylesheet" />
-    <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
-    <link href="./assets/css/argon-design-system.css?v=1.2.0" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+    <link rel="stylesheet" href="/assets/css/theme.css">
+    <script>(function(){try{var t=localStorage.getItem('fog-theme');document.documentElement.setAttribute('data-theme',t==='light'||t==='dark'?t:(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));}catch(e){}})();</script>
 </head>
-<body id="page" class="index-page" style="font-family: 'Libre Baskerville', serif;">
+<body id="page" class="index-page site-page archive-page">
 
-  <!-- Navigation bar starts -->
+  <?php if (!defined('FOG_HEAD_DONE')) define('FOG_HEAD_DONE', true); include dirname(__DIR__, 2) . '/navbar.php'; ?>
+<main class="page page-archive page-archive-about"><div class="page-header"><h1>About</h1></div>
 
-  <!-- <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom">
-      <div class="container">
-          <a class="navbar-brand mr-md-6" href="../fog-prediction/"><img class="img-fluid" src="./assets/img/fps1.png" style="height: 60px;width: 350px;"></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-      </button>
-          <div class="collapse navbar-collapse" id="navbar-default">
-              <div class="navbar-collapse-header">
-                  <div class="row">
-                      <div class="col-6 collapse-brand">
-
-                      </div>
-                      <div class="col-6 collapse-close">
-                          <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
-                          <span></span>
-                          <span></span>
-                      </button>
-                      </div>
-                  </div>
-              </div> -->
-              <!-- <div class="navbar-nav flex-row mr-auto ml-4 d-none d-md-flex">
-                <h2 style="color: #ffffff; margin-left: 100px;font-weight: bold;">About Us</h2>
-            </div> -->
-              <!--<ul class="navbar-nav ">
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact_us.php" target="_blank" style="font-size:larger;font-weight: bold;">Feedback</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about.php" target="_blank" style="font-size:larger;font-weight: bold;background:#5e72e4;">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="publication.php" target="_blank" style="font-size:larger;font-weight: bold;">Publications</a>
-                    </li>
-                  
-              </ul>
-              <ul class="navbar-nav ml-lg-auto">
-                  <li>
-                      <div class="row">
-                          <div class="col-md-12" style="height:60px;">
-                              <form role="form" autocomplete="off" method="GET">
-                                  <div class="form-group">
-                                      <div class="autocomplete input-group">
-                                          <a href="../fog-prediction/" class="nav-link">
-                                              <span class="nav-link-inner--text"><button type="button" class="btn btn-primary btn-fab btn-icon btn-round fa fa-home">Home</button></span>
-                                          </a>
-                                      </div>
-                                  </div>
-                              </form>
-                          </div>
-                      </div>
-                  </li>
-              </ul>
-
-          </div>
-      </div>
-  </nav> -->
-  <?php $_GET['page'] = "about"; include "navbar.php" ?>
-
-
-  <!-- Navigation bar ends -->
 
 
   <div class="wrapper container-fuild">
-      <section class="section section-shaped rounded" style="padding-bottom:2rem;">
-          <div class="shape shape-primary" style="height: 100px;">
+      <section class="section section-shaped rounded">
+          <div class="shape shape-primary">
           </div>
       </section>
   </div>
 
-  <!-- <section class="section  pb-0" id="section-services" style="padding-top:1rem;">    -->
-    <section class="section  pb-0" style="padding-top:1rem;">
+  <!-- <section class="section  pb-0" id="section-services">    -->
+    <section class="section  pb-0">
       <div class="container">
-        <div class="card shadow">
-          <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;">
-            <h1 class="heading-title text-warning" style="text-align: center;"><b>Motivation</b></h1>
+        <div class="card">
+          <div class="card-body">
+            <h1 class="heading-title text-warning"><b>Motivation</b></h1>
             <div class="container">
-                <div class="card-body rounded"  style="padding:1rem 2rem 1rem 2rem;">
+                <div class="card-body rounded">
                   <h4>The northern part of India, during winter months (Dec-Jan),
                     experience high fog that hinders daily activities of people like
                     agriculture, transportation and travel. Formation of fog is mainly
@@ -188,13 +131,13 @@
         </div>
       </div>
     </section>
-    <section class="section  pb-0" style="padding-top:1rem;">
+    <section class="section  pb-0">
       <div class="container">
-        <div class="card shadow">
-          <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;">
-            <h1 class="heading-title text-warning" style="text-align: center;"><b>Onset and  dissipation of fog at Airstrip IITK</b></h1>
+        <div class="card">
+          <div class="card-body">
+            <h1 class="heading-title text-warning"><b>Onset and  dissipation of fog at Airstrip IITK</b></h1>
             <div class="container">
-                <div class="card-body rounded d-flex justify-content-center"  style="padding:1rem 2rem 1rem 2rem;">
+                <div class="card-body rounded d-flex justify-content-center">
                 <video class="w-100" controls>
                   <source src="TimeSeriesanimation_fps-8_new_layout_oneDay.mp4" type="video/mp4">
                 Your browser does not support the video tag.
@@ -205,121 +148,121 @@
         </div>
       </div>
     </section>
-  <section class="section  pb-0" style="padding-top:1rem;">
+  <section class="section  pb-0">
     <div class="container">
-      <div class="card shadow">
-        <div class="card-body rounded " style="padding:1rem 2rem 1rem 2rem;">
+      <div class="card">
+        <div class="card-body">
 
-          <h2 id="bridgename" class="heading-title text-warning" style="text-align: center;">Fog Prediction Team</h2>
+          <h2 id="bridgename" class="heading-title text-warning">Fog Prediction Team</h2>
           <br>
           <h2 id="bridgename" class="heading-title text-warning ">Current Team Members</h2>
-          
-          
+
+
           <div class="row" >
-            <div class="col-md" style="text-align: center;margin: 15px;">
-              <a href="https://home.iitk.ac.in/~prasadj/" target="_blank"><img src="./assets/img/team/prasad.jpg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover" style="width: 50%;"></a>
+            <div class="col-md">
+              <a href="https://home.iitk.ac.in/~prasadj/" target="_blank"><img src="./assets/img/team/prasad.jpg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover"></a>
               <b>Deshpande Prasad Jayant</b><br><i>prasadj@iitk.ac.in</i>
             </div>
-            <div class="col-md" style="text-align: center;margin: 15px;">
-              <img src="./assets/img/team/kriti.jpg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover" style="width: 50%;">
+            <div class="col-md">
+              <img src="./assets/img/team/kriti.jpg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover">
               <b>Kriti Bajaj</b><br><i>kritib@iitk.ac.in</i><br>
             </div>
-            <div class="col-md" style="text-align: center;margin: 15px;">
-              <img src="./assets/img/team/roshan.jpg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover" style="width: 50%;">
+            <div class="col-md">
+              <img src="./assets/img/team/roshan.jpg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover">
               <b> Roshan Banbariya</b><br><i>brosha@iitk.ac.in</i><br>
             </div>
-            
-            
-            
-             
-            
+
+
+
+
+
           </div>
           <div class="row " >
-            
-          
-            <div class="col-md-4 " style="text-align: center;margin: 15px;">
-              <img src="./assets/img/team/yash.jpeg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover" style="width: 50%;">
+
+
+            <div class="col-md-4 ">
+              <img src="./assets/img/team/yash.jpeg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover">
               <b> Yash Patil</b><br><i>yashpp21@iitk.ac.in</i><br>
             </div>
-            
-            
-           
-            
-            
-            
-             
-            
+
+
+
+
+
+
+
+
           </div>
-          
+
           <br><br><br>
           <h2 id="bridgename" class="heading-title text-warning ">Mentors</h2>
           <div class="row">
-            <div class="col-md" style="text-align: center;margin: 15px;">
-              <a href="https://www.cse.iitk.ac.in/users/arnabb/" target="_blank"><img src="./assets/img/team/arnab.jpeg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover" style="width: 50%;"></a>
+            <div class="col-md">
+              <a href="https://www.cse.iitk.ac.in/users/arnabb/" target="_blank"><img src="./assets/img/team/arnab.jpeg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover"></a>
               <b>Dr. Arnab Bhattacharya</b><br><i>arnabb@iitk.ac.in</i>
             </div>
-            <div class="col-md" style="text-align: center;margin: 15px;">
-              <a href="https://iitk.ac.in/new/shivam-tripathi" target="_blank"><img src="./assets/img/team/shivam.jpg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover" style="width: 50%;"></a>
+            <div class="col-md">
+              <a href="https://iitk.ac.in/new/shivam-tripathi" target="_blank"><img src="./assets/img/team/shivam.jpg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover"></a>
               <b>Dr. Shivam Tripathi</b><br><i>shiva@iitk.ac.in</i>
             </div>
-            <div class="col-md" style="text-align: center;margin: 15px;">
-              <a href="https://sites.google.com/view/mahendra-verma/" target="_blank"><img src="./assets/img/team/mahendra.jpg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover" style="width: 50%;"></a>
+            <div class="col-md">
+              <a href="https://sites.google.com/view/mahendra-verma/" target="_blank"><img src="./assets/img/team/mahendra.jpg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover"></a>
               <b>Dr. Mahendra K. Verma</b><br><i>mkv@iitk.ac.in</i>
             </div>
           </div>
           <br><br>
           <h2 id="bridgename" class="heading-title text-warning ">Past Team Members</h2>
           <div class="row" >
-          <div class="col-md" style="text-align: center;margin: 15px;">
-              <img src="./assets/img/team/kajal.jpg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover" style="width: 50%;">
+          <div class="col-md">
+              <img src="./assets/img/team/kajal.jpg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover">
               <b>Kajal Sethi</b><br><i>kajals21@iitk.ac.in</i><br>
             </div>
-            <div class="col-md" style="text-align: center;margin: 15px;">
-            <img src="./assets/img/team/shlok.png" class="rounded-circle img-center img-fluid shadow shadow-lg--hover" style="width: 50%;">
+            <div class="col-md">
+            <img src="./assets/img/team/shlok.png" class="rounded-circle img-center img-fluid shadow shadow-lg--hover">
               <b>Shlok Mishra</b><br><i> shlokm21@iitk.ac.in</i>
             </div>
-            <div class="col-md-4" style="text-align: center;margin: 15px;">
-              <img src="./assets/img/team/ridin.png" class="rounded-circle img-center img-fluid shadow shadow-lg--hover" style="width: 50%;">
+            <div class="col-md-4">
+              <img src="./assets/img/team/ridin.png" class="rounded-circle img-center img-fluid shadow shadow-lg--hover">
               <b> Ridin Datta</b><br><i>ridind21@iitk.ac.in</i><br>
             </div>
             </div>
           <div class="row" >
-          <div class="col-md" style="text-align: center;margin: 15px;">
-              <img src="./assets/img/team/Mohsin Usmani.png" class="rounded-circle img-center img-fluid shadow shadow-lg--hover" style="width: 50%;">
+          <div class="col-md">
+              <img src="./assets/img/team/Mohsin Usmani.png" class="rounded-circle img-center img-fluid shadow shadow-lg--hover">
               <b>Mohsin Usmani</b><br><i> musmani@iitk.ac.in</i><br>
             </div>
-          <div class="col-md" style="text-align: center;margin: 15px;">
-              <a href="https://shruti-codes.github.io" target="_blank"><img src="./assets/img/team/shruti.jpeg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover" style="width: 50%;"></a>
+          <div class="col-md">
+              <a href="https://shruti-codes.github.io" target="_blank"><img src="./assets/img/team/shruti.jpeg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover"></a>
               <b>Shruti Sharma</b><br><i>shruti20@iitk.ac.in</i><br>
-            </div> 
-            <div class="col-md" style="text-align: center;margin: 15px;">
-              <img src="./assets/img/team/chaman.jpeg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover" style="width: 50%;">
+            </div>
+            <div class="col-md">
+              <img src="./assets/img/team/chaman.jpeg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover">
               <b>Chaman Jangra</b><br><i>cjangra@iitk.ac.in</i>
             </div>
-           
-            
+
+
           </div>
           <div class="row" >
-          <div class="col-md" style="text-align: center;margin: 15px;">
-              <img src="./assets/img/team/yash.jpg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover" style="width: 50%;">
+          <div class="col-md">
+              <img src="./assets/img/team/yash.jpg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover">
               <b>Yash Saraswat</b><br><i>yash20@iitk.ac.in</i><br>
             </div>
-          <div class="col-md" style="text-align: center;margin: 15px;">
-              <img src="./assets/img/team/rakshit.jpg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover" style="width: 50%;">
+          <div class="col-md">
+              <img src="./assets/img/team/rakshit.jpg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover">
               <b>Rakshit Paurwal</b><br><i>rakshup@iitk.ac.in</i><br>
             </div>
-            <div class="col-md" style="text-align: center;margin: 15px;">
-              <img src="./assets/img/team/sanket.jpg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover" style="width: 50%;">
+            <div class="col-md">
+              <img src="./assets/img/team/sanket.jpg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover">
               <b>Sanket Bodele</b><br><i>sbodele@iitk.ac.in</i><br>
             </div>
-            <!-- <div class="col-md" style="text-align: center;margin: 15px;">
-              <img src="./assets/img/team/aruna.jpg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover" style="width: 50%;">
+            <!-- <div class="col-md">
+              <img src="./assets/img/team/aruna.jpg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover">
               <b>Aruna</b><br><i>arunasp23@gmail.com</i><br>
             </div> -->
           </div>
           <div class="row" >
-            <div class="col-md-4" style="text-align: center;margin: 15px;">
-              <img src="./assets/img/team/chinthu.jpeg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover" style="width: 50%;">
+            <div class="col-md-4">
+              <img src="./assets/img/team/chinthu.jpeg" class="rounded-circle img-center img-fluid shadow shadow-lg--hover">
               <b>Chinthulal V S</b><br><i>chinthulalvs@gmail.com</i><br>
             </div>
           </div>
@@ -329,17 +272,9 @@
     </div>
     <br>
   </section>
-  <section class="section pb-0" style="padding-top:1rem;margin-bottom:1rem">
-    <div class="container-fluid">
-        <div class="card shadow">
-            <div class="card-body bg-gradient-primary rounded ">
-                <div class="row justify-content-center" style="color:white;">
-                    <p>© Fog Prediction , IIT Kanpur. All rights reserved.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+  </main>
+
+<?php $footerCopyrightHtml = '&copy; Fog Prediction , IIT Kanpur. All rights reserved.'; include dirname(__DIR__, 2) . '/footer.php'; ?>
   <script src="./assets/js/core/jquery.min.js" type="text/javascript"></script>
   <script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
   <script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
