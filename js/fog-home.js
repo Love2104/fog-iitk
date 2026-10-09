@@ -96,57 +96,6 @@
     }
   }
 
-  /* ---- count-up animation ------------------------------------------------ */
-  function runCountUp() {
-    var el = document.querySelector('.js-count-up');
-    var wrap = document.querySelector('.hero-reading');
-    if (!el || !wrap) return;
-    
-    // Hide parts from SR since parent .hero-reading has the full aria-label
-    el.setAttribute('aria-hidden', 'true');
-    var unitEl = document.querySelector('.hero-unit');
-    if (unitEl) unitEl.setAttribute('aria-hidden', 'true');
-    
-    // Progressive enhancement: skipped if reduced motion
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      return;
-    }
-    
-    var valStr = wrap.getAttribute('data-fog-value');
-    var finalVal = parseFloat(valStr);
-    if (isNaN(finalVal)) return;
-    
-    var decimals = valStr.indexOf('.') !== -1 ? valStr.split('.')[1].length : 0;
-    
-    // Reserve final width to prevent jitter
-    el.style.display = 'inline-block';
-    el.style.minWidth = el.offsetWidth + 'px';
-    
-    var duration = 1200; // ms
-    var fps = 60;
-    var steps = Math.floor(duration / (1000 / fps));
-    var step = 0;
-    
-    var easeOut = function(t) { return 1 - Math.pow(1 - t, 4); };
-    
-    var timer = setInterval(function() {
-      step++;
-      var progress = step / steps;
-      var current = finalVal * easeOut(progress);
-      el.textContent = current.toFixed(decimals);
-      
-      if (step >= steps) {
-        clearInterval(timer);
-        el.textContent = valStr;
-        // Clean up
-        el.style.minWidth = '';
-        el.style.display = '';
-      }
-    }, 1000 / fps);
-  }
-  
-  runCountUp();
-
   /* ---- chart readout ----------------------------------------------------- */
 
   var wrap = document.querySelector('[data-fog-chart]');
@@ -165,44 +114,6 @@
   var line = wrap.querySelector('.hover-line');
   var dot  = wrap.querySelector('.hover-dot');
   if (!svg || !line || !dot) { return; }
-
-  var obsPath = svg.querySelector('.obs');
-  if (obsPath) {
-    var d = obsPath.getAttribute('d');
-    if (d) {
-      var defs = svg.querySelector('defs');
-      if (!defs) {
-        defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-        svg.insertBefore(defs, svg.firstChild);
-      }
-      if (!defs.querySelector('#obs-gradient')) {
-        var grad = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
-        grad.setAttribute('id', 'obs-gradient');
-        grad.setAttribute('x1', '0'); grad.setAttribute('y1', '0');
-        grad.setAttribute('x2', '0'); grad.setAttribute('y2', '1');
-        
-        var stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
-        stop1.setAttribute('offset', '0%'); stop1.setAttribute('stop-color', 'var(--measured)'); stop1.setAttribute('stop-opacity', '1');
-        var stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
-        stop2.setAttribute('offset', '100%'); stop2.setAttribute('stop-color', 'var(--measured)'); stop2.setAttribute('stop-opacity', '0');
-        grad.appendChild(stop1); grad.appendChild(stop2);
-        defs.appendChild(grad);
-      }
-
-      var areaD = d.split('M').filter(Boolean).map(function(seg) {
-        var pts = seg.trim().split('L');
-        if (!pts.length) return '';
-        var firstX = pts[0].split(',')[0];
-        var lastX = pts[pts.length - 1].split(',')[0];
-        return 'M' + seg + ' L' + lastX + ',' + geo.b + ' L' + firstX + ',' + geo.b + ' Z';
-      }).join(' ');
-
-      var areaPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      areaPath.setAttribute('class', 'obs-area');
-      areaPath.setAttribute('d', areaD);
-      obsPath.parentNode.insertBefore(areaPath, obsPath);
-    }
-  }
 
   var VIEW_W = 1000;
   var span   = Math.max(1, geo.to - geo.from);
@@ -394,7 +305,7 @@
 
     var controls = document.createElement('div');
     controls.className = 'map-zoom-controls';
-    controls.innerHTML = '<button type="button" class="zoom-in" aria-label="Zoom in">+</button><button type="button" class="zoom-out" aria-label="Zoom out">-</button><button type="button" class="zoom-reset" aria-label="Reset zoom">↺</button>';
+    controls.innerHTML = '<button type="button" class="zoom-in" aria-label="Zoom in"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 5v10M5 10h10"/></svg></button><button type="button" class="zoom-out" aria-label="Zoom out"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10"/></svg></button><button type="button" class="zoom-reset" aria-label="Reset zoom"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8a5.5 5.5 0 1 1-.4 3.8M5 4v4h4"/></svg></button>';
     mapSvg.parentNode.style.position = 'relative';
     mapSvg.parentNode.appendChild(controls);
 
@@ -407,8 +318,6 @@
     controls.querySelector('.zoom-reset').addEventListener('click', function() {
       vb = origVB.slice();
       mapSvg.setAttribute('viewBox', vb.join(' '));
-      mapSvg.style.transition = 'viewBox 0.3s ease';
-      setTimeout(function() { mapSvg.style.transition = ''; }, 300);
     });
 
     function zoomCenter(zoom) {

@@ -166,6 +166,7 @@ function fognav_option(array $s, ?array $current): void
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Source+Sans+3:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap">
 <link rel="stylesheet" href="assets/css/fog-redesign.css">
 <link rel="stylesheet" href="assets/css/fog-theme-compat.css">
+<link rel="stylesheet" href="assets/css/theme.css">
 <script>
 (function () {
   try {
@@ -182,7 +183,7 @@ function fognav_option(array $s, ?array $current): void
 </script>
 <?php endif; ?>
 
-<nav class="fognav" aria-label="Primary">
+<header class="site-header"><nav class="fognav" aria-label="Primary">
   <div class="fognav-bar">
 
     <a class="fognav-mark" href="index.php"<?php
@@ -363,4 +364,5 @@ function fognav_option(array $s, ?array $current): void
   </div>
   <?php endif; ?>
 </nav>
+</header>
 <script src="js/fog-nav.js" defer></script>

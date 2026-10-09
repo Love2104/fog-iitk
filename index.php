@@ -270,16 +270,7 @@ define('FOG_HEAD_DONE', true);
 <title><?php echo $pageTitle; ?></title>
 <meta name="description" content="Current visibility and fog state at <?php echo fog_e($sname); ?>, with the next six hours of predicted visibility, from IIT Kanpur's fog observation and forecasting programme.">
 <link rel="icon" type="image/png" href="./assets/img/iitk.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Instrument+Sans:wght@400;500;600;700&amp;family=Source+Sans+3:wght@400;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap">
-<link href="./assets/css/nucleo-icons.css" rel="stylesheet">
-<link href="./assets/css/nucleo-svg.css" rel="stylesheet">
-<link id="pagestyle" href="./assets/css/argon-design-system.css?v=1.0.2" rel="stylesheet">
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="assets/css/fog-home.css">
-<link rel="stylesheet" href="assets/css/fog-redesign.css?v=1789772589">
-<link rel="stylesheet" href="assets/css/fog-theme-compat.css">
+<link rel="stylesheet" href="assets/css/theme.css">
 <script>
 (function () {
   try {
@@ -295,18 +286,13 @@ define('FOG_HEAD_DONE', true);
 })();
 </script>
 </head>
-<body class="fog-body fog-app">
+<body class="fog-body fog-app index-page-theme">
 
 <a class="fog-skip" href="#main">Skip to the current reading</a>
 
 <?php include __DIR__ . '/navbar.php'; ?>
 
 <main class="fog-home" id="main" style="--fog-density: <?php echo $fogDensity; ?>;">
-  <div class="fog-atmos">
-    <div class="fog-layer fog-layer-1"></div>
-    <div class="fog-layer fog-layer-2"></div>
-    <div class="fog-layer fog-layer-3"></div>
-  </div>
   <div class="fog-shell">
     
     <!-- 1. DASHBOARD HERO -->
@@ -315,17 +301,21 @@ define('FOG_HEAD_DONE', true);
         <div class="dashboard-left">
       <?php if ($isStale): ?>
       <div class="hero-stale-banner">
-        Last observation <?php echo $obsAge !== null ? fog_e(fog_age_human($obsAge)) : 'unknown'; ?>. Not current.
+        <div class="data-status" data-stale="true">
+          <div class="data-status-dot" style="color: var(--state-fog);"></div>
+          Historical observation
+        </div>
+        <span>Last observation <?php echo $obsAge !== null ? fog_e(fog_age_human($obsAge)) : 'unknown'; ?>. Not current.</span>
       </div>
       <?php endif; ?>
       
-      <div class="hero-super fog-reveal" style="margin-bottom: 8px;">
+      <div class="hero-super fog-reveal" id="read-h">
         <?php echo $isStale ? 'Last report' : 'Current visibility'; ?> &middot; <?php echo fog_e($sname); ?> (<?php echo fog_e((string) $sid); ?>)
       </div>
       
       <div class="hero-main fog-reveal hero-reading" data-fog-value="<?php echo fog_e((string) $visNum); ?>">
         <?php $visParts = explode('.', (string) $visNum, 2); ?>
-        <span class="num hero-num js-count-up" style="font-family: var(--ff-sans); font-variant-numeric: tabular-nums;"><?php echo fog_e($visParts[0]); ?><?php if (isset($visParts[1])): ?>.<?php echo fog_e($visParts[1]); ?><?php endif; ?></span>
+        <span class="num hero-num js-count-up"><?php echo fog_e($visParts[0]); ?><?php if (isset($visParts[1])): ?>.<?php echo fog_e($visParts[1]); ?><?php endif; ?></span>
         <span class="unit hero-unit"><?php echo fog_e($visUnit); ?> visibility</span>
       </div>
 
@@ -334,10 +324,12 @@ define('FOG_HEAD_DONE', true);
       </div>
 
       <div class="hero-obs-time">
-        <div class="data-status" data-stale="<?php echo $isStale ? 'true' : 'false'; ?>">
-          <div class="data-status-dot" style="color: var(--state-<?php echo $isStale ? 'fog' : 'clear'; ?>);"></div>
-          <?php echo $isStale ? 'Historical observation' : 'Live observation'; ?>
+        <?php if (!$isStale): ?>
+        <div class="data-status" data-stale="false">
+          <div class="data-status-dot" style="color: var(--state-clear);"></div>
+          Live observation
         </div>
+        <?php endif; ?>
         <div>
           Observed <?php echo $obsTime !== null ? fog_fmt($obsTime, 'd M Y') . ' &middot; ' . fog_fmt($obsTime, 'H:i') . ' IST' : 'nothing recorded'; ?>
         </div>
@@ -375,7 +367,7 @@ define('FOG_HEAD_DONE', true);
         </div> <!-- end dashboard-left -->
         
         <div class="dashboard-right fog-reveal">
-          <div class="map-container" style="width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div class="map-container">
             <?php
             $primary = []; $others = [];
             foreach ($stations as $s) {
@@ -388,7 +380,7 @@ define('FOG_HEAD_DONE', true);
                 $otherDots .= sprintf('M%.1f %.1fm-2.4 0a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0', $x, $y);
             }
             ?>
-            <svg class="fog-map" viewBox="<?php echo FOG_MAP_VIEWBOX; ?>" role="img" aria-label="Map of India showing observing locations." style="width: 100%; height: auto; max-height: 500px; display: block;">
+            <svg class="fog-map" viewBox="<?php echo FOG_MAP_VIEWBOX; ?>" role="img" aria-label="Map of India showing observing locations.">
               <path class="land" d="<?php echo fog_map_outline(); ?>"/>
               <path class="states" d="<?php echo fog_map_states(); ?>"/>
               <?php if ($otherDots !== ''): ?>
@@ -450,7 +442,7 @@ define('FOG_HEAD_DONE', true);
             $depPct = max(0, min(100, ($value / 10) * 100));
         ?>
         <div class="depression-meter">
-            <div class="depression-gradient"></div>
+            <div class="depression-track"></div>
             <div class="depression-marker" style="left: <?php echo fog_e((string)$depPct); ?>%;"></div>
         </div>
         <?php endif; ?>
@@ -647,7 +639,7 @@ define('FOG_HEAD_DONE', true);
         </ul>
       </div>
     </div>
-    <div class="foot-colophon" style="border-top: 1px solid var(--rule-2); margin-top: 32px; padding-top: 16px; color: var(--ink-3); font-size: 14px; text-align: center; max-width: var(--home-shell); margin-left: auto; margin-right: auto;">
+    <div class="foot-colophon">
       &copy; <?php echo date('Y'); ?> IIT Kanpur. All rights reserved.
     </div>
   </footer>
